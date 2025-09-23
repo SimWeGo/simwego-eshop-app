@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCvp18eRlB2BDUFixvZFPvkecd1SsF_44g',
-    appId: '1:81669114717:android:da8057b463a1a6c96776b4',
-    messagingSenderId: '81669114717',
-    projectId: 'monty-BaseFlutter',
-    storageBucket: 'monty-BaseFlutter.appspot.com',
+    apiKey: 'AIzaSyDpM6y0uoEuuirDixCqxeJyx6bRwms8viw',
+    appId: '1:437878741797:android:7ac94f4c1d66c7f74718cc',
+    messagingSenderId: '437878741797',
+    projectId: 'sim-we-go-live',
+    storageBucket: 'sim-we-go-live.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCeqiE1AbuaJTDcTLZNs2IfpNUzxPpO0cU',
-    appId: '1:81669114717:ios:638f08d018f431516776b4',
-    messagingSenderId: '81669114717',
-    projectId: 'monty-BaseFlutter',
-    storageBucket: 'monty-BaseFlutter.appspot.com',
-    iosBundleId: 'com.monty.BaseFlutter',
+    apiKey: 'AIzaSyDnb5yWVLP92D7SzkrMkzRfz8jiOX98jco',
+    appId: '1:437878741797:ios:de9713ae0056577c4718cc',
+    messagingSenderId: '437878741797',
+    projectId: 'sim-we-go-live',
+    storageBucket: 'sim-we-go-live.firebasestorage.app',
+    iosBundleId: 'com.simwego.esim.test',
   );
+
 }

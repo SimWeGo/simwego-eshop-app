@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "437878741797",
+    "project_id": "sim-we-go-live",
+    "storage_bucket": "sim-we-go-live.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437878741797:android:7ac94f4c1d66c7f74718cc",
+        "android_client_info": {
+          "package_name": "com.luxe.esim"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpM6y0uoEuuirDixCqxeJyx6bRwms8viw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437878741797:android:7202f7b04db983424718cc",
+        "android_client_info": {
+          "package_name": "com.simwego.esim.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpM6y0uoEuuirDixCqxeJyx6bRwms8viw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

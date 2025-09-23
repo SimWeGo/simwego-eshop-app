@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBUvPwPV70qUa08c4vYw1AqJ8CdfUnvA1k',
-    appId: '1:221368510791:android:c51df057507248a84cc462',
-    messagingSenderId: '221368510791',
-    projectId: 'esim-opensource---test',
-    storageBucket: 'esim-opensource---test.firebasestorage.app',
+    apiKey: 'AIzaSyDpM6y0uoEuuirDixCqxeJyx6bRwms8viw',
+    appId: '1:437878741797:android:7202f7b04db983424718cc',
+    messagingSenderId: '437878741797',
+    projectId: 'sim-we-go-live',
+    storageBucket: 'sim-we-go-live.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBcuxZAcNFZH-uhbiyyrTpRp9tAeVskajw',
-    appId: '1:221368510791:ios:06b67807e2ee54c84cc462',
-    messagingSenderId: '221368510791',
-    projectId: 'esim-opensource---test',
-    storageBucket: 'esim-opensource---test.firebasestorage.app',
-    iosBundleId: 'monty.esim.opensource.test',
+    apiKey: 'AIzaSyDnb5yWVLP92D7SzkrMkzRfz8jiOX98jco',
+    appId: '1:437878741797:ios:de9713ae0056577c4718cc',
+    messagingSenderId: '437878741797',
+    projectId: 'sim-we-go-live',
+    storageBucket: 'sim-we-go-live.firebasestorage.app',
+    iosBundleId: 'com.simwego.esim.test',
   );
+
 }

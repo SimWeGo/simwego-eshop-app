@@ -88,9 +88,9 @@ android {
     productFlavors {
         OpenSourceDev {
             dimension "environment"
-            applicationId ""
+            applicationId "com.simwego.esim.test"
             versionNameSuffix "-dev"
-            resValue "string", "app_name", "White Label Dev"
+            resValue "string", "app_name", "SIM We Go Dev"
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
@@ -107,9 +107,9 @@ android {
         }
         OpenSourceStaging {
             dimension "environment"
-            applicationId ""
+            applicationId "com.simwego.esim"
             versionNameSuffix "-staging"
-            resValue "string", "app_name", "White Label Stg"
+            resValue "string", "app_name", "SIM We Go Stg"
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
@@ -126,9 +126,9 @@ android {
         }
         OpenSourceProd {
             dimension "environment"
-            applicationId ""
+            applicationId "com.simwego.esim"
             versionNameSuffix ""
-            resValue "string", "app_name", "White Label"
+            resValue "string", "app_name", "SIM We Go"
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""

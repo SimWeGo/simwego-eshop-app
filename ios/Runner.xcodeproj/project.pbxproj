@@ -10,6 +10,7 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
+		41D578578DF7DDBCCF3D3976 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82AD4685F2504FA265DEF489 /* GoogleService-Info.plist */; };
 		662DD8B4759C7D2F5ED3C064 /* Pods_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831D683EB098AA4341356208 /* Pods_NotificationServiceExtension.framework */; };
 		702402CA6316E9EF51031AA5 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5ED69F9EDE7A348404E59E /* Pods_RunnerTests.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -144,6 +145,7 @@
 		7EC459D2C1DA779EB7EE5D88 /* Pods-RunnerAppClip.debug-staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerAppClip.debug-staging.xcconfig"; path = "Target Support Files/Pods-RunnerAppClip/Pods-RunnerAppClip.debug-staging.xcconfig"; sourceTree = "<group>"; };
 		80363E582DBC5C2516E69446 /* Pods-NotificationServiceExtension.profile-opensourcestaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationServiceExtension.profile-opensourcestaging.xcconfig"; path = "Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension.profile-opensourcestaging.xcconfig"; sourceTree = "<group>"; };
 		81C4796896B9AD95F42E9598 /* Pods-RunnerTests.profile-opensourcedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile-opensourcedev.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile-opensourcedev.xcconfig"; sourceTree = "<group>"; };
+		82AD4685F2504FA265DEF489 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		831D683EB098AA4341356208 /* Pods_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8710ED600AC9063AC4168E7C /* Pods-RunnerTests.release-opensourceprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release-opensourceprod.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release-opensourceprod.xcconfig"; sourceTree = "<group>"; };
 		8931C8AC477804DCAA7E6C2B /* Pods-NotificationServiceExtension.release-prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationServiceExtension.release-prod.xcconfig"; path = "Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension.release-prod.xcconfig"; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				331C8082294A63A400263BE5 /* RunnerTests */,
 				F17EE0CC94D438B12DBB0EA7 /* Pods */,
 				6859C9F4FA7A09ACAD06D8F0 /* Frameworks */,
+				82AD4685F2504FA265DEF489 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -540,6 +543,8 @@
 				45383681A0CC722A30749758 /* [CP] Copy Pods Resources */,
 				8FE355902DA6D0E000497155 /* Set Status Bar Appearance : UIViewControllerBasedStatusBarAppearance true */,
 				8F1ED5DD2DF177DE00729D61 /* BRANCH_USE_TEST_MODE flag */,
+				593B207AC6DA7C65C1A142C4 /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
+				CCE43AB8112352C5A121BDEB /* FlutterFire: "flutterfire bundle-service-file" */,
 			);
 			buildRules = (
 			);
@@ -633,6 +638,7 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				41D578578DF7DDBCCF3D3976 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,13 +691,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -719,6 +721,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		593B207AC6DA7C65C1A142C4 /* FlutterFire: "flutterfire upload-crashlytics-symbols" */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "FlutterFire: \"flutterfire upload-crashlytics-symbols\"";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n#!/bin/bash\nPATH=\"${PATH}:$FLUTTER_ROOT/bin:${PUB_CACHE}/bin:$HOME/.pub-cache/bin\"\n\nif [ -z \"$PODS_ROOT\" ] || [ ! -d \"$PODS_ROOT/FirebaseCrashlytics\" ]; then\n  # Cannot use \"BUILD_DIR%/Build/*\" as per Firebase documentation, it points to \"flutter-project/build/ios/*\" path which doesn't have run script\n  DERIVED_DATA_PATH=$(echo \"$BUILD_ROOT\" | sed -E 's|(.*DerivedData/[^/]+).*|\\1|')\n  PATH_TO_CRASHLYTICS_UPLOAD_SCRIPT=\"${DERIVED_DATA_PATH}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\nelse\n  PATH_TO_CRASHLYTICS_UPLOAD_SCRIPT=\"$PODS_ROOT/FirebaseCrashlytics/run\"\nfi\n\n# Command to upload symbols script used to upload symbols to Firebase server\nflutterfire upload-crashlytics-symbols --upload-symbols-script-path=\"$PATH_TO_CRASHLYTICS_UPLOAD_SCRIPT\" --platform=ios --apple-project-path=\"${SRCROOT}\" --env-platform-name=\"${PLATFORM_NAME}\" --env-configuration=\"${CONFIGURATION}\" --env-project-dir=\"${PROJECT_DIR}\" --env-built-products-dir=\"${BUILT_PRODUCTS_DIR}\" --env-dwarf-dsym-folder-path=\"${DWARF_DSYM_FOLDER_PATH}\" --env-dwarf-dsym-file-name=\"${DWARF_DSYM_FILE_NAME}\" --env-infoplist-path=\"${INFOPLIST_PATH}\" --build-configuration=${CONFIGURATION}\n";
 		};
 		6B2B8389491DA48100D9FA48 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -854,6 +874,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CCE43AB8112352C5A121BDEB /* FlutterFire: "flutterfire bundle-service-file" */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "FlutterFire: \"flutterfire bundle-service-file\"";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n#!/bin/bash\nPATH=\"${PATH}:$FLUTTER_ROOT/bin:${PUB_CACHE}/bin:$HOME/.pub-cache/bin\"\nflutterfire bundle-service-file --plist-destination=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\" --build-configuration=${CONFIGURATION} --platform=ios --apple-project-path=\"${SRCROOT}\"\n";
+		};
 		CE3A921AB7B20B493A1E6F86 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -862,13 +900,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -883,13 +917,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RunnerAppClip/Pods-RunnerAppClip-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RunnerAppClip/Pods-RunnerAppClip-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -904,13 +934,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RunnerAppClip/Pods-RunnerAppClip-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RunnerAppClip/Pods-RunnerAppClip-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1045,6 +1071,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1075,15 +1102,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim.test;
+				PRODUCT_DISPLAY_NAME = "SIM We Go Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1164,6 +1191,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1192,15 +1220,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Stg";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
+				PRODUCT_DISPLAY_NAME = "SIM We Go Stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1280,6 +1308,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1308,15 +1337,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
+				PRODUCT_DISPLAY_NAME = "SIM We Go";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1389,6 +1418,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1423,15 +1453,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim.test;
+				PRODUCT_DISPLAY_NAME = "SIM We Go Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1502,6 +1532,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1534,15 +1565,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Stg";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
+				PRODUCT_DISPLAY_NAME = "SIM We Go Stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1612,6 +1643,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1644,15 +1676,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
+				PRODUCT_DISPLAY_NAME = "SIM We Go";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1722,6 +1754,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1754,15 +1787,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim.test;
+				PRODUCT_DISPLAY_NAME = "SIM We Go Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1833,6 +1866,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1863,15 +1897,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Stg";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
+				PRODUCT_DISPLAY_NAME = "SIM We Go Stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1941,6 +1975,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1971,15 +2006,15 @@
 				FACEBOOK_SIGN_IN_APP_ID = "";
 				GOOGLE_SIGN_IN_CLIENT_ID = "";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label";
+				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
+				PRODUCT_DISPLAY_NAME = "SIM We Go";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2839,7 +2874,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2924,7 +2959,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3009,7 +3044,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3089,7 +3124,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3167,7 +3202,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3245,7 +3280,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3324,7 +3359,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3402,7 +3437,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3480,7 +3515,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

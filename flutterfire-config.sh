@@ -8,9 +8,9 @@ if [[ $# -eq 0 ]]; then
 fi
 
 
-OPEN_SOURCE_APP_BUNDLE_ID=""
-FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID=""
-FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID=""
+OPEN_SOURCE_APP_BUNDLE_ID="com.simwego.esim"
+FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID="sim-we-go-live"
+FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID="sim-we-go-test"
 
 case $1 in
   openSourceDev)

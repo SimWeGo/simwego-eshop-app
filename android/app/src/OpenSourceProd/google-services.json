@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "870688758238",
+    "project_id": "sim-we-go-test",
+    "storage_bucket": "sim-we-go-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870688758238:android:9fd04c43623f57ccd5e54f",
+        "android_client_info": {
+          "package_name": "com.simwego.esim"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ9slW26vGkuyCpDJ7Ly9artU_vk1sn3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
