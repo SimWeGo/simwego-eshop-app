@@ -64,7 +64,7 @@ class LoginView extends StatelessWidget {
                   verticalSpaceSmallMedium,
                   Image.asset(
                     EnvironmentImages.whiteAppIcon.fullImagePath,
-                    width: screenWidth(context) / 1.5,
+                    width: screenWidth(context) / 2,
                     fit: BoxFit.fitWidth,
                   ),
                   verticalSpaceMedium,
@@ -101,7 +101,7 @@ class LoginView extends StatelessWidget {
                           image: EnvironmentImages.loginFacebook.fullImagePath,
                           title: LocaleKeys.loginView_continueWithFacebook.tr(),
                           titleTextStyle: bodyBoldTextStyle(context: context),
-                          textColor: mainWhiteTextColor(context: context),
+                          textColor: titleTextColor(context: context),
                           buttonColor: facebookButtonColor(context: context),
                           containerPadding: const EdgeInsets.only(bottom: 10),
                         )

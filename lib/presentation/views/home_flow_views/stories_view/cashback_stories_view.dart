@@ -23,7 +23,7 @@ class CashbackStoriesView {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                EnvironmentImages.storyCar.fullImagePath,
+                EnvironmentImages.storyBuilding.fullImagePath,
               ),
               fit: BoxFit.cover, // Cover, contain, etc.
             ),
@@ -51,8 +51,8 @@ class CashbackStoriesView {
                     Text(
                       LocaleKeys.storiesView_cashbackContent.tr(
                         namedArgs: <String, String>{
-                          "CashbackDiscount":
-                          locator<AppConfigurationService>().getCashbackDiscount,
+                          "CashbackDiscount": locator<AppConfigurationService>()
+                              .getCashbackDiscount,
                         },
                       ),
                       style: bodyNormalTextStyle(

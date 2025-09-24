@@ -86,17 +86,17 @@ class OpenSourceColorTemplate implements TemplateAppColors {
   @override
   final Color defGrey_500 = const Color(0XFF667085);
   @override
-  final Color defGreyAlt_500 = const Color(0XFF667085);
+  final Color defGreyAlt_500 = const Color(0XFF2E3786);
   @override
   final Color defGrey_600 = const Color(0XFF475467);
   @override
   final Color defGreyAlt_600 = const Color(0XFF475467);
   @override
-  final Color defGrey_700 = const Color(0XFF344053);
+  final Color defGrey_700 = const Color(0XFF475467);
   @override
-  final Color defGrey_800 = const Color(0XFF1D2939);
+  final Color defGrey_800 = const Color(0XFF475467);
   @override
-  final Color defGrey_900 = const Color(0XFF2E3786);
+  final Color defGrey_900 = const Color(0XFF475467);
   @override
   final Color defIndigo_50 = const Color(0XFFEDF4FF);
   @override
@@ -118,23 +118,23 @@ class OpenSourceColorTemplate implements TemplateAppColors {
   @override
   final Color defPrimary_100 = const Color(0XFFE5E9EE);
   @override
-  final Color defPrimary_200 = const Color(0XFF94A4B9);
+  final Color defPrimary_200 = const Color(0XFF2C507C);
   @override
-  final Color defPrimary_300 = const Color(0XFF6C829F);
+  final Color defPrimary_300 = const Color(0XFF2C507C);
   @override
-  final Color defPrimary_400 = const Color(0XFF4E688B);
+  final Color defPrimary_400 = const Color(0XFF2C507C);
   @override
   final Color defPrimary_500 = const Color(0XFF2C507C);
   @override
-  final Color defPrimaryAlt_500 = const Color(0XFF2C507C);
+  final Color defPrimaryAlt_500 = const Color(0XFF7DD3F6);
   @override
-  final Color defPrimary_600 = const Color(0XFF2C507B);
+  final Color defPrimary_600 = const Color(0XFF2C507C);
   @override
   final Color defPrimary_700 = const Color(0XFF7DD3F6);
   @override
   final Color defPrimary_800 = const Color(0XFF7DD3F6);
   @override
-  final Color defPrimaryAlt_800 = const Color(0XFF7DD3F6);
+  final Color defPrimaryAlt_800 = const Color(0XFF2E3786);
   @override
   final Color defPrimaryAltBtn_800 = const Color(0XFF7DD3F6);
   @override
@@ -142,35 +142,35 @@ class OpenSourceColorTemplate implements TemplateAppColors {
   @override
   final Color defPrimaryAltSwitchBtn_800 = const Color(0XFF7DD3F6);
   @override
-  final Color defPrimary_900 = const Color(0XFF122644);
+  final Color defPrimary_900 = const Color(0XFF2E3786);
   @override
-  final Color defPrimaryAlt_900 = const Color(0XFF7DD3F6);
+  final Color defPrimaryAlt_900 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_25 = const Color(0XFF7DD3F6);
+  final Color defSecondary_25 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_50 = const Color(0XFFDDBB70);
+  final Color defSecondary_50 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_100 = const Color(0XFFDDBB70);
+  final Color defSecondary_100 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_200 = const Color(0XFFDDBB70);
+  final Color defSecondary_200 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_300 = const Color(0XFFDDBB70);
+  final Color defSecondary_300 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_400 = const Color(0XFFDDBB70);
+  final Color defSecondary_400 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_500 = const Color(0XFFDDBB70);
+  final Color defSecondary_500 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_600 = const Color(0XFFDDBB70);
+  final Color defSecondary_600 = const Color(0XFF2E3786);
   @override
-  final Color defSecondaryAlt_600 = const Color(0XFFDDBB70);
+  final Color defSecondaryAlt_600 = const Color(0XFF2E3786);
   @override
-  final Color defSecondaryAltIconBtn_600 = const Color(0XFFDDBB70);
+  final Color defSecondaryAltIconBtn_600 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_700 = const Color(0XFFDDBB70);
+  final Color defSecondary_700 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_800 = const Color(0XFFDDBB70);
+  final Color defSecondary_800 = const Color(0XFF2E3786);
   @override
-  final Color defSecondary_900 = const Color(0XFFDDBB70);
+  final Color defSecondary_900 = const Color(0XFF2E3786);
   @override
   final Color defShadow = const Color.fromRGBO(16, 24, 40, 2);
   @override

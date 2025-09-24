@@ -63,7 +63,7 @@ class ContinueWithEmailView extends StatelessWidget {
                   ),
                   Image.asset(
                     EnvironmentImages.darkAppIcon.fullImagePath,
-                    width: screenWidth(context) / 2,
+                    width: screenWidth(context) / 3,
                     fit: BoxFit.fitWidth,
                   ),
                   Column(
