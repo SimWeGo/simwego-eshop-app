@@ -9,8 +9,8 @@ fi
 
 
 OPEN_SOURCE_APP_BUNDLE_ID="com.simwego.esim"
-FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID="sim-we-go-live"
-FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID="sim-we-go-test"
+FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID="simwego-test"
+FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID="simwego-live"
 
 case $1 in
   openSourceDev)

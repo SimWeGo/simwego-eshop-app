@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBQ9slW26vGkuyCpDJ7Ly9artU_vk1sn3M',
-    appId: '1:870688758238:android:9fd04c43623f57ccd5e54f',
-    messagingSenderId: '870688758238',
-    projectId: 'sim-we-go-test',
-    storageBucket: 'sim-we-go-test.firebasestorage.app',
+    apiKey: 'AIzaSyCtvHcXIR8Atjtpv-4dr28bLeUQr4uDMyk',
+    appId: '1:763933589891:android:7424fd3155f898307076b6',
+    messagingSenderId: '763933589891',
+    projectId: 'simwego-live',
+    storageBucket: 'simwego-live.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA4VMukVkBUDTfOXQ-ajqnvCaf6LV1W7yU',
-    appId: '1:870688758238:ios:eb2436650a630daad5e54f',
-    messagingSenderId: '870688758238',
-    projectId: 'sim-we-go-test',
-    storageBucket: 'sim-we-go-test.firebasestorage.app',
+    apiKey: 'AIzaSyCFwLeu8CLNbIZZqGtPn8L-V1eTnFFPNpM',
+    appId: '1:763933589891:ios:f98ce8761291ff817076b6',
+    messagingSenderId: '763933589891',
+    projectId: 'simwego-live',
+    storageBucket: 'simwego-live.firebasestorage.app',
     iosBundleId: 'com.simwego.esim',
   );
 

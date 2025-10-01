@@ -134,6 +134,7 @@ class MainButton extends StatelessWidget {
     TextStyle? titleTextStyle,
     double leadingImageWidth = 25,
     double leadingImageHeight = 25,
+    Color imageColor = Colors.white,
   }) {
     return MainButton(
       title: title,
@@ -148,6 +149,7 @@ class MainButton extends StatelessWidget {
         image,
         width: leadingImageWidth,
         height: leadingImageHeight,
+        color: imageColor,
       ),
       horizontalPadding: 20,
       textAlignment: MainAxisAlignment.spaceBetween,

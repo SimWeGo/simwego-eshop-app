@@ -59,7 +59,7 @@ Color enabledSecondaryButtonTextColor({required BuildContext context}) =>
     context.appColors.secondary_600!;
 
 Color disabledMainButtonTextColor({required BuildContext context}) =>
-    context.appColors.greyAlt_500!;
+    context.appColors.primary_900!.withAlpha(130);
 
 Color bubbleCountryTextColor({required BuildContext context}) =>
     context.appColors.baseBlack!;
@@ -81,7 +81,7 @@ Color facebookButtonColor({required BuildContext context}) =>
     context.appColors.primaryAlt_500!;
 
 Color disabledMainButtonColor({required BuildContext context}) =>
-    context.appColors.primary_800!.withAlpha(150);
+    context.appColors.primary_800!.withAlpha(130);
 
 Color iconButtonColor({required BuildContext context}) =>
     context.appColors.secondary_600!;

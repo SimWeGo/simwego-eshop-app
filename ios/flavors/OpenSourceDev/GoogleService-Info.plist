@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDnb5yWVLP92D7SzkrMkzRfz8jiOX98jco</string>
+	<string>AIzaSyAPhHC4q82yWDfuy0e5B4cMbGeEegNGJjE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>437878741797</string>
+	<string>141502542449</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.simwego.esim.test</string>
 	<key>PROJECT_ID</key>
-	<string>sim-we-go-live</string>
+	<string>simwego-test</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sim-we-go-live.firebasestorage.app</string>
+	<string>simwego-test.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:437878741797:ios:de9713ae0056577c4718cc</string>
+	<string>1:141502542449:ios:16326bace12dc0fc8a21d0</string>
 </dict>
 </plist>
