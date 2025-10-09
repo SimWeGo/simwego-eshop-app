@@ -1,7 +1,8 @@
-import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view_model.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:mockito/mockito.dart";
 
 import "../../../../../../helpers/view_helper.dart";
 import "../../../../../../helpers/view_model_helper.dart";
@@ -67,26 +68,31 @@ Future<void> main() async {
     });
 
     test("updateSwitch changes value", () {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
       expect(viewModel.receiveUpdated, isFalse);
       viewModel.updateSwitch(newValue: true);
       expect(viewModel.receiveUpdated, isTrue);
     });
 
     test("validateNumber updates state", () {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
       viewModel.validateNumber("961", "12345678", isValid: true);
       expect(viewModel.isPhoneValid, isTrue);
       expect(viewModel.userPhoneNumber, equals("12345678"));
     });
 
     test("updateButtonState - phone login", () {
-      AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi =
-          LoginType.phoneNumber;
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.phoneNumber);
       viewModel.updateButtonState();
       expect(viewModel.saveButtonEnabled, isA<bool>());
     });
 
     test("updateButtonState - email login", () {
-      AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi = LoginType.email;
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
       viewModel.updateButtonState();
       expect(viewModel.saveButtonEnabled, isA<bool>());
     });

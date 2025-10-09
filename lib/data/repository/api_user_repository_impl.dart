@@ -103,11 +103,11 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
 
   @override
   FutureOr<Resource<EmptyResponse?>> getBundleLabel({
-    required String code,
+    required String iccid,
     required String label,
   }) {
     return responseToResource(
-      apiUserBundles.getBundleLabel(code: code, label: label),
+      apiUserBundles.getBundleLabel(iccid: iccid, label: label),
     );
   }
 

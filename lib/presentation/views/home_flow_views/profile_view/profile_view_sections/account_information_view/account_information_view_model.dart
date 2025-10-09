@@ -24,6 +24,7 @@ class AccountInformationViewModel extends BaseModel {
   bool _saveButtonEnabled = false;
 
   String? _validationError;
+
   String? get validationError => _validationError;
 
   bool get saveButtonEnabled => _saveButtonEnabled;
@@ -33,6 +34,7 @@ class AccountInformationViewModel extends BaseModel {
   bool isPhoneValid = false;
 
   TextEditingController get nameController => _nameController;
+
   TextEditingController get emailController => _emailController;
 
   TextEditingController get familyNameController => _familyNameController;
@@ -43,6 +45,27 @@ class AccountInformationViewModel extends BaseModel {
       UpdateUserInfoUseCase(locator<ApiAuthRepository>());
   PhoneController phoneController =
       PhoneController(const PhoneNumber(isoCode: IsoCode.LB, nsn: ""));
+
+  bool get isPhoneInputEnabled {
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        return true;
+      case LoginType.phoneNumber:
+      case LoginType.emailAndPhone:
+        return false;
+    }
+  }
+
+  bool get isEmailFieldEditable {
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        return false;
+      case LoginType.phoneNumber:
+        return true;
+      case LoginType.emailAndPhone:
+        return false;
+    }
+  }
 
   @override
   Future<void> onViewModelReady() async {
@@ -144,18 +167,7 @@ class AccountInformationViewModel extends BaseModel {
         ? true
         : ((userPhoneNumber != userMsisdn) && isPhoneValid);
 
-    _saveButtonEnabled =
-        AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
-            ? ((_receiveUpdates != isNewsletterSubscribed) ||
-                    (_nameController.text != userFirstName) ||
-                    (_familyNameController.text != userLastName) ||
-                    (_emailController.text != userEmailAddress)) &&
-                isValidEmail
-            : ((_receiveUpdates != isNewsletterSubscribed) ||
-                    (_nameController.text != userFirstName) ||
-                    (_familyNameController.text != userLastName) ||
-                    (userPhoneNumber != userMsisdn)) &&
-                isValidPhone;
+    _saveButtonEnabled = __saveButtonEnabled(isValidPhone);
 
     if (isPhoneValid) {
       _validationError = null;
@@ -164,5 +176,26 @@ class AccountInformationViewModel extends BaseModel {
     }
 
     notifyListeners();
+  }
+
+  bool __saveButtonEnabled(bool isValidPhone) {
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        return ((_receiveUpdates != isNewsletterSubscribed) ||
+                (_nameController.text != userFirstName) ||
+                (_familyNameController.text != userLastName) ||
+                (userPhoneNumber != userMsisdn)) &&
+            isValidPhone;
+      case LoginType.phoneNumber:
+        return ((_receiveUpdates != isNewsletterSubscribed) ||
+                (_nameController.text != userFirstName) ||
+                (_familyNameController.text != userLastName) ||
+                (_emailController.text != userEmailAddress)) &&
+            isValidEmail;
+      case LoginType.emailAndPhone:
+        return (_receiveUpdates != isNewsletterSubscribed) ||
+            (_nameController.text != userFirstName) ||
+            (_familyNameController.text != userLastName);
+    }
   }
 }

@@ -14,15 +14,15 @@ class GetBundleLabelUseCase
   @override
   FutureOr<Resource<EmptyResponse?>> execute(BundleLabelParams params) async {
     return await repository.getBundleLabel(
-      code: params.code,
+      iccid: params.iccid,
       label: params.label,
     );
   }
 }
 
 class BundleLabelParams {
-  BundleLabelParams({required this.code, required this.label});
+  BundleLabelParams({required this.iccid, required this.label});
 
-  final String code;
+  final String iccid;
   final String label;
 }

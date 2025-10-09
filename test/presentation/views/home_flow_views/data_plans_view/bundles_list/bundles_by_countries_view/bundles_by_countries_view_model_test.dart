@@ -19,13 +19,12 @@ Future<void> main() async {
         const EsimArguments(id: "1", name: "test", type: "region");
     final BundlesByCountriesViewModel vm = BundlesByCountriesViewModel(args);
     
-    vm.bundles;
-    vm.availableCountries;
+
     await vm.onModelReady();
     vm.getInitialAvailableCountries();
     await vm.fetchBundles("codes");
-    vm.addAvailableCountries(CountryResponseModel(id: "1", country: "Test"));
-    vm.removeAvailableCountries(CountryResponseModel(id: "1", country: "Test"));
+    vm..addAvailableCountries(CountryResponseModel(id: "1", country: "Test"))
+    ..removeAvailableCountries(CountryResponseModel(id: "1", country: "Test"));
   });
 
   Future<void> tearDown() async {

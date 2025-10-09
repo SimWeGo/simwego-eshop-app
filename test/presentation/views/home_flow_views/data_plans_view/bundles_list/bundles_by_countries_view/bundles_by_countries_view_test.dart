@@ -1,3 +1,4 @@
+import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_by_countries_view/bundles_by_countries_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_by_countries_view/bundles_by_countries_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
@@ -30,8 +31,8 @@ void main() async {
 
     final BundlesByCountriesView view = BundlesByCountriesView(
       viewModel: vm,
-      onBundleSelected: (bundle) {},
-      horizontalPadding: 10.0,
+      onBundleSelected: (BundleResponseModel bundle) {},
+      horizontalPadding: 10,
     );
 
     await tester.pumpWidget(
@@ -51,8 +52,8 @@ void main() async {
 
     final BundlesByCountriesView view = BundlesByCountriesView(
       viewModel: vm,
-      onBundleSelected: (bundle) {},
-      horizontalPadding: 10.0,
+      onBundleSelected: (BundleResponseModel bundle) {},
+      horizontalPadding: 10,
     );
 
     await tester.pumpWidget(
@@ -71,8 +72,8 @@ void main() async {
 
     final BundlesByCountriesView view = BundlesByCountriesView(
       viewModel: vm,
-      onBundleSelected: (bundle) {},
-      horizontalPadding: 10.0,
+      onBundleSelected: (BundleResponseModel bundle) {},
+      horizontalPadding: 10,
     );
 
     final DiagnosticPropertiesBuilder builder = DiagnosticPropertiesBuilder();

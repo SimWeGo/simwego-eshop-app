@@ -417,7 +417,7 @@ class MockDataSource implements DynamicSelectionViewDataSource {
     this.dialogContentText = "Test Dialog Content",
     this.selectedData = "Selected Item",
     this.shouldReturnEmptyList = false,
-    this.shouldConfirm = true,
+    // this.shouldConfirm = true,
   }) : _data = data ?? <String>["Item 1", "Item 2", "Item 3"];
 
   @override
@@ -425,7 +425,7 @@ class MockDataSource implements DynamicSelectionViewDataSource {
 
   List<String> _data;
   final bool shouldReturnEmptyList;
-  final bool shouldConfirm;
+  // final bool shouldConfirm;
 
   @override
   List<String> get data => _data;

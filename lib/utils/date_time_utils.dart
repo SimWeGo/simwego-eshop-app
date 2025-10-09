@@ -21,4 +21,30 @@ class DateTimeUtils {
       return "";
     }
   }
+
+  static String formatStringToDate({
+    required String dateString,
+    required String format,
+  }) {
+    try {
+      log("formatStringToDate dateString: $dateString");
+
+      // Handle empty or null string
+      if (dateString.isEmpty) {
+        log("formatStringToDate: empty dateString");
+        return "";
+      }
+
+      final DateTime dateTime = DateTime.parse(dateString);
+      final DateFormat formatter = DateFormat(format);
+      log("formatStringToDate return: ${formatter.format(dateTime)}");
+      return formatter.format(dateTime);
+    } on FormatException catch (e) {
+      log("formatStringToDate FormatException: $e");
+      return "";
+    } on Error catch (e) {
+      log("formatStringToDate error: $e");
+      return "";
+    }
+  }
 }

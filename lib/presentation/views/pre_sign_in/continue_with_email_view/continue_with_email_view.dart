@@ -20,11 +20,30 @@ import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
 
+class ContinueWithEmailViewArgs {
+  ContinueWithEmailViewArgs({
+    this.redirection,
+    this.localLoginType,
+  });
+
+  final InAppRedirection? redirection;
+  final LoginType? localLoginType;
+}
+
 class ContinueWithEmailView extends StatelessWidget {
-  const ContinueWithEmailView({super.key, this.redirection});
+  const ContinueWithEmailView({
+    super.key,
+    this.redirection,
+    LoginType? localLoginType,
+  }) : _localLoginType = localLoginType;
 
   static const String routeName = "ContinueWithEmailView";
   final InAppRedirection? redirection;
+
+  final LoginType? _localLoginType;
+
+  LoginType get localLoginType =>
+      _localLoginType ?? AppEnvironment.appEnvironmentHelper.loginType;
 
   @override
   Widget build(BuildContext context) {
@@ -78,36 +97,17 @@ class ContinueWithEmailView extends StatelessWidget {
                       ),
                       verticalSpaceSmall,
                       Text(
-                        AppEnvironment.appEnvironmentHelper.loginType ==
-                                LoginType.phoneNumber
-                            ? LocaleKeys.continueWithEmailView_SubTitleTextPhone
-                                .tr()
-                            : LocaleKeys.continueWithEmailView_SubTitleText
-                                .tr(),
+                        getContinueWithEmailSubtitleText(),
                         style: bodyNormalTextStyle(
                           context: context,
                           fontColor: secondaryTextColor(context: context),
                         ),
                       ),
-                      verticalSpace(90),
-                      AppEnvironment.appEnvironmentHelper.loginType ==
-                              LoginType.phoneNumber
-                          ? MyPhoneInput(
-                              onChanged: (
-                                String code,
-                                String phoneNumber, {
-                                required bool isValid,
-                              }) {
-                                viewModel.validateNumber(
-                                  code: code,
-                                  number: phoneNumber,
-                                  isValid: isValid,
-                                );
-                              },
-                              phoneController: viewModel.phoneController,
-                              validateRequired: true,
-                            )
-                          : MainInputField.formField(
+                      verticalSpace(
+                        localLoginType == LoginType.emailAndPhone ? 60 : 90,
+                      ),
+                      viewModel.showEmailField
+                          ? MainInputField.formField(
                               themeColor: themeColor,
                               labelTitleText: LocaleKeys
                                   .continueWithEmailView_emailTitleField
@@ -124,7 +124,43 @@ class ContinueWithEmailView extends StatelessWidget {
                                 context: context,
                                 fontColor: secondaryTextColor(context: context),
                               ),
-                            ),
+                            )
+                          : Container(),
+                      localLoginType == LoginType.emailAndPhone
+                          ? verticalSpaceSmall
+                          : Container(),
+                      viewModel.showPhoneField
+                          ? Column(
+                              children: <Widget>[
+                                PaddingWidget.applySymmetricPadding(
+                                  vertical: 5,
+                                  child: Text(
+                                    LocaleKeys.phoneInput_placeHolder.tr(),
+                                    style: captionOneMediumTextStyle(
+                                      context: context,
+                                      fontColor:
+                                          secondaryTextColor(context: context),
+                                    ),
+                                  ).textSupportsRTL(context),
+                                ),
+                                MyPhoneInput(
+                                  onChanged: (
+                                    String code,
+                                    String phoneNumber, {
+                                    required bool isValid,
+                                  }) {
+                                    viewModel.validateNumber(
+                                      code: code,
+                                      number: phoneNumber,
+                                      isValid: isValid,
+                                    );
+                                  },
+                                  phoneController: viewModel.phoneController,
+                                  validateRequired: true,
+                                ),
+                              ],
+                            )
+                          : Container(),
                       verticalSpaceMediumLarge,
                       GestureDetector(
                         key: const Key("checkBox"),
@@ -223,11 +259,23 @@ class ContinueWithEmailView extends StatelessWidget {
     );
   }
 
+  String getContinueWithEmailSubtitleText() {
+    switch (localLoginType) {
+      case LoginType.email:
+        return LocaleKeys.continueWithEmailView_SubTitleText.tr();
+      case LoginType.phoneNumber:
+      case LoginType.emailAndPhone:
+        return LocaleKeys.continueWithEmailView_SubTitleTextPhone.tr();
+    }
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(
-      DiagnosticsProperty<InAppRedirection?>("redirection", redirection),
-    );
+    properties
+      ..add(
+        DiagnosticsProperty<InAppRedirection?>("redirection", redirection),
+      )
+      ..add(EnumProperty<LoginType>("localLoginType", localLoginType));
   }
 }

@@ -7,12 +7,12 @@ import "package:flutter/material.dart";
 class InfoRow extends StatelessWidget {
   const InfoRow({
     required this.title,
-    required this.message,
+    this.message,
     super.key,
   });
 
   final String title;
-  final String message;
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,15 @@ class InfoRow extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              message,
-              style: captionTwoNormalTextStyle(
-                context: context,
-                fontColor: contentTextColor(context: context),
-              ),
-            ),
+            message != null
+                ? Text(
+                    message ?? "",
+                    style: captionTwoNormalTextStyle(
+                      context: context,
+                      fontColor: contentTextColor(context: context),
+                    ),
+                  )
+                : Container(),
             Text(
               title,
               style: captionTwoNormalTextStyle(

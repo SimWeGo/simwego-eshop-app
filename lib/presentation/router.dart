@@ -1,4 +1,5 @@
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
+import "package:esim_open_source/presentation/helpers/route_wrapper.dart";
 import "package:esim_open_source/presentation/helpers/view_state_utils.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/app_clip_start/app_clip_selection/app_clip_selection_view.dart";
@@ -24,7 +25,6 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view.dart";
-import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view.dart";
@@ -80,29 +80,40 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
 
     case ContinueWithEmailView.routeName:
-      final Object? args = settings.arguments;
-      InAppRedirection? redirection;
+      Object? args = settings.arguments;
 
-      if (args is InAppRedirection) {
-        redirection = args;
+      RouteTransitionsBuilder? transitionsBuilder;
+
+      if (args is RouteWrapper) {
+        transitionsBuilder = args.transitionsBuilder;
+        args = args.instance;
+      }
+
+      ContinueWithEmailViewArgs? continueWithEmailViewArgs;
+
+      if (args is ContinueWithEmailViewArgs) {
+        continueWithEmailViewArgs = args;
       } else {
-        redirection = null;
+        continueWithEmailViewArgs = null;
       }
       return _getPageRoute(
         routeName: settingsName,
         viewToShow: ContinueWithEmailView(
-          redirection: redirection,
+          redirection: continueWithEmailViewArgs?.redirection,
+          localLoginType: continueWithEmailViewArgs?.localLoginType,
         ),
+        transitionsBuilder: transitionsBuilder,
       );
 
     case VerifyLoginView.routeName:
-      ContinueWithEmailViewModelArgs args =
-          settings.arguments! as ContinueWithEmailViewModelArgs;
+      VerifyLoginViewArgs args = settings.arguments! as VerifyLoginViewArgs;
       return _getPageRoute(
         routeName: settingsName,
         viewToShow: VerifyLoginView(
           redirection: args.redirection,
-          username: args.username,
+          email: args.email,
+          phoneNumber: args.phoneNumber,
+          localLoginType: args.localLoginType,
         ),
       );
 

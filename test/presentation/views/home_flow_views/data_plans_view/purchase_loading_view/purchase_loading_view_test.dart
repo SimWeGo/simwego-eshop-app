@@ -27,8 +27,8 @@ Future<void> main() async {
     when(mockViewModel.onViewModelReady()).thenReturn(null);
     
     // Override the locator registration for the ViewModel
-    locator.unregister<PurchaseLoadingViewModel>();
-    locator.registerFactory<PurchaseLoadingViewModel>(() => mockViewModel);
+    locator..unregister<PurchaseLoadingViewModel>()
+    ..registerFactory<PurchaseLoadingViewModel>(() => mockViewModel);
   });
 
   testWidgets("renders basic structure with required components",

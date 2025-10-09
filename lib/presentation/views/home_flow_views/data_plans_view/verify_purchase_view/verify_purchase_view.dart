@@ -23,6 +23,7 @@ class VerifyPurchaseViewArgs {
     required this.iccid,
     required this.orderID,
   });
+
   final String iccid;
   final String orderID;
 }
@@ -32,6 +33,7 @@ class VerifyPurchaseView extends StatelessWidget {
     required this.args,
     super.key,
   });
+
   final VerifyPurchaseViewArgs args;
 
   static const String routeName = "VerifyPurchaseView";
@@ -174,10 +176,7 @@ class VerifyPurchaseView extends StatelessWidget {
     return Text.rich(
       textAlign: TextAlign.center,
       TextSpan(
-        text: AppEnvironment.appEnvironmentHelper.loginType ==
-                LoginType.phoneNumber
-            ? LocaleKeys.verifyLogin_checkPhone.tr()
-            : LocaleKeys.verifyLogin_checkEmail.tr(),
+        text: getVerifyLoginText(),
         style: captionOneNormalTextStyle(
           context: context,
           fontColor: secondaryTextColor(context: context),
@@ -197,6 +196,16 @@ class VerifyPurchaseView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String getVerifyLoginText() {
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        return LocaleKeys.verifyLogin_checkEmail.tr();
+      case LoginType.phoneNumber:
+      case LoginType.emailAndPhone:
+        return LocaleKeys.verifyLogin_checkPhone.tr();
+    }
   }
 
   @override

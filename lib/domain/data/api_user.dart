@@ -33,7 +33,7 @@ abstract interface class ApiUser {
   });
 
   FutureOr<dynamic> getBundleLabel({
-    required String code,
+    required String iccid,
     required String label,
   });
 

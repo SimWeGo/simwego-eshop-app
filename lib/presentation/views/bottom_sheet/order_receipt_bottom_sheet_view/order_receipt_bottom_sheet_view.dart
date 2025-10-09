@@ -246,7 +246,7 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                             .orderReceiptBottomSheet_unitPrice
                                             .tr(),
                                         contentText: viewModel.bundleOrderModel
-                                                ?.bundleDetails?.priceDisplay ??
+                                                ?.orderDisplayPrice ??
                                             "",
                                       ),
                                     ],
@@ -259,7 +259,7 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                             .orderReceiptBottomSheet_amount
                                             .tr(),
                                         contentText: viewModel.bundleOrderModel
-                                                ?.bundleDetails?.priceDisplay ??
+                                                ?.orderDisplayPrice ??
                                             "",
                                       ),
                                     ],

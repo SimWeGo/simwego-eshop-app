@@ -50,7 +50,7 @@ FutureOr<Resource<T>> responseToResource<T>(FutureOr<dynamic> request) async {
       );
     }
     return Resource<T>.error(
-      response.developerMessage ?? "",
+      response.title ?? "",
       data: response.data,
       error: GeneralError(
         message: response.title ?? "",

@@ -110,7 +110,11 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                                     LocaleKeys.esim_warning.tr(),
                               ),
                               verticalSpaceSmall,
-                              buildAccountInfo(context, viewModel.state.item),
+                              buildAccountInfo(
+                                context,
+                                viewModel.state.item,
+                                viewModel.state.expiryDate,
+                              ),
                               verticalSpaceSmall,
                               buildConsumption(
                                 context,
@@ -159,6 +163,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
   Widget buildAccountInfo(
     BuildContext context,
     PurchaseEsimBundleResponseModel? item,
+    String? expiryDate,
   ) {
     return Card(
       margin: EdgeInsets.zero,
@@ -186,11 +191,17 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                       fontColor: mainDarkTextColor(context: context),
                     ),
                   ),
-                  verticalSpaceSmall,
-                  BundleInfoColumn(
-                    label: LocaleKeys.esim_validity.tr(),
-                    value: item?.validityDisplay ?? "",
-                  ),
+                  (expiryDate != null && expiryDate.isNotEmpty)
+                      ? Column(
+                          children: <Widget>[
+                            verticalSpaceSmall,
+                            BundleInfoColumn(
+                              label: LocaleKeys.esim_validity.tr(),
+                              value: expiryDate,
+                            ),
+                          ],
+                        )
+                      : Container(),
                   buildInfoRow(
                     context: context,
                     label: LocaleKeys.iccid_number.tr(),

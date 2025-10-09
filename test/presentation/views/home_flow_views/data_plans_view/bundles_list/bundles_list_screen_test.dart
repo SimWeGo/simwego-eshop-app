@@ -4,7 +4,6 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_list_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
 import "package:esim_open_source/presentation/widgets/common_navigation_title.dart";
-import "package:esim_open_source/presentation/widgets/country_flag_image.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/foundation.dart";
@@ -55,7 +54,7 @@ void main() async {
       expect(find.descendant(
         of: find.byType(CommonNavigationTitle),
         matching: find.text("Afghanistan"),
-      ), findsOneWidget);
+      ), findsOneWidget,);
       
       // Check that search field is displayed for country type
       expect(find.byType(MainInputField), findsOneWidget);
@@ -148,7 +147,7 @@ void main() async {
 
   group("CountrySearchList Widget Tests", () {
     test("CountrySearchList debug properties", () {
-      final List<CountryResponseModel> countries = [
+      final List<CountryResponseModel> countries = <CountryResponseModel>[
         CountryResponseModel(id: "1", country: "Test", icon: "icon"),
       ];
       final CountrySearchList widget = CountrySearchList(
@@ -187,7 +186,7 @@ void main() async {
 
   group("FlagChipsRow Widget Tests", () {
     test("FlagChipsRow debug properties", () {
-      final List<CountryResponseModel> countries = [
+      final List<CountryResponseModel> countries = <CountryResponseModel>[
         CountryResponseModel(id: "1", country: "Test", icon: "icon"),
       ];
       final FlagChipsRow widget = FlagChipsRow(

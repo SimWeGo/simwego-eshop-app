@@ -25,9 +25,9 @@ enum ConfigurationResponseKeys {
       case ConfigurationResponseKeys.defaultCurrency:
         return "default_currency";
       case ConfigurationResponseKeys.paymentTypes:
-        return "allowed_payment_types";
+        return "ALLOWED_PAYMENT_TYPES";
       case ConfigurationResponseKeys.loginType:
-        return "login_type";
+        return "LOGIN_TYPE";
       case ConfigurationResponseKeys.cashbackDiscount:
         return "REFERRAL_CODE_PERCENTAGE";
     }

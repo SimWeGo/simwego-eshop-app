@@ -1,6 +1,8 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/theme/my_theme_builder.dart";
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
 import "package:flutter/material.dart";
@@ -16,6 +18,7 @@ import "flutter_esim_helper.dart";
 import "fluttertoast_helper.dart";
 import "haptic_helper.dart";
 import "package_info_helper.dart";
+import "share_plus_helper.dart";
 // ignore_for_file: type=lint
 
 Widget createTestableWidget(Widget child) {
@@ -59,8 +62,12 @@ Future<void> setupTest() async {
   PackageInfoHelperTest.initPackageInfo();
   AppEnvironment.setupEnvironment();
   FluttertoastHelperTest.implementFluttertoast();
+  SharePlusHelper.implementSharePlus();
   FlutterEsimHelperTest.implementFlutterEsim();
-  when(locator<ReferralInfoService>().getReferralAmountAndCurrency).thenReturn("5 \$");
+  when(locator<ReferralInfoService>().getReferralAmountAndCurrency)
+      .thenReturn("5 \$");
+  when(locator<AppConfigurationService>().getLoginType)
+      .thenReturn(LoginType.email);
 }
 
 Future<void> tearDownTest() async {
@@ -73,6 +80,7 @@ Future<void> tearDownAllTest() async {
   PackageInfoHelperTest.deInitPackageInfo();
   FirebaseHelper.deInitFirebaseMock();
   FluttertoastHelperTest.deInitFluttertoast();
+  SharePlusHelper.deInitSharePlus();
   FlutterEsimHelperTest.deInitFlutterEsim();
 }
 

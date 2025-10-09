@@ -24,6 +24,7 @@ class LoginView extends StatelessWidget {
 
   static const String routeName = "LoginViewPage";
   final InAppRedirection? redirection;
+
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
@@ -151,10 +152,7 @@ class LoginView extends StatelessWidget {
                     },
                     themeColor: themeColor,
                     image: EnvironmentImages.loginMail.fullImagePath,
-                    title: AppEnvironment.appEnvironmentHelper.loginType ==
-                            LoginType.phoneNumber
-                        ? LocaleKeys.loginView_continueWithPhone.tr()
-                        : LocaleKeys.loginView_continueWithEmail.tr(),
+                    title: getContinueWithText(),
                     titleTextStyle: bodyBoldTextStyle(context: context),
                     textColor: mainDarkTextColor(context: context),
                     imageColor: Colors.black,
@@ -205,6 +203,16 @@ class LoginView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String getContinueWithText() {
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        return LocaleKeys.loginView_continueWithEmail.tr();
+      case LoginType.phoneNumber:
+      case LoginType.emailAndPhone:
+        return LocaleKeys.loginView_continueWithPhone.tr();
+    }
   }
 
   @override

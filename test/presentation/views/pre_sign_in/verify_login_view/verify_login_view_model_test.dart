@@ -1,4 +1,5 @@
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
+import "package:esim_open_source/data/remote/responses/auth/otp_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
@@ -130,12 +131,12 @@ Future<void> main() async {
 
     // Additional mocks are handled by locator_test.dart
 
-    viewModel = VerifyLoginViewModel(username: "test@example.com");
+    viewModel = VerifyLoginViewModel(email: "test@example.com");
   });
 
   group("VerifyLoginViewModel Tests", () {
     test("initializes with correct default values", () {
-      expect(viewModel.username, "test@example.com");
+      expect(viewModel.email, "test@example.com");
       expect(viewModel.isVerifyButtonEnabled, false);
       expect(viewModel.errorMessage, "");
       expect(viewModel.otpCount, 6);
@@ -145,11 +146,11 @@ Future<void> main() async {
       final InAppRedirection redirection = InAppRedirection.cashback();
       final VerifyLoginViewModel viewModelWithRedirection =
           VerifyLoginViewModel(
-        username: "test@example.com",
+        email: "test@example.com",
         redirection: redirection,
       );
 
-      expect(viewModelWithRedirection.username, "test@example.com");
+      expect(viewModelWithRedirection.email, "test@example.com");
       expect(viewModelWithRedirection.redirection, redirection);
     });
 
@@ -208,9 +209,9 @@ Future<void> main() async {
     });
 
     test("resendCodeButtonTapped calls resend API successfully", () async {
-      final Resource<EmptyResponse?> resendResponse =
-          Resource<EmptyResponse?>.success(
-        EmptyResponse(),
+      final Resource<OtpResponseModel?> resendResponse =
+          Resource<OtpResponseModel?>.success(
+            OtpResponseModel(),
         message: "OTP sent successfully",
       );
 
@@ -236,7 +237,7 @@ Future<void> main() async {
       final VerifyLoginViewModel viewModelWithNullUsername =
           VerifyLoginViewModel();
 
-      expect(viewModelWithNullUsername.username, null);
+      expect(viewModelWithNullUsername.email, null);
       expect(viewModelWithNullUsername.isVerifyButtonEnabled, false);
     });
 

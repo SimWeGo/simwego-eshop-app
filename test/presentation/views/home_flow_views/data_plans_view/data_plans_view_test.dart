@@ -4,12 +4,9 @@ import "package:esim_open_source/data/remote/responses/bundles/regions_response_
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view_model.dart";
 import "package:esim_open_source/presentation/widgets/custom_tab_view.dart";
-import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
 import "package:flutter/foundation.dart";
-import "package:flutter/material.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
 
@@ -217,7 +214,7 @@ void main() async {
 }
 
 List<CountryResponseModel> getMockCountries() {
-  return [
+  return <CountryResponseModel>[
     CountryResponseModel(
       id: "AFG",
       country: "Afghanistan",
@@ -240,7 +237,7 @@ List<CountryResponseModel> getMockCountries() {
 }
 
 List<RegionsResponseModel> getMockRegions() {
-  return [
+  return <RegionsResponseModel>[
     RegionsResponseModel(
       regionCode: "EU",
       regionName: "Europe",
@@ -253,18 +250,18 @@ List<RegionsResponseModel> getMockRegions() {
 }
 
 List<BundleResponseModel> getMockGlobalBundles() {
-  return [
+  return <BundleResponseModel>[
     BundleResponseModel(
       bundleCode: "global1",
       bundleName: "Global Plan 1GB",
       price: 5.99,
-      priceDisplay: "\$5.99",
+      priceDisplay: r"$5.99",
     ),
     BundleResponseModel(
       bundleCode: "global2",
       bundleName: "Global Plan 5GB",
       price: 19.99,
-      priceDisplay: "\$19.99",
+      priceDisplay: r"$19.99",
     ),
   ];
 }

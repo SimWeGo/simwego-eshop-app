@@ -58,6 +58,8 @@ void onViewModelReadyMock({
   when(locator<ReferralInfoService>().getReferralAmount).thenReturn("5");
   when(locator<ReferralInfoService>().getReferralAmountAndCurrency)
       .thenReturn("5 \$");
+  when(locator<ReferralInfoService>().getReferralMessage)
+      .thenReturn("Get \$5 when you join!");
   when(locator<UserAuthenticationService>().userFirstName).thenReturn("");
   when(locator<UserAuthenticationService>().userLastName).thenReturn("");
   when(locator<UserAuthenticationService>().isUserLoggedIn).thenReturn(true);
@@ -65,6 +67,8 @@ void onViewModelReadyMock({
       .thenReturn(true);
   when(locator<UserAuthenticationService>().userPhoneNumber)
       .thenReturn("expected");
+  when(locator<UserAuthenticationService>().referralCode)
+      .thenReturn("TEST123");
 
   // BottomSheetService mocks
   when(locator<BottomSheetService>().showCustomSheet(
@@ -132,6 +136,7 @@ void onViewModelReadyMock({
   ));
   when(mockApiAppRepository.getBannerStream()).thenReturn(bannerStream);
   when(mockApiAppRepository.resetBannerStream()).thenAnswer((_) async {});
+
 
   // Setup UserGuideDetailedViewModel mock
   // setupUserGuideDetailedViewModelMock();

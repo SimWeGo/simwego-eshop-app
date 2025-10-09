@@ -7,13 +7,12 @@ import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
-import "package:esim_open_source/presentation/enums/login_type.dart";
+import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/esim_base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_by_countries_view/bundles_by_countries_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
-import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:flutter/cupertino.dart";
 
 class BundlesListViewModel extends EsimBaseModel {
@@ -129,14 +128,10 @@ class BundlesListViewModel extends EsimBaseModel {
                 )
                 .toList()
             : <CountriesRequestModel>[];
-    // SheetResponse<EmptyBottomSheetResponse>? response
-    if ((!AppEnvironment.appEnvironmentHelper.enableGuestFlowPurchase ||
-            AppEnvironment.appEnvironmentHelper.loginType ==
-                LoginType.phoneNumber) &&
-        !isUserLoggedIn) {
-      await navigationService.navigateTo(
-        LoginView.routeName,
-        arguments: InAppRedirection.purchase(
+    if (!isUserLoggedIn &&
+        !AppEnvironment.appEnvironmentHelper.isGuestFlowPurchaseEnabled) {
+      await navigationService.navigateToLoginScreen(
+        redirection: InAppRedirection.purchase(
           PurchaseBundleBottomSheetArgs(
             regionRequestModel,
             countriesRequestModel,
@@ -178,7 +173,7 @@ class BundlesListViewModel extends EsimBaseModel {
         );
         _selectedCountryChips.add(country);
         notifyListeners();
-      } catch (e) {
+      } on Object catch (_) {
         // Handle case where no country is found
       }
     }

@@ -2,7 +2,6 @@ import "dart:async";
 import "dart:developer";
 
 import "package:esim_open_source/app/app.locator.dart";
-import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/app/configuration_response_model.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -61,22 +60,6 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
         ),
       );
 
-      //set default login type from api
-      String loginTypeString = getLoginType;
-      if (loginTypeString.isNotEmpty) {
-        LoginType? loginType = LoginType.fromValue(value: loginTypeString);
-        AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi = loginType;
-      }
-
-      //set default payment type from api
-      String paymentTypeString = getPaymentTypes;
-      if (paymentTypeString.isNotEmpty) {
-        List<PaymentType> paymentTypeList =
-            PaymentType.getListFromValues(paymentTypeString);
-        AppEnvironment.appEnvironmentHelper.setPaymentTypeListFromApi =
-            paymentTypeList;
-      }
-
       if (!(_appConfigCompleter?.isCompleted ?? true)) {
         _appConfigCompleter?.complete();
       }
@@ -131,24 +114,33 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
   }
 
   @override
-  String get getLoginType {
-    return _getConfigData(
+  LoginType? get getLoginType {
+    String loginTypeString = _getConfigData(
       key: ConfigurationResponseKeys.loginType,
     );
+    if (loginTypeString.isNotEmpty) {
+      return LoginType.fromValue(value: loginTypeString);
+    }
+    return null;
   }
 
   @override
-  String get getPaymentTypes {
-    return _getConfigData(
+  List<PaymentType>? get getPaymentTypes {
+    String paymentTypeString = _getConfigData(
       key: ConfigurationResponseKeys.paymentTypes,
     );
+    if (paymentTypeString.isNotEmpty) {
+      return PaymentType.getListFromValues(paymentTypeString);
+    }
+    return null;
   }
 
   String _getConfigData({required ConfigurationResponseKeys key}) {
     return _configData
             ?.firstWhere(
               (ConfigurationResponseModel element) =>
-                  element.key == key.configurationKeyValue,
+                  element.key?.toLowerCase() ==
+                  key.configurationKeyValue.toLowerCase(),
               orElse: () => ConfigurationResponseModel(key: "", value: ""),
             )
             .value ??

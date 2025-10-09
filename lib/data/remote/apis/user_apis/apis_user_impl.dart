@@ -146,14 +146,14 @@ class APIUserImpl extends APIService implements ApiUser {
 
   @override
   FutureOr<ResponseMain<EmptyResponse?>> getBundleLabel({
-    required String code,
+    required String iccid,
     required String label,
   }) async {
     Map<String, dynamic> params = <String, dynamic>{"label": label};
     ResponseMain<EmptyResponse?> response = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: UserApis.getBundleLabel,
-        paramIDs: <String>[code],
+        paramIDs: <String>[iccid],
         parameters: params,
       ),
       fromJson: EmptyResponse.fromJson,

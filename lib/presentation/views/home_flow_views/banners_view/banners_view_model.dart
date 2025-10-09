@@ -7,6 +7,7 @@ import "package:esim_open_source/domain/use_case/app/get_banner_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
+import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
@@ -14,14 +15,12 @@ import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banners_view_types.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
-import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
 import "package:esim_open_source/utils/value_stream.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class BannersViewModel extends BaseModel {
-
   //#endregion
   Timer? _timer;
   Timer? _buttonTimer;
@@ -29,6 +28,7 @@ class BannersViewModel extends BaseModel {
   PageController bannersPageController = PageController(viewportFraction: 0.9);
 
   List<BannerState> _bannersList = <BannerState>[];
+
   List<BannerState> get banners => _bannersList;
 
   Color? _textColor;
@@ -37,12 +37,14 @@ class BannersViewModel extends BaseModel {
   int get currentPage => _currentPage;
 
   Color? get textColor => _textColor;
+
   Color? get buttonColor => _buttonColor;
 
   //#endregion
 
   //#region UseCases
   final GetBannerUseCase getBannerUseCase = GetBannerUseCase(locator());
+
   //#endregion
 
   //#region Functions
@@ -53,8 +55,7 @@ class BannersViewModel extends BaseModel {
         getBannerUseCase.execute(NoParams());
 
     processBanners(bannerStream.currentValue);
-    bannerStream.stream
-        .listen(processBanners);
+    bannerStream.stream.listen(processBanners);
   }
 
   void processBanners(Resource<List<BannerResponseModel>?>? banners) {
@@ -135,10 +136,10 @@ class BannersViewModel extends BaseModel {
           );
           return;
         }
-        locator<NavigationService>().navigateTo(
-          LoginView.routeName,
-          arguments: InAppRedirection.referral(),
+        locator<NavigationService>().navigateToLoginScreen(
+          redirection: InAppRedirection.referral(),
         );
+
       case BannersViewTypes.cashBackRewards:
         if (locator<UserAuthenticationService>().isUserLoggedIn) {
           locator<NavigationService>().navigateTo(
@@ -147,9 +148,8 @@ class BannersViewModel extends BaseModel {
           );
           return;
         }
-        locator<NavigationService>().navigateTo(
-          LoginView.routeName,
-          arguments: InAppRedirection.cashback(),
+        locator<NavigationService>().navigateToLoginScreen(
+          redirection: InAppRedirection.cashback(),
         );
       case BannersViewTypes.none:
         break;

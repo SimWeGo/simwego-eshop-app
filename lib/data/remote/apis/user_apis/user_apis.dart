@@ -39,7 +39,7 @@ enum UserApis implements URlRequestBuilder {
       case UserApis.getBundleExists:
         return "/api/v1/user/bundle-exists";
       case UserApis.getBundleLabel:
-        return "/api/v1/user/bundle-label";
+        return "/api/v1/user/bundle-label-by-iccid";
       case UserApis.getMyEsims:
         return "/api/v1/user/my-esim";
       case UserApis.getMyEsimByIccID:

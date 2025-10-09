@@ -103,6 +103,7 @@ void main() {
             ResponseMain<EmptyResponse>.createErrorWithData(
           statusCode: 400,
           developerMessage: "Invalid device information",
+          title: "Invalid device information",
         );
 
         when(
@@ -262,6 +263,7 @@ void main() {
             ResponseMain<List<FaqResponse>>.createErrorWithData(
           statusCode: 500,
           developerMessage: "Failed to retrieve FAQs",
+          title: "Failed to retrieve FAQs",
         );
 
         when(mockApiApp.getFaq()).thenAnswer((_) async => responseMain);
@@ -353,6 +355,7 @@ void main() {
             ResponseMain<StringResponse>.createErrorWithData(
           statusCode: 422,
           developerMessage: "Invalid email format",
+          title: "Invalid email format",
         );
 
         when(
@@ -457,6 +460,7 @@ void main() {
             ResponseMain<DynamicPageResponse>.createErrorWithData(
           statusCode: 404,
           developerMessage: "About Us content not found",
+          title: "About Us content not found",
         );
 
         when(mockApiApp.getAboutUs()).thenAnswer((_) async => responseMain);
@@ -518,6 +522,7 @@ void main() {
             ResponseMain<DynamicPageResponse>.createErrorWithData(
           statusCode: 500,
           developerMessage: "Failed to load terms and conditions",
+          title: "Failed to load terms and conditions",
         );
 
         when(mockApiApp.getTermsConditions())
@@ -579,6 +584,7 @@ void main() {
             ResponseMain<List<ConfigurationResponseModel>>.createErrorWithData(
           statusCode: 403,
           developerMessage: "Access denied to configurations",
+          title: "Access denied to configurations",
         );
 
         when(mockApiApp.getConfigurations())
@@ -665,6 +671,7 @@ void main() {
             ResponseMain<List<CurrenciesResponseModel>>.createErrorWithData(
           statusCode: 502,
           developerMessage: "Currency service unavailable",
+          title: "Currency service unavailable",
         );
 
         when(mockApiApp.getCurrencies()).thenAnswer((_) async => responseMain);

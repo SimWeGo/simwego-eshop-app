@@ -49,6 +49,17 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
 
     List<PaymentType> paymentTypeList = AppEnvironment.appEnvironmentHelper
         .paymentTypeList(isUserLoggedIn: isUserLoggedIn);
+
+    final double price = item.price ?? 0;
+
+    // check if amount in wallet covers the bundle price
+    if (paymentTypeList.contains(PaymentType.wallet) &&
+        price > userAuthenticationService.walletAvailableBalance) {
+      paymentTypeList = paymentTypeList
+          .where((PaymentType element) => element != PaymentType.wallet)
+          .toList();
+    }
+
     if (paymentTypeList.isEmpty) {
       //no payment type available
       showToast(LocaleKeys.no_payment_method_available.tr());
@@ -170,7 +181,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     required BundleResponseModel item,
   }) async {
     String bundleCode = item.bundleCode ?? "";
-    double bundlePrice = item.price ?? 0.0;
+    // double bundlePrice = item.price ?? 0.0;
     String bundlePriceDisplay = item.priceDisplay ?? "";
     String bundleCurrency = item.currencyCode ?? "";
 

@@ -2,15 +2,17 @@ import "dart:async";
 
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
+import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
-import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:flutter/material.dart";
 import "package:package_info_plus/package_info_plus.dart";
 
 class ProfileViewModel extends BaseModel {
   String _appVersion = "";
+
   String get appVersion => _appVersion;
   String _buildNumber = "";
+
   String get buildNumber => _buildNumber;
 
   @override
@@ -31,14 +33,16 @@ class ProfileViewModel extends BaseModel {
   }
 
   Future<void> loginButtonTapped() async {
-    navigationService.navigateTo(LoginView.routeName);
+    navigationService.navigateToLoginScreen();
   }
 
   String getUserName() {
-    if (AppEnvironment.appEnvironmentHelper.loginType ==
-        LoginType.phoneNumber) {
-      return userMsisdn;
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        return userEmailAddress;
+      case LoginType.phoneNumber:
+      case LoginType.emailAndPhone:
+        return userMsisdn;
     }
-    return userEmailAddress;
   }
 }

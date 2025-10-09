@@ -8,14 +8,18 @@ import "package:esim_open_source/data/remote/responses/auth/auth_response_model.
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/auth/tmp_login_use_case.dart";
+import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/validate_promo_code_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/assign_user_bundle_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_bundle_exists_use_case.dart";
+import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
@@ -32,6 +36,7 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/order_status_enum.dart";
 import "package:esim_open_source/utils/payment_helper.dart";
 import "package:flutter/material.dart";
+import "package:phone_input/phone_input_package.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class BundleDetailBottomSheetViewModel extends BaseModel {
@@ -61,8 +66,12 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 
   BundleResponseModel? get bundle => _bundle;
 
+  PhoneController phoneController =
+      PhoneController(const PhoneNumber(isoCode: IsoCode.LB, nsn: ""));
+
   bool _isTermsChecked = false;
   bool _isLoginEnabled = false;
+  bool _isValidPhoneNumber = false;
 
   final TextEditingController _emailController = TextEditingController();
 
@@ -114,6 +123,17 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     return LocaleKeys.promoCodeView_cancelButtonText.tr();
   }
 
+  bool get showPhoneInput {
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        return false;
+      case LoginType.phoneNumber:
+        return true;
+      case LoginType.emailAndPhone:
+        return true;
+    }
+  }
+
   //#endregion
 
   //#region Functions
@@ -126,6 +146,15 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     if (_referralCode.isNotEmpty) {
       unawaited(validatePromoCode(_referralCode));
     }
+  }
+
+  void validateNumber({
+    required String code,
+    required String number,
+    required bool isValid,
+  }) {
+    _isValidPhoneNumber = isValid;
+    _validateForm();
   }
 
   void updateTermsSelections() {
@@ -151,9 +180,15 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   }
 
   void _validateForm() {
-    final String emailAddress = _emailController.text.trim();
-    _emailErrorMessage = _validateEmailAddress(emailAddress);
-    _isLoginEnabled = _emailErrorMessage == "" && isTermsChecked;
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        final String emailAddress = _emailController.text.trim();
+        _emailErrorMessage = _validateEmailAddress(emailAddress);
+        _isLoginEnabled = _emailErrorMessage == "" && isTermsChecked;
+      case LoginType.phoneNumber:
+      case LoginType.emailAndPhone:
+        _isLoginEnabled = _isValidPhoneNumber && isTermsChecked;
+    }
 
     notifyListeners();
   }
@@ -233,6 +268,37 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         paymentType: PaymentType.card,
       );
       return;
+    }
+
+    //refresh wallet in case wallet payment is allowed backend, if API fails remove wallet option from payment list
+    if (paymentTypeList.contains(PaymentType.wallet)) {
+      try {
+        Resource<AuthResponseModel?> response =
+            await GetUserInfoUseCase(locator<ApiAuthRepository>())
+                .execute(NoParams());
+
+        await handleResponse(
+          response,
+          onSuccess: (Resource<AuthResponseModel?> result) async {},
+          onFailure: (Resource<AuthResponseModel?> result) async {
+            paymentTypeList = paymentTypeList
+                .where((PaymentType element) => element != PaymentType.wallet)
+                .toList();
+          },
+        );
+      } on Object catch (_) {
+        paymentTypeList = paymentTypeList
+            .where((PaymentType element) => element != PaymentType.wallet)
+            .toList();
+      }
+    }
+
+    // check if amount in wallet covers the bundle price
+    if (paymentTypeList.contains(PaymentType.wallet) &&
+        price > userAuthenticationService.walletAvailableBalance) {
+      paymentTypeList = paymentTypeList
+          .where((PaymentType element) => element != PaymentType.wallet)
+          .toList();
     }
 
     if (paymentTypeList.isEmpty) {
@@ -458,7 +524,15 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   Future<String?> _getTemporaryToken() async {
     setViewState(ViewState.busy);
     Resource<AuthResponseModel?> response = await tmpLoginUseCase.execute(
-      TmpLoginParams(email: _emailController.text.trim()),
+      TmpLoginParams(
+        email:
+            (emailErrorMessage == "" && _emailController.text.trim().isNotEmpty)
+                ? _emailController.text.trim()
+                : null,
+        phone: _isValidPhoneNumber
+            ? "+${phoneController.value?.countryCode}${phoneController.value?.nsn}"
+            : null,
+      ),
     );
     setViewState(ViewState.idle);
     String? token;
@@ -557,5 +631,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       locator<LocalStorageService>().remove(LocalStorageKeys.referralCode),
     );
   }
+
 //#endregion
 }

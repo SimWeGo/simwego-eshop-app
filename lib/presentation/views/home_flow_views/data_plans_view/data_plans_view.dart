@@ -165,6 +165,7 @@ class DataPlansView extends StatelessWidget {
                 : BundlesListView(
                     showShimmer: viewModel.isBundleServicesBusy(),
                     bundles: viewModel.filteredCruiseBundles,
+                    hideSupportedCountries: true,
                     onBundleSelected:
                         (BundleResponseModel selectedBundle) async =>
                             viewModel.navigateToEsimDetail(selectedBundle),

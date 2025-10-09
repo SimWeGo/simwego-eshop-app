@@ -108,6 +108,7 @@ void main() {
             ResponseMain<DeviceInfoResponseModel>.createErrorWithData(
           statusCode: 400,
           developerMessage: "Invalid device information provided",
+          title: "Invalid device information provided",
         );
 
         when(
@@ -163,6 +164,7 @@ void main() {
             ResponseMain<DeviceInfoResponseModel>.createErrorWithData(
           statusCode: 500,
           developerMessage: "Internal server error",
+          title: "Internal server error",
         );
 
         when(
@@ -218,6 +220,7 @@ void main() {
             ResponseMain<DeviceInfoResponseModel>.createErrorWithData(
           statusCode: 401,
           developerMessage: "Unauthorized access",
+          title: "Unauthorized access",
         );
 
         when(

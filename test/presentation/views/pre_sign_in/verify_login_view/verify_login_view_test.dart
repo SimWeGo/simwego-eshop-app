@@ -62,7 +62,7 @@ Future<void> main() async {
     when(mockLocalStorageService.getString(any)).thenReturn("test_utm");
 
     // Create VerifyLoginViewModel instance for testing
-    locator<VerifyLoginViewModel>().username = "test@example.com";
+    locator<VerifyLoginViewModel>().email = "test@example.com";
   });
 
   testWidgets("renders correctly with state error not empty",
@@ -73,7 +73,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -89,7 +90,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -108,7 +110,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -126,7 +129,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -143,7 +147,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -162,7 +167,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
           redirection: testRedirection,
         ),
       ),
@@ -180,7 +186,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -203,7 +210,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -221,7 +229,8 @@ Future<void> main() async {
     await tester.pumpWidget(
       createTestableWidget(
         const VerifyLoginView(
-          username: "test@example.com",
+          email: "test@example.com",
+          phoneNumber: null,
         ),
       ),
     );
@@ -234,7 +243,8 @@ Future<void> main() async {
   testWidgets("debug properties", (WidgetTester tester) async {
     final InAppRedirection redirection = InAppRedirection.cashback();
     final VerifyLoginView widget = VerifyLoginView(
-      username: "test@example.com",
+      email: "test@example.com",
+      phoneNumber: null,
       redirection: redirection,
     );
 
@@ -244,7 +254,7 @@ Future<void> main() async {
     final List<DiagnosticsNode> props = builder.properties;
 
     final StringProperty usernameProp =
-        props.firstWhere((DiagnosticsNode p) => p.name == "emailAddress")
+        props.firstWhere((DiagnosticsNode p) => p.name == "email")
             as StringProperty;
     final DiagnosticsProperty<InAppRedirection?> redirectionProp =
         props.firstWhere((DiagnosticsNode p) => p.name == "redirection")

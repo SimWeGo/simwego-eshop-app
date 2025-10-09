@@ -10,6 +10,7 @@ import "package:esim_open_source/domain/repository/services/redirections_handler
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
+import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
@@ -23,7 +24,6 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
-import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
@@ -241,9 +241,7 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
 
         if (!locator<UserAuthenticationService>().isUserLoggedIn) {
           await Future<void>.delayed(const Duration(seconds: 1));
-          navigationService.navigateTo(
-            LoginView.routeName,
-          );
+          navigationService.navigateToLoginScreen();
         }
 
       case CountrySelected():
@@ -292,7 +290,7 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
   }) async {
     if (redirection.variant != null) {
       await bottomSheetService.showCustomSheet(
-        data: redirection.arguments,
+        data: redirection.arguments as PurchaseBundleBottomSheetArgs,
         enableDrag: false,
         isScrollControlled: true,
         variant: redirection.variant,
@@ -358,6 +356,7 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
       redirectionCategoryType: redirectionCategoryType,
     );
   }
+
 //#endregion
 
 //#region UI handling

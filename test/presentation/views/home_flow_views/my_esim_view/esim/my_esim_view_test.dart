@@ -159,7 +159,7 @@ Future<void> main() async {
       expect(viewModel.state.currentESimList.length, equals(1));
 
       // Test onEditName callback directly through view model
-      await viewModel.onEditNameClick(index: 0);
+      await viewModel.onEditNameClick(iccid: "test-iccid");
       verify(mockBottomSheetService.showCustomSheet(
         variant: anyNamed("variant"),
         isScrollControlled: anyNamed("isScrollControlled"),
@@ -175,7 +175,7 @@ Future<void> main() async {
       ),).thenAnswer((_) async => null);
 
       // Test onTopUpClick callback
-      await viewModel.onTopUpClick(index: 0);
+      await viewModel.onTopUpClick(iccid: "test-iccid");
       verify(mockBottomSheetService.showCustomSheet(
         variant: anyNamed("variant"),
         isScrollControlled: anyNamed("isScrollControlled"),
@@ -191,7 +191,7 @@ Future<void> main() async {
       ),).thenAnswer((_) async => null);
 
       // Test onConsumptionClick callback
-      await viewModel.onConsumptionClick(index: 0);
+      await viewModel.onConsumptionClick(iccid: "test-iccid");
       verify(mockBottomSheetService.showCustomSheet(
         variant: anyNamed("variant"),
         isScrollControlled: anyNamed("isScrollControlled"),
@@ -207,7 +207,7 @@ Future<void> main() async {
       ),).thenAnswer((_) async => null);
 
       // Test onQrCodeClick callback
-      await viewModel.onQrCodeClick(index: 0);
+      await viewModel.onQrCodeClick(iccid: "test-iccid");
       verify(mockBottomSheetService.showCustomSheet(
         variant: anyNamed("variant"),
         isScrollControlled: anyNamed("isScrollControlled"),
@@ -215,7 +215,7 @@ Future<void> main() async {
       ),).called(1);
 
       // Test onInstallClick callback
-      await viewModel.onInstallClick(index: 0);
+      await viewModel.onInstallClick(iccid: "test-iccid");
       // Just verify no exception was thrown
       expect(tester.takeException(), isNull);
     });
@@ -286,7 +286,7 @@ Future<void> main() async {
       expect(viewModel.state.currentESimList.length, equals(1));
 
       // Test callbacks directly to ensure coverage of callback logic
-      await viewModel.onEditNameClick(index: 0);
+      await viewModel.onEditNameClick(iccid: "test-iccid");
       verify(mockBottomSheetService.showCustomSheet(
         variant: anyNamed("variant"),
         isScrollControlled: anyNamed("isScrollControlled"),

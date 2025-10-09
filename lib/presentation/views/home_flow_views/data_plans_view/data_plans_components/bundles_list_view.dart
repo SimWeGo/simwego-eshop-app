@@ -13,6 +13,7 @@ class BundlesListView extends StatelessWidget {
     required this.bundles,
     required this.showShimmer,
     required this.onBundleSelected,
+    this.hideSupportedCountries = false,
     this.lastItemBottomPadding = 0,
     super.key,
   });
@@ -21,6 +22,7 @@ class BundlesListView extends StatelessWidget {
   final List<BundleResponseModel> bundles;
   final void Function(BundleResponseModel selectedBundle) onBundleSelected;
   final int lastItemBottomPadding;
+  final bool hideSupportedCountries;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +42,9 @@ class BundlesListView extends StatelessWidget {
           data: bundles[index].gprsLimitDisplay ?? "",
           showUnlimitedData: bundles[index].unlimited ?? false,
           validFor: bundles[index].validityDisplay ?? "",
-          supportedCountries:
-              bundles[index].countries ?? <CountryResponseModel>[],
+          supportedCountries: hideSupportedCountries
+              ? <CountryResponseModel>[]
+              : bundles[index].countries ?? <CountryResponseModel>[],
           priceButtonText: LocaleKeys.bundleInfo_priceText.tr(
             namedArgs: <String, String>{
               "price": bundles[index].priceDisplay ?? "",
@@ -69,6 +72,7 @@ class BundlesListView extends StatelessWidget {
       )
       ..add(IterableProperty<BundleResponseModel>("bundles", bundles))
       ..add(DiagnosticsProperty<bool>("showShimmer", showShimmer))
-      ..add(IntProperty("lastItemBottomPadding", lastItemBottomPadding));
+      ..add(IntProperty("lastItemBottomPadding", lastItemBottomPadding))
+      ..add(DiagnosticsProperty<bool>("hideSupportedCountries", hideSupportedCountries));
   }
 }

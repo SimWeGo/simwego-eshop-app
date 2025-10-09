@@ -9,6 +9,7 @@ import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
+import "package:esim_open_source/utils/date_time_utils.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class MyESimBundleBottomSheetViewModel extends BaseModel {
@@ -74,11 +75,16 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
         String dataUsedDisplay = result.data?.dataUsedDisplay ?? "";
         double percentage = (dataUsed / dataAllocated) * 100;
         percentage = double.parse(percentage.toStringAsFixed(2));
+        String expiryDate = DateTimeUtils.formatStringToDate(
+          dateString: result.data?.expiryDate ?? "",
+          format: DateTimeUtils.ddMmYyyy,
+        );
         _state
           ..percentageUI = "$percentage %"
           ..consumption = percentage / 100
           ..consumptionText = "$dataUsedDisplay of $dataAllocatedDisplay"
-          ..consumptionLoading = false;
+          ..consumptionLoading = false
+          ..expiryDate = expiryDate;
       },
       onFailure: (Resource<UserBundleConsumptionResponse?> result) async {
         _state
@@ -110,4 +116,5 @@ class MyESimBundleBottomState {
   double consumption = 0;
   bool consumptionLoading = true;
   bool showTopUP = true;
+  String? expiryDate;
 }

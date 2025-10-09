@@ -13,8 +13,8 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_notifications_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
-import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
+import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
@@ -22,7 +22,6 @@ import "package:esim_open_source/presentation/views/home_flow_views/banners_view
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_list_screen.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/notifications_view/notifications_view.dart";
-import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/utils/display_message_helper.dart";
 import "package:esim_open_source/utils/value_stream.dart";
 import "package:flutter/material.dart";
@@ -123,7 +122,7 @@ class DataPlansViewModel extends BaseModel {
   }
 
   Future<void> loginButtonTapped() async {
-    await navigationService.navigateTo(LoginView.routeName);
+    await navigationService.navigateToLoginScreen();
   }
 
   Future<void> notificationsButtonTapped() async {
@@ -272,13 +271,10 @@ class DataPlansViewModel extends BaseModel {
   }
 
   Future<void> navigateToEsimDetail(BundleResponseModel bundle) async {
-    if ((!AppEnvironment.appEnvironmentHelper.enableGuestFlowPurchase ||
-            AppEnvironment.appEnvironmentHelper.loginType ==
-                LoginType.phoneNumber) &&
-        !isUserLoggedIn) {
-      await navigationService.navigateTo(
-        LoginView.routeName,
-        arguments: InAppRedirection.purchase(
+    if (!isUserLoggedIn &&
+        !AppEnvironment.appEnvironmentHelper.isGuestFlowPurchaseEnabled) {
+      await navigationService.navigateToLoginScreen(
+        redirection: InAppRedirection.purchase(
           PurchaseBundleBottomSheetArgs(
             null,
             null,

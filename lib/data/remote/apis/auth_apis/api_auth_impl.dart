@@ -5,6 +5,7 @@ import "package:esim_open_source/data/remote/apis/auth_apis/auth_apis.dart";
 import "package:esim_open_source/data/remote/auth_reload_interface.dart";
 import "package:esim_open_source/data/remote/http_request.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
+import "package:esim_open_source/data/remote/responses/auth/otp_response_model.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/unauthorized_access_interface.dart";
@@ -26,7 +27,7 @@ class APIAuthImpl extends APIService implements APIAuth {
   void _initialise() {}
 
   @override
-  FutureOr<ResponseMain<EmptyResponse?>> login({
+  FutureOr<ResponseMain<OtpResponseModel?>> login({
     required String? email,
     required String? phoneNumber,
   }) async {
@@ -35,12 +36,12 @@ class APIAuthImpl extends APIService implements APIAuth {
       if (phoneNumber != null) "phone": phoneNumber,
     };
 
-    ResponseMain<EmptyResponse?> loginResponse = await sendRequest(
+    ResponseMain<OtpResponseModel?> loginResponse = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: AuthApis.login,
         parameters: params,
       ),
-      fromJson: EmptyResponse.fromJson,
+      fromJson: OtpResponseModel.fromJson,
     );
 
     return loginResponse;
@@ -119,14 +120,14 @@ class APIAuthImpl extends APIService implements APIAuth {
   @override
   FutureOr<ResponseMain<AuthResponseModel>> updateUserInfo({
     required String? email,
-    required String msisdn,
+    required String? msisdn,
     required String firstName,
     required String lastName,
     required bool isNewsletterSubscribed,
   }) async {
     Map<String, dynamic> params = <String, dynamic>{
       if (email != null) "email": email,
-      "msisdn": msisdn,
+      if (msisdn != null) "msisdn": msisdn,
       "first_name": firstName,
       "last_name": lastName,
       "should_notify": isNewsletterSubscribed,
@@ -206,10 +207,12 @@ class APIAuthImpl extends APIService implements APIAuth {
 
   @override
   FutureOr<ResponseMain<AuthResponseModel?>> tmpLogin({
-    required String email,
+    required String? email,
+    required String? phone,
   }) async {
     Map<String, String> params = <String, String>{
-      "email": email,
+      if (email != null) "email": email,
+      if (phone != null) "phone": phone,
     };
 
     ResponseMain<AuthResponseModel?> tmpLoginResponse = await sendRequest(

@@ -1,4 +1,6 @@
+import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_theme.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
 
@@ -62,19 +64,20 @@ class AppEnvironmentHelper {
   bool enableFacebookSignIn;
 
   //Login type
-  LoginType? _apiLoginType;
-
-  set setLoginTypeFromApi(LoginType? apiLoginType) {
-    _apiLoginType = apiLoginType;
-  }
+  LoginType? get _apiLoginType =>
+      locator<AppConfigurationService>().getLoginType;
 
   LoginType get loginType => _apiLoginType ?? defaultLoginType;
 
   //Payment type
-  List<PaymentType>? _apiPaymentTypeList;
+  List<PaymentType>? get _apiPaymentTypeList =>
+      locator<AppConfigurationService>().getPaymentTypes;
 
-  set setPaymentTypeListFromApi(List<PaymentType>? apiPaymentTypeList) {
-    _apiPaymentTypeList = apiPaymentTypeList;
+  // Allow Guest Flow Purchase
+  bool get isGuestFlowPurchaseEnabled {
+    return enableGuestFlowPurchase &&
+        !(loginType == LoginType.phoneNumber ||
+            loginType == LoginType.emailAndPhone);
   }
 
   List<PaymentType> paymentTypeList({required bool isUserLoggedIn}) {

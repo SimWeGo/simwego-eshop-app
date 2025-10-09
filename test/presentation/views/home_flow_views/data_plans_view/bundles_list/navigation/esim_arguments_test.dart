@@ -7,25 +7,18 @@ Future<void> main() async {
   await prepareTest();
 
   test("basic coverage", () {
-    final EsimArguments args = const EsimArguments(id: "1", name: "test", type: "region");
-    args.id;
-    args.name;
-    args.type;
-    args.copyWith();
-    args.copyWith(code: "2");
-    args.copyWith(name: "test2");
-    args.copyWith(type: "country");
-    args.copyWith(code: "3", name: "test3", type: "country");
-    
-    EsimArgumentType.region;
-    EsimArgumentType.country;
+    const EsimArguments(id: "1", name: "test", type: "region")
+    ..copyWith()
+    ..copyWith(code: "2")
+    ..copyWith(name: "test2")
+    ..copyWith(type: "country")
+    ..copyWith(code: "3", name: "test3", type: "country");
+
     
     // Test different types
-    const EsimArguments regionArgs = EsimArguments(id: "r1", name: "Region", type: EsimArgumentType.region);
-    const EsimArguments countryArgs = EsimArguments(id: "c1", name: "Country", type: EsimArgumentType.country);
-    
-    regionArgs.id;
-    countryArgs.id;
+    const EsimArguments(id: "r1", name: "Region", type: EsimArgumentType.region);
+    const EsimArguments(id: "c1", name: "Country", type: EsimArgumentType.country);
+
   });
 
   Future<void> tearDown() async {

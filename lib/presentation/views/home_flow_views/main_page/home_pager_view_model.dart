@@ -15,9 +15,13 @@ class HomePagerViewModel extends MainBaseModel {
   void onViewModelReady() {
     super.onViewModelReady();
 
-    if (redirection != null) {
-      redirectionsHandlerService.redirectToRoute(redirection: redirection!);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future<void>.delayed(
+          const Duration(milliseconds: 500),); // Add your desired delay
+      if (redirection != null) {
+        redirectionsHandlerService.redirectToRoute(redirection: redirection!);
+      }
+    });
   }
 
   set tabController(LockableTabController controller) {

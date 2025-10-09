@@ -20,6 +20,7 @@ class UpdateUserInfoParams {
     required this.lastName,
     required this.isNewsletterSubscribed,
   });
+
   final String email;
   final String msisdn;
   final String firstName;
@@ -30,6 +31,7 @@ class UpdateUserInfoParams {
 class UpdateUserInfoUseCase
     implements UseCase<Resource<AuthResponseModel>, UpdateUserInfoParams> {
   UpdateUserInfoUseCase(this.repository);
+
   final ApiAuthRepository repository;
 
   final UserAuthenticationService userAuthenticationService =
@@ -44,11 +46,29 @@ class UpdateUserInfoUseCase
   FutureOr<Resource<AuthResponseModel>> execute(
     UpdateUserInfoParams params,
   ) async {
+    String? email;
+
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+      case LoginType.emailAndPhone:
+        email = null;
+      case LoginType.phoneNumber:
+        email = params.email;
+    }
+
+    String? msisdn;
+
+    switch (AppEnvironment.appEnvironmentHelper.loginType) {
+      case LoginType.email:
+        msisdn = params.msisdn;
+      case LoginType.emailAndPhone:
+      case LoginType.phoneNumber:
+        msisdn = null;
+    }
+
     Resource<AuthResponseModel> response = await repository.updateUserInfo(
-      email: AppEnvironment.appEnvironmentHelper.loginType == LoginType.email
-          ? params.email
-          : null,
-      msisdn: params.msisdn,
+      email: email,
+      msisdn: msisdn,
       firstName: params.firstName,
       lastName: params.lastName,
       isNewsletterSubscribed: params.isNewsletterSubscribed,

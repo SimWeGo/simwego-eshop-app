@@ -64,8 +64,20 @@ class MyESimViewModel extends BaseModel {
     unawaited(navigationService.navigateTo(NotificationsView.routeName));
   }
 
-  Future<void> onTopUpClick({required int index}) async {
-    PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+  PurchaseEsimBundleResponseModel? _getEsimBundleByICCID(String iccid){
+    PurchaseEsimBundleResponseModel? selectedItem;
+    selectedItem = _state.currentESimList.where((PurchaseEsimBundleResponseModel item) => item.iccid == iccid).firstOrNull;
+    selectedItem ??= _state.expiredESimList.where((PurchaseEsimBundleResponseModel item) => item.iccid == iccid).firstOrNull;
+    return selectedItem;
+  }
+
+  Future<void> onTopUpClick({required String iccid}) async {
+    PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
+
+    if(item == null) {
+      return;
+    }
+
     SheetResponse<MainBottomSheetResponse>? sheetResponse =
         await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
@@ -91,8 +103,13 @@ class MyESimViewModel extends BaseModel {
     }
   }
 
-  Future<void> onConsumptionClick({required int index}) async {
-    PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+  Future<void> onConsumptionClick({required String iccid}) async {
+    PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
+
+    if(item == null) {
+      return;
+    }
+
     SheetResponse<MainBottomSheetResponse>? sheetResponse =
         await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
@@ -106,12 +123,17 @@ class MyESimViewModel extends BaseModel {
 
     if (!(sheetResponse?.data?.canceled ?? true) &&
         sheetResponse?.data?.tag == "top-up") {
-      onTopUpClick(index: index);
+      onTopUpClick(iccid: iccid);
     }
   }
 
-  Future<void> onQrCodeClick({required int index}) async {
-    PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+  Future<void> onQrCodeClick({required String iccid}) async {
+    PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
+
+    if(item == null) {
+      return;
+    }
+
     await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
       variant: BottomSheetType.bundleQrCode,
@@ -123,9 +145,14 @@ class MyESimViewModel extends BaseModel {
     );
   }
 
-  Future<void> onInstallClick({required int index}) async {
+  Future<void> onInstallClick({required String iccid}) async {
     try {
-      PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+      PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
+
+      if(item == null) {
+        return;
+      }
+
       if (Platform.isAndroid) {
         // unawaited(
         //TODO MAHDI add SHAExist from API when it comes
@@ -150,8 +177,13 @@ class MyESimViewModel extends BaseModel {
     }
   }
 
-  Future<void> onEditNameClick({required int index}) async {
-    PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+  Future<void> onEditNameClick({required String iccid}) async {
+    PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
+
+    if(item == null) {
+      return;
+    }
+
     SheetResponse<MainBottomSheetResponse>? sheetResponse =
         await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
@@ -163,7 +195,7 @@ class MyESimViewModel extends BaseModel {
     if (sheetResponse?.data?.canceled == false &&
         (sheetResponse?.data?.tag ?? "").isNotEmpty) {
       _changeBundleName(
-        code: item.bundleCode ?? "",
+        iccid: item.iccid ?? "",
         label: sheetResponse?.data?.tag ?? "",
       );
     }
@@ -177,11 +209,16 @@ class MyESimViewModel extends BaseModel {
     );
   }
 
-  Future<void> onCurrentBundleClick({required int index}) async {
+  Future<void> onCurrentBundleClick({required String iccid}) async {
     if (isBusy) {
       return;
     }
-    PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+    PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
+
+    if(item == null) {
+      return;
+    }
+
     SheetResponse<MainBottomSheetResponse>? sheetResponse =
         await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
@@ -193,16 +230,21 @@ class MyESimViewModel extends BaseModel {
     if (!(sheetResponse?.data?.canceled ?? false)) {
       String tag = sheetResponse?.data?.tag ?? "";
       if (tag == "top_up") {
-        onTopUpClick(index: index);
+        onTopUpClick(iccid: iccid);
       }
     }
   }
 
-  Future<void> onExpiredBundleClick({required int index}) async {
+  Future<void> onExpiredBundleClick({required String iccid}) async {
     if (isBusy) {
       return;
     }
-    PurchaseEsimBundleResponseModel item = _state.expiredESimList[index];
+    PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
+
+    if(item == null) {
+      return;
+    }
+
     SheetResponse<MainBottomSheetResponse>? sheetResponse =
         await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
@@ -214,7 +256,7 @@ class MyESimViewModel extends BaseModel {
     if (!(sheetResponse?.data?.canceled ?? false)) {
       String tag = sheetResponse?.data?.tag ?? "";
       if (tag == "top_up") {
-        onTopUpClick(index: index);
+        onTopUpClick(iccid: iccid);
       }
     }
   }
@@ -323,13 +365,13 @@ class MyESimViewModel extends BaseModel {
   }
 
   Future<void> _changeBundleName({
-    required String code,
+    required String iccid,
     required String label,
   }) async {
     setViewState(ViewState.busy);
     Resource<EmptyResponse?> response = await getBundleLabelUseCase.execute(
       BundleLabelParams(
-        code: code,
+        iccid: iccid,
         label: label,
       ),
     );

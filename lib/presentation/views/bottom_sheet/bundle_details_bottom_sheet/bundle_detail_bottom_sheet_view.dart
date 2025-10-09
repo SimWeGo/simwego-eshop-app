@@ -3,6 +3,7 @@ import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
+import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -16,6 +17,7 @@ import "package:esim_open_source/presentation/widgets/bundle_validity_view.dart"
 import "package:esim_open_source/presentation/widgets/divider_line.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
+import "package:esim_open_source/presentation/widgets/my_phone_input.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/presentation/widgets/supported_countries_card.dart";
 import "package:esim_open_source/presentation/widgets/unlimited_data_widget.dart";
@@ -159,26 +161,66 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                               horizontal: 5,
                               child: Column(
                                 children: <Widget>[
-                                  MainInputField.formField(
-                                    textFieldHeight: 50,
-                                    themeColor: themeColor,
-                                    labelTitleText: LocaleKeys
-                                        .continueWithEmailView_emailTitleField
-                                        .tr(),
-                                    hintText: LocaleKeys
-                                        .continueWithEmailView_emailPlaceholder
-                                        .tr(),
-                                    controller: viewModel.emailController,
-                                    textInputType: TextInputType.emailAddress,
-                                    errorMessage: viewModel.emailErrorMessage,
-                                    backGroundColor:
-                                        whiteBackGroundColor(context: context),
-                                    labelStyle: bodyNormalTextStyle(
-                                      context: context,
-                                      fontColor:
-                                          secondaryTextColor(context: context),
-                                    ),
-                                  ),
+                                  viewModel.showPhoneInput
+                                      ? Column(
+                                          children: <Widget>[
+                                            PaddingWidget.applySymmetricPadding(
+                                              vertical: 5,
+                                              child: Text(
+                                                LocaleKeys
+                                                    .phoneInput_placeHolder
+                                                    .tr(),
+                                                style:
+                                                    captionOneMediumTextStyle(
+                                                  context: context,
+                                                  fontColor: secondaryTextColor(
+                                                    context: context,
+                                                  ),
+                                                ),
+                                              ).textSupportsRTL(context),
+                                            ),
+                                            MyPhoneInput(
+                                              onChanged: (
+                                                String code,
+                                                String phoneNumber, {
+                                                required bool isValid,
+                                              }) {
+                                                viewModel.validateNumber(
+                                                  code: code,
+                                                  number: phoneNumber,
+                                                  isValid: isValid,
+                                                );
+                                              },
+                                              phoneController:
+                                                  viewModel.phoneController,
+                                              validateRequired: true,
+                                            ),
+                                          ],
+                                        )
+                                      : MainInputField.formField(
+                                          textFieldHeight: 50,
+                                          themeColor: themeColor,
+                                          labelTitleText: LocaleKeys
+                                              .continueWithEmailView_emailTitleField
+                                              .tr(),
+                                          hintText: LocaleKeys
+                                              .continueWithEmailView_emailPlaceholder
+                                              .tr(),
+                                          controller: viewModel.emailController,
+                                          textInputType:
+                                              TextInputType.emailAddress,
+                                          errorMessage:
+                                              viewModel.emailErrorMessage,
+                                          backGroundColor: whiteBackGroundColor(
+                                            context: context,
+                                          ),
+                                          labelStyle: bodyNormalTextStyle(
+                                            context: context,
+                                            fontColor: secondaryTextColor(
+                                              context: context,
+                                            ),
+                                          ),
+                                        ),
                                   GestureDetector(
                                     onTap: () {
                                       viewModel.updateTermsSelections();

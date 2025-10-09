@@ -131,29 +131,29 @@ Future<void> main() async {
       // Test that all properties are included
       expect(
           props.any((DiagnosticsNode prop) => prop.name == "priceButtonText"),
-          isTrue);
+          isTrue,);
       expect(props.any((DiagnosticsNode prop) => prop.name == "title"), isTrue);
       expect(props.any((DiagnosticsNode prop) => prop.name == "data"), isTrue);
       expect(
-          props.any((DiagnosticsNode prop) => prop.name == "validFor"), isTrue);
+          props.any((DiagnosticsNode prop) => prop.name == "validFor"), isTrue,);
       expect(
           props
               .any((DiagnosticsNode prop) => prop.name == "supportedCountries"),
-          isTrue);
+          isTrue,);
       expect(
           props
               .any((DiagnosticsNode prop) => prop.name == "availableCountries"),
-          isTrue);
+          isTrue,);
       expect(props.any((DiagnosticsNode prop) => prop.name == "showArrow"),
-          isTrue);
+          isTrue,);
       expect(
           props
               .any((DiagnosticsNode prop) => prop.name == "onPriceButtonClick"),
-          isTrue);
+          isTrue,);
       expect(props.any((DiagnosticsNode prop) => prop.name == "icon"), isTrue);
       expect(
           props.any((DiagnosticsNode prop) => prop.name == "showUnlimitedData"),
-          isTrue);
+          isTrue,);
     });
 
     tearDown(() async {

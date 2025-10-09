@@ -36,6 +36,7 @@ Future<void> main() async {
         ),
       );
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 1000));
     });
 
     test("debug properties with redirection", () {

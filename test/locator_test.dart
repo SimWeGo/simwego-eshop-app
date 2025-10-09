@@ -13,6 +13,7 @@ import "package:esim_open_source/domain/repository/services/analytics_service.da
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
+import "package:esim_open_source/domain/repository/services/dynamic_linking_service.dart";
 import "package:esim_open_source/domain/repository/services/environment_service.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -26,7 +27,6 @@ import "package:esim_open_source/domain/repository/services/social_login_service
 import "package:esim_open_source/domain/use_case/app/get_about_us_use_case.dart";
 import "package:esim_open_source/domain/use_case/app/get_banner_use_case.dart";
 import "package:esim_open_source/domain/use_case/app/get_terms_and_condition_use_case.dart";
-import "package:esim_open_source/domain/use_case/user/get_order_history_pagination_use_case.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
@@ -72,6 +72,7 @@ import "locator_test.mocks.dart";
   NavigationRouter,
   CustomRouteObserver,
   DeviceInfoService,
+  DynamicLinkingService,
   PushNotificationService,
   SocialLoginService,
   PaymentService,
@@ -96,7 +97,6 @@ import "locator_test.mocks.dart";
   GetAboutUsUseCase,
   GetBannerUseCase,
   GetTermsAndConditionUseCase,
-  GetOrderHistoryPaginationUseCase,
   NavigationService,
   DialogService,
   SnackbarService,
@@ -156,6 +156,7 @@ Future<void> setupTestLocator() async {
 Future<void> appServicesModule() async {
   locator
     ..registerLazySingleton<DeviceInfoService>(MockDeviceInfoService.new)
+    ..registerLazySingleton<DynamicLinkingService>(MockDynamicLinkingService.new)
     ..registerLazySingleton<PushNotificationService>(
       MockPushNotificationService.new,
     )
@@ -211,9 +212,9 @@ Future<void> appAPIServicesModule() async {
     ..registerLazySingleton<GetTermsAndConditionUseCase>(
       MockGetTermsAndConditionUseCase.new,
     )
-    ..registerLazySingleton<GetOrderHistoryPaginationUseCase>(
-      MockGetOrderHistoryPaginationUseCase.new,
-    )
+    // ..registerLazySingleton<GetOrderHistoryPaginationUseCase>(
+    //   MockGetOrderHistoryPaginationUseCase.new,
+    // )
     ..registerLazySingleton<ApiDeviceRepository>(MockApiDeviceRepository.new)
     ..registerLazySingleton<APIPromotion>(MockAPIPromotion.new)
     ..registerLazySingleton<ApiPromotionRepository>(

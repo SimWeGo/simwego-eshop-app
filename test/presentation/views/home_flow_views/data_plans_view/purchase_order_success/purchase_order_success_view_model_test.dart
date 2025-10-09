@@ -42,8 +42,8 @@ Future<void> main() async {
     });
 
     test("copyToClipboard does nothing when viewModel is busy", () async {
-      viewModel.purchaseESimBundle = null;
-      viewModel.setBusy(true);
+      viewModel..purchaseESimBundle = null
+      ..setBusy(true);
 
       // Should not throw or call any services when busy
       await viewModel.copyToClipboard("test text");
@@ -53,8 +53,8 @@ Future<void> main() async {
     });
 
     test("copyToClipboard works when viewModel is not busy", () async {
-      viewModel.purchaseESimBundle = null;
-      viewModel.setBusy(false);
+      viewModel..purchaseESimBundle = null
+      ..setBusy(false);
 
       // Test that it doesn't throw
       await viewModel.copyToClipboard("test text");
@@ -69,15 +69,15 @@ Future<void> main() async {
         activationCode: "share-test-code",
       );
 
-      viewModel.purchaseESimBundle = testBundle;
-      viewModel.onViewModelReady();
+      viewModel..purchaseESimBundle = testBundle
+      ..onViewModelReady();
 
       await Future<void>.delayed(const Duration(milliseconds: 50));
 
       // Mock the image capture to avoid actual file operations
       try {
         await viewModel.onShareClick();
-      } catch (e) {
+      } on Object catch(_) {
         // Expected to fail in test environment due to file system operations
       }
     });
@@ -108,8 +108,8 @@ Future<void> main() async {
         activationCode: "install-test-code",
       );
 
-      viewModel.purchaseESimBundle = testBundle;
-      viewModel.onViewModelReady();
+      viewModel..purchaseESimBundle = testBundle
+      ..onViewModelReady();
 
       await Future<void>.delayed(const Duration(milliseconds: 50));
 
@@ -143,15 +143,17 @@ Future<void> main() async {
         activationCode: "install-test-code",
       );
 
-      viewModel.purchaseESimBundle = testBundle;
-      viewModel.onViewModelReady();
+      viewModel..purchaseESimBundle = testBundle
+      ..onViewModelReady();
 
       await Future<void>.delayed(const Duration(milliseconds: 50));
 
       when(locator<EnvironmentService>().isAndroid).thenReturn(true);
       try {
         await viewModel.onDownloadClick();
-      } catch (e) {}
+      } on Object catch (_) {
+
+      }
     });
 
     test("onInstallClick calls correct platform method for iOS", () async {
@@ -161,8 +163,8 @@ Future<void> main() async {
         activationCode: "install-test-code",
       );
 
-      viewModel.purchaseESimBundle = testBundle;
-      viewModel.onViewModelReady();
+      viewModel..purchaseESimBundle = testBundle
+      ..onViewModelReady();
 
       await Future<void>.delayed(const Duration(milliseconds: 50));
 
@@ -291,9 +293,9 @@ Future<void> main() async {
         activationCode: "ready-code",
       );
 
-      viewModel.purchaseESimBundle = testBundle;
+      viewModel..purchaseESimBundle = testBundle
 
-      viewModel.onViewModelReady();
+      ..onViewModelReady();
 
       // Wait for async completion
       await Future<void>.delayed(const Duration(milliseconds: 50));
@@ -328,9 +330,9 @@ Future<void> main() async {
 
   group("PurchaseOrderSuccessState Tests", () {
     test("qrCodeValue formats correctly with different values", () {
-      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState();
-      state.smDpAddress = "formatted-test-smdp";
-      state.activationCode = "formatted-test-code";
+      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState()
+      ..smDpAddress = "formatted-test-smdp"
+      ..activationCode = "formatted-test-code";
 
       expect(state.qrCodeValue,
           equals(r"LPA:1$formatted-test-smdp$formatted-test-code"),);
@@ -343,16 +345,16 @@ Future<void> main() async {
     });
 
     test("qrCodeValue with partial empty values", () {
-      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState();
+      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState()
 
       // Test with empty smdpAddress
-      state.smDpAddress = "";
-      state.activationCode = "partial-code";
+      ..smDpAddress = ""
+      ..activationCode = "partial-code";
       expect(state.qrCodeValue, equals(r"LPA:1$$partial-code"));
 
       // Test with empty activationCode
-      state.smDpAddress = "partial-smdp";
-      state.activationCode = "";
+      state..smDpAddress = "partial-smdp"
+      ..activationCode = "";
       expect(state.qrCodeValue, equals(r"LPA:1$partial-smdp$"));
     });
 
@@ -367,10 +369,10 @@ Future<void> main() async {
     });
 
     test("state properties can be modified independently", () {
-      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState();
+      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState()
 
       // Test modifying smDpAddress only
-      state.smDpAddress = "only-smdp-modified";
+      ..smDpAddress = "only-smdp-modified";
       expect(state.smDpAddress, equals("only-smdp-modified"));
       expect(state.activationCode, equals(""));
 
@@ -401,9 +403,9 @@ Future<void> main() async {
     });
 
     test("state can handle special characters in values", () {
-      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState();
-      state.smDpAddress = r"smdp-with-special-chars!@#$%^&*()";
-      state.activationCode = "code-with-special-chars{}[]|\\:;\"'<>?,./";
+      final PurchaseOrderSuccessState state = PurchaseOrderSuccessState()
+      ..smDpAddress = r"smdp-with-special-chars!@#$%^&*()"
+      ..activationCode = "code-with-special-chars{}[]|\\:;\"'<>?,./";
 
       expect(state.qrCodeValue, contains("smdp-with-special-chars!@#"));
       expect(state.qrCodeValue, contains("code-with-special-chars{}[]"));

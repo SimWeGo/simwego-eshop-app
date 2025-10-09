@@ -103,9 +103,9 @@ Future<void> main() async {
     });
 
     group("Bundle Interactions", () {
-      test("onTopUpClick handles valid index", () async {
-        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel());
-        await viewModel.onTopUpClick(index: 0);
+      test("onTopUpClick handles valid iccid", () async {
+        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        await viewModel.onTopUpClick(iccid: "test-iccid");
         verify(
           mockBottomSheetService.showCustomSheet(
             isScrollControlled: anyNamed("isScrollControlled"),
@@ -115,9 +115,9 @@ Future<void> main() async {
         ).called(1);
       });
 
-      test("onConsumptionClick handles valid index", () async {
-        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel());
-        await viewModel.onConsumptionClick(index: 0);
+      test("onConsumptionClick handles valid iccid", () async {
+        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        await viewModel.onConsumptionClick(iccid: "test-iccid");
         verify(
           mockBottomSheetService.showCustomSheet(
             isScrollControlled: anyNamed("isScrollControlled"),
@@ -127,9 +127,9 @@ Future<void> main() async {
         ).called(1);
       });
 
-      test("onQrCodeClick handles valid index", () async {
-        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel());
-        await viewModel.onQrCodeClick(index: 0);
+      test("onQrCodeClick handles valid iccid", () async {
+        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        await viewModel.onQrCodeClick(iccid: "test-iccid");
         verify(
           mockBottomSheetService.showCustomSheet(
             isScrollControlled: anyNamed("isScrollControlled"),
@@ -139,22 +139,9 @@ Future<void> main() async {
         ).called(1);
       });
 
-      test("onCurrentBundleClick handles valid index", () async {
-        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel());
-        await viewModel.onCurrentBundleClick(index: 0);
-        verify(
-          mockBottomSheetService.showCustomSheet(
-            isScrollControlled: anyNamed("isScrollControlled"),
-            ignoreSafeArea: anyNamed("ignoreSafeArea"),
-            variant: anyNamed("variant"),
-            data: anyNamed("data"),
-          ),
-        ).called(1);
-      });
-
-      test("onExpiredBundleClick handles valid index", () async {
-        viewModel.state.expiredESimList.add(PurchaseEsimBundleResponseModel());
-        await viewModel.onExpiredBundleClick(index: 0);
+      test("onCurrentBundleClick handles valid iccid", () async {
+        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        await viewModel.onCurrentBundleClick(iccid: "test-iccid");
         verify(
           mockBottomSheetService.showCustomSheet(
             isScrollControlled: anyNamed("isScrollControlled"),
@@ -165,9 +152,22 @@ Future<void> main() async {
         ).called(1);
       });
 
-      test("onEditNameClick handles valid index", () async {
-        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel());
-        await viewModel.onEditNameClick(index: 0);
+      test("onExpiredBundleClick handles valid iccid", () async {
+        viewModel.state.expiredESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        await viewModel.onExpiredBundleClick(iccid: "test-iccid");
+        verify(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            ignoreSafeArea: anyNamed("ignoreSafeArea"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).called(1);
+      });
+
+      test("onEditNameClick handles valid iccid", () async {
+        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        await viewModel.onEditNameClick(iccid: "test-iccid");
         verify(
           mockBottomSheetService.showCustomSheet(
             isScrollControlled: anyNamed("isScrollControlled"),
@@ -180,7 +180,7 @@ Future<void> main() async {
 
     group("Installation", () {
       test("onInstallClick handles errors gracefully", () async {
-        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel());
+        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
 
         when(
           mockFlutterChannelHandlerService.openEsimSetupForAndroid(
@@ -196,7 +196,7 @@ Future<void> main() async {
           ),
         ).thenThrow(Exception("Installation failed"));
 
-        await viewModel.onInstallClick(index: 0);
+        await viewModel.onInstallClick(iccid: "test-iccid");
         expect(viewModel.isInstallationFailed, isTrue);
       });
     });

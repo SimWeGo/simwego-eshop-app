@@ -1,6 +1,6 @@
-import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view.dart";
@@ -34,10 +34,11 @@ Future<void> main() async {
   group("AccountInformationView Tests", () {
     testWidgets("widget renders without exceptions",
         (WidgetTester tester) async {
-      AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi = LoginType.email;
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
       onViewModelReadyMock(viewName: "AccountInformationView");
       when(locator<ApiAuthRepository>().updateUserInfo(
-        email: "",
+        email: null,
         msisdn: "+961",
         firstName: "",
         lastName: "",
@@ -61,8 +62,8 @@ Future<void> main() async {
     testWidgets("widget renders with different login type",
         (WidgetTester tester) async {
       onViewModelReadyMock(viewName: "AccountInformationView");
-      AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi =
-          LoginType.phoneNumber;
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.phoneNumber);
       tester.view.physicalSize = const Size(800, 1200);
       tester.view.devicePixelRatio = 1.0;
 

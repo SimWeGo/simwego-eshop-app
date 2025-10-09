@@ -8,19 +8,24 @@ import "package:esim_open_source/domain/util/resource.dart";
 class TmpLoginParams {
   TmpLoginParams({
     required this.email,
+    required this.phone,
   });
-  final String email;
+
+  final String? email;
+  final String? phone;
 }
 
 class TmpLoginUseCase
     implements UseCase<Resource<AuthResponseModel?>, TmpLoginParams> {
   TmpLoginUseCase(this.repository);
+
   final ApiAuthRepository repository;
 
   @override
   FutureOr<Resource<AuthResponseModel?>> execute(TmpLoginParams params) async {
     return await repository.tmpLogin(
       email: params.email,
+      phone: params.phone,
     );
   }
 }

@@ -7,7 +7,6 @@ import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
 import "package:stacked_services/stacked_services.dart";
 
-import "../../../../../helpers/test_data_factory.dart";
 import "../../../../../helpers/view_helper.dart";
 import "../../../../../helpers/view_model_helper.dart";
 import "../../../../../locator_test.dart";
@@ -31,9 +30,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "AFG", name: "Afghanistan", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.onViewModelReady();
+      ..onViewModelReady();
       // Wait a bit for async operations to complete (onViewModelReady already calls getSelectedCountry)
       await Future<void>.delayed(const Duration(milliseconds: 10));
 
@@ -49,9 +48,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "EU", name: "Europe", type: "Region");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.onViewModelReady();
+      ..onViewModelReady();
       // Wait a bit for async operations to complete (onViewModelReady already calls getSelectedCountry)
       await Future<void>.delayed(const Duration(milliseconds: 10));
 
@@ -63,9 +62,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.setSearchFocused(focused: true);
+      ..setSearchFocused(focused: true);
       
       // Test empty search returns all unselected countries
       List<CountryResponseModel> filtered = vm.filteredCountries;
@@ -88,9 +87,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.setSearchFocused(focused: false);
+      ..setSearchFocused(focused: false);
       
       List<CountryResponseModel> filtered = vm.filteredCountries;
       expect(filtered.length, equals(0));
@@ -100,9 +99,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
       
-      vm.onViewModelReady();
+      ..onViewModelReady();
       
       final CountryResponseModel country = 
           CountryResponseModel(id: "ALB", country: "Albania");
@@ -117,9 +116,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
       
-      vm.onViewModelReady();
+      ..onViewModelReady();
       
       final CountryResponseModel country = 
           CountryResponseModel(id: "ALB", country: "Albania");
@@ -127,16 +126,16 @@ Future<void> main() async {
       await vm.addCountry(country);
       await vm.addCountry(country); // Try to add the same country again
       
-      expect(vm.selectedCountryChips.where((c) => c.id == "ALB").length, equals(1));
+      expect(vm.selectedCountryChips.where((CountryResponseModel c) => c.id == "ALB").length, equals(1));
     });
 
     test("removes country correctly when multiple countries exist", () async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
       
-      vm.onViewModelReady();
+      ..onViewModelReady();
       
       final CountryResponseModel country1 = 
           CountryResponseModel(id: "ALB", country: "Albania");
@@ -159,9 +158,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
       
-      vm.onViewModelReady();
+      ..onViewModelReady();
       
       final CountryResponseModel country = 
           CountryResponseModel(id: "ALB", country: "Albania");
@@ -192,23 +191,23 @@ Future<void> main() async {
       expect(vm.searchTextFieldController.text, isEmpty);
     });
 
-    test("country codes returns correct format", () {
+    test("country codes returns correct format", () async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.onViewModelReady();
+      ..onViewModelReady();
 
       expect(vm.countryCodes, isEmpty);
 
-      final countries = [
+      final List<CountryResponseModel> countries = <CountryResponseModel>[
         CountryResponseModel(id: "ALB", country: "Albania"),
         CountryResponseModel(id: "AND", country: "Andorra"),
       ];
 
-      for (final country in countries) {
-        vm.addCountry(country);
+      for (final CountryResponseModel country in countries) {
+        await vm.addCountry(country);
       }
 
       expect(vm.countryCodes, equals("ALB,AND"));
@@ -218,9 +217,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.onViewModelReady();
+      ..onViewModelReady();
 
       final CountryResponseModel country = 
           CountryResponseModel(id: "ALB", country: "Albania", iso3Code: "AL");
@@ -229,7 +228,7 @@ Future<void> main() async {
       final BundleResponseModel bundle = BundleResponseModel(
         bundleCode: "bundle1",
         price: 10.99,
-        priceDisplay: "\$10.99",
+        priceDisplay: r"$10.99",
         bundleName: "Test Bundle",
       );
       await vm.navigateToEsimDetail(bundle);
@@ -240,21 +239,21 @@ Future<void> main() async {
         enableDrag: false,
         isScrollControlled: true,
         variant: anyNamed("variant"),
-      )).called(1);
+      ),).called(1);
     });
 
     test("navigation to esim detail with region arguments", () async {
       final EsimArguments args =
           const EsimArguments(id: "EU", name: "Europe", type: "Region");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.onViewModelReady();
+      ..onViewModelReady();
 
       final BundleResponseModel bundle = BundleResponseModel(
         bundleCode: "bundle1",
         price: 10.99,
-        priceDisplay: "\$10.99",
+        priceDisplay: r"$10.99",
         bundleName: "Test Bundle",
       );
       await vm.navigateToEsimDetail(bundle);
@@ -265,17 +264,17 @@ Future<void> main() async {
         enableDrag: false,
         isScrollControlled: true,
         variant: anyNamed("variant"),
-      )).called(1);
+      ),).called(1);
     });
 
     test("disposes correctly", () {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.onViewModelReady();
-      vm.onDispose();
+      ..onViewModelReady()
+      ..onDispose();
 
       // Controller should be disposed - attempting to use it should throw
       expect(() => vm.searchTextFieldController.text = "test", throwsFlutterError);
@@ -294,9 +293,9 @@ Future<void> main() async {
       final EsimArguments args =
           const EsimArguments(id: "1", name: "test", type: "Country");
       final BundlesListViewModel vm = BundlesListViewModel()
-        ..esimArguments = args;
+        ..esimArguments = args
 
-      vm.onViewModelReady();
+      ..onViewModelReady();
 
       expect(vm.childViewModel, isNotNull);
     });

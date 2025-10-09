@@ -27,7 +27,7 @@ abstract interface class APIAuth {
 
   FutureOr<dynamic> updateUserInfo({
     required String? email,
-    required String msisdn,
+    required String? msisdn,
     required String firstName,
     required String lastName,
     required bool isNewsletterSubscribed,
@@ -56,6 +56,7 @@ abstract interface class APIAuth {
   );
 
   FutureOr<dynamic> tmpLogin({
-    required String email,
+    required String? email,
+    required String? phone,
   });
 }

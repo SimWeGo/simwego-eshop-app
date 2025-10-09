@@ -170,17 +170,17 @@ class MyESimView extends StatelessWidget {
               ),
               supportedCountries: item.countries ?? <CountryResponseModel>[],
               onEditName: () =>
-                  unawaited(viewModel.onEditNameClick(index: index)),
+                  unawaited(viewModel.onEditNameClick(iccid: item.iccid ?? "")),
               onTopUpClick: () =>
-                  unawaited(viewModel.onTopUpClick(index: index)),
+                  unawaited(viewModel.onTopUpClick(iccid: item.iccid ?? "")),
               onConsumptionClick: () async =>
-                  viewModel.onConsumptionClick(index: index),
-              onQrCodeClick: () async => viewModel.onQrCodeClick(index: index),
+                  viewModel.onConsumptionClick(iccid: item.iccid ?? ""),
+              onQrCodeClick: () async => viewModel.onQrCodeClick(iccid: item.iccid ?? ""),
               onInstallClick: () async =>
-                  viewModel.onInstallClick(index: index),
+                  viewModel.onInstallClick(iccid: item.iccid ?? ""),
               isLoading: viewModel.isBusy,
               onItemClick: () =>
-                  unawaited(viewModel.onCurrentBundleClick(index: index)),
+                  unawaited(viewModel.onCurrentBundleClick(iccid: item.iccid ?? "")),
             ),
             (index == viewModel.state.currentESimList.length - 1)
                 ? const SizedBox(height: 90)
@@ -225,7 +225,7 @@ class MyESimView extends StatelessWidget {
               isLoading: viewModel.isBusy,
               iconPath: item.icon,
               onItemClick: () =>
-                  unawaited(viewModel.onExpiredBundleClick(index: index)),
+                  unawaited(viewModel.onExpiredBundleClick(iccid: item.iccid ?? "")),
             ),
             (index == viewModel.state.expiredESimList.length - 1)
                 ? const SizedBox(height: 90)

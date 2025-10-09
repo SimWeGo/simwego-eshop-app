@@ -27,6 +27,8 @@ Future<void> main() async {
     when(mockViewModel.isBusy).thenReturn(false);
     when(mockViewModel.viewState).thenReturn(ViewState.idle);
     when(mockViewModel.state).thenReturn(ContinueWithEmailState());
+    when(mockViewModel.showEmailField).thenReturn(true);
+    when(mockViewModel.showPhoneField).thenReturn(false);
   });
 
   group("View Testing", () {

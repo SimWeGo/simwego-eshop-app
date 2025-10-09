@@ -1,7 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
-import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/di/locator.dart";
-import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -99,18 +97,13 @@ class AccountInformationView extends StatelessWidget {
                               ),
                               getSpacersWidgets(context),
                               MyPhoneInput(
-                                enabled: AppEnvironment
-                                            .appEnvironmentHelper.loginType ==
-                                        LoginType.phoneNumber
-                                    ? false
-                                    : true,
+                                enabled: viewModel.isPhoneInputEnabled,
                                 onChanged: viewModel.validateNumber,
                                 phoneController: viewModel.phoneController,
                                 validateRequired: true,
                               ),
                               getSpacersWidgets(context),
-                              AppEnvironment.appEnvironmentHelper.loginType ==
-                                      LoginType.phoneNumber
+                              viewModel.isEmailFieldEditable
                                   ? MainInputField.formField(
                                       themeColor: themeColor,
                                       hintText: LocaleKeys.email.tr(),

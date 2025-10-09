@@ -1,14 +1,15 @@
 // continue_with_email_view_model_test.dart
 
 import "package:easy_localization/easy_localization.dart";
-import "package:esim_open_source/app/environment/app_environment.dart";
-import "package:esim_open_source/data/remote/responses/empty_response.dart";
+import "package:esim_open_source/data/remote/responses/auth/otp_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
@@ -75,30 +76,33 @@ Future<void> main() async {
     });
 
     test("loginWithEmail navigates to verify view on success", () async {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
+      viewModel.state?.isTermsChecked = true;
       viewModel.state?.emailController.text = "test@example.com";
-
+      viewModel.state?.emailErrorMessage = "";
       when(
         locator<ApiAuthRepository>().login(
           email: "test@example.com",
           phoneNumber: null,
         ),
       ).thenAnswer(
-        (_) async =>
-            Resource<EmptyResponse>.success(EmptyResponse(), message: ""),
+        (_) async => Resource<OtpResponseModel?>.success(OtpResponseModel(),
+            message: ""),
       );
 
       when(
         locator<NavigationService>().navigateTo(
           "VerifyLoginView",
           arguments: argThat(
-            isA<ContinueWithEmailViewModelArgs>()
+            isA<VerifyLoginViewArgs>()
                 .having(
-                  (ContinueWithEmailViewModelArgs args) => args.username,
-                  "username",
+                  (VerifyLoginViewArgs args) => args.email,
+                  "email",
                   "test@example.com",
                 )
                 .having(
-                  (ContinueWithEmailViewModelArgs args) => args.redirection,
+                  (VerifyLoginViewArgs args) => args.redirection,
                   "redirection",
                   null,
                 ),
@@ -113,14 +117,14 @@ Future<void> main() async {
         locator<NavigationService>().navigateTo(
           "VerifyLoginView",
           arguments: argThat(
-            isA<ContinueWithEmailViewModelArgs>()
+            isA<VerifyLoginViewArgs>()
                 .having(
-                  (ContinueWithEmailViewModelArgs args) => args.username,
-                  "username",
+                  (VerifyLoginViewArgs args) => args.email,
+                  "email",
                   "test@example.com",
                 )
                 .having(
-                  (ContinueWithEmailViewModelArgs args) => args.redirection,
+                  (VerifyLoginViewArgs args) => args.redirection,
                   "redirection",
                   null,
                 ),
@@ -151,8 +155,8 @@ Future<void> main() async {
     });
 
     test("Update terms selection tapped cover lines", () {
-      AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi =
-          LoginType.phoneNumber;
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.phoneNumber);
       viewModel.state?.isTermsChecked = false;
       viewModel.updateTermsSelections();
       expect(viewModel.state?.isTermsChecked, true);

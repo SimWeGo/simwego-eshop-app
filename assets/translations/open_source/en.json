@@ -305,7 +305,7 @@
   "purchased": "Purchased {date}",
   "order_id": "Order Id",
   "hurray": "Hurray!",
-  "top_up_success_message": "Your payment was done successfully.\nAp topup was added to your balance,\nit will appear once you consumed your existing data.",
+  "top_up_success_message": "Your payment was done successfully.\nA topup was added to your balance,\nit will appear once you consumed your existing data.",
   "invalid_phone_number": "Invalid phone number",
   "noConnection_titleText": "No Network",
   "noConnection_contentText": "Please connect to network and\ntry again",

@@ -3,7 +3,7 @@ import "dart:io";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
-import "package:esim_open_source/data/remote/responses/empty_response.dart";
+import "package:esim_open_source/data/remote/responses/auth/otp_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -16,15 +16,19 @@ import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 
 class VerifyLoginViewModel extends BaseModel {
-  VerifyLoginViewModel({this.username, this.redirection});
+  VerifyLoginViewModel({this.email, this.phoneNumber, this.redirection});
+
   InAppRedirection? redirection;
 
   bool _isVerifyButtonEnabled = false;
+
   bool get isVerifyButtonEnabled => _isVerifyButtonEnabled;
 
-  String? username;
+  String? email;
+  String? phoneNumber;
   String _pinCode = "";
   String _errorMessage = "";
+
   @override
   String get errorMessage => _errorMessage;
 
@@ -55,7 +59,8 @@ class VerifyLoginViewModel extends BaseModel {
     Resource<AuthResponseModel> authResponse = await verifyOtpUseCase.execute(
       VerifyOtpParams(
         pinCode: _pinCode,
-        username: username ?? "",
+        email: email,
+        phoneNumber: phoneNumber,
       ),
     );
 
@@ -83,16 +88,20 @@ class VerifyLoginViewModel extends BaseModel {
   Future<void> resendCodeButtonTapped() async {
     setViewState(ViewState.busy);
 
-    Resource<EmptyResponse?> resendOtpResponse = await resendOtpUseCase.execute(
+    Resource<OtpResponseModel?> resendOtpResponse =
+        await resendOtpUseCase.execute(
       ResendOtpParams(
-        username: username ?? "",
+        email: email,
+        phoneNumber: phoneNumber,
       ),
     );
 
-    await handleResponse(
-      resendOtpResponse,
-      onSuccess: (Resource<EmptyResponse?> response) async {},
-    );
+    try {
+      await handleResponse(
+        resendOtpResponse,
+        onSuccess: (Resource<OtpResponseModel?> response) async {},
+      );
+    } on Object catch (_) {}
 
     setViewState(ViewState.idle);
   }

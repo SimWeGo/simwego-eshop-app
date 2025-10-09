@@ -56,7 +56,6 @@ import "package:esim_open_source/domain/repository/services/referral_info_servic
 import "package:esim_open_source/domain/repository/services/remote_config_service.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
-import "package:esim_open_source/domain/use_case/user/get_order_history_pagination_use_case.dart";
 import "package:esim_open_source/objectbox.g.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/view_models/main_model.dart";
@@ -218,8 +217,8 @@ Future<void> appAPIServicesModule() async {
         }
         return DynamicLinkingServiceEmptyImpl() as DynamicLinkingService;
       },
-    )
-    ..registerLazySingleton(() => GetOrderHistoryPaginationUseCase(locator()));
+    );
+    // ..registerLazySingleton(() => GetOrderHistoryPaginationUseCase(locator()));
   // ..registerLazySingleton(() => GetBundlesByRegionUseCase(locator()))
   // ..registerLazySingleton(() => GetBundlesByCountryUseCase(locator()))
   // ..registerLazySingleton(() => GetBundlesGlobalUseCase(locator()))

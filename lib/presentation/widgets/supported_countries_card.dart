@@ -14,6 +14,7 @@ class SupportedCountriesCard extends StatefulWidget {
   const SupportedCountriesCard({required this.countries, super.key});
 
   final List<CountryResponseModel> countries;
+
   @override
   State<SupportedCountriesCard> createState() => _SupportedCountriesCardState();
 
@@ -72,53 +73,59 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
                 itemCount: widget.countries.length,
                 itemBuilder: (BuildContext context, int index) {
                   final CountryResponseModel country = widget.countries[index];
-                  return ExpansionTile(
-                    collapsedIconColor:
-                        mainTabBackGroundColor(context: context),
-                    iconColor: mainTabBackGroundColor(context: context),
-                    minTileHeight: 0,
-                    shape: const Border(),
-                    onExpansionChanged: (bool isExpanded) {
-                      setState(() {
-                        _isExpanded = isExpanded;
-                      });
-                    },
-                    trailing: Icon(
-                      _isExpanded
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
-                      size: 20,
-                    ),
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 12),
-                    title: Row(
-                      children: <Widget>[
-                        CountryFlagImage(
-                          icon: widget.countries[index].icon ?? "",
-                          height: 20,
-                          width: 20,
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Text(
-                          country.country ?? "",
-                          style: captionTwoMediumTextStyle(
-                            context: context,
-                            fontColor: titleTextColor(
+                  return AbsorbPointer(
+                    absorbing: country.operatorList?.isEmpty ?? true,
+                    child: ExpansionTile(
+                      collapsedIconColor:
+                          mainTabBackGroundColor(context: context),
+                      iconColor: mainTabBackGroundColor(context: context),
+                      minTileHeight: 0,
+                      shape: const Border(),
+                      onExpansionChanged: (bool isExpanded) {
+                        setState(() {
+                          _isExpanded = isExpanded;
+                        });
+                      },
+                      trailing: country.operatorList?.isEmpty ?? true
+                          ? const SizedBox.shrink()
+                          : Icon(
+                              _isExpanded
+                                  ? Icons.keyboard_arrow_up
+                                  : Icons.keyboard_arrow_down,
+                              size: 20,
+                            ),
+                      tilePadding: const EdgeInsets.symmetric(horizontal: 12),
+                      title: Row(
+                        children: <Widget>[
+                          CountryFlagImage(
+                            icon: widget.countries[index].icon ?? "",
+                            height: 20,
+                            width: 20,
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          Text(
+                            country.country ?? "",
+                            style: captionTwoMediumTextStyle(
                               context: context,
+                              fontColor: titleTextColor(
+                                context: context,
+                              ),
                             ),
                           ),
-                        ),
+                        ],
+                      ),
+                      children: <Widget>[
+                        country.operatorList?.isEmpty ?? true
+                            ? Container()
+                            : InfoRow(
+                                title: country.operatorList?.join(",") ??
+                                    LocaleKeys.supportedCountries_noNetworks
+                                        .tr(),
+                              ),
                       ],
                     ),
-                    children: <Widget>[
-                      InfoRow(
-                        title: country.operatorList?.join(",") ??
-                            LocaleKeys.supportedCountries_noNetworks.tr(),
-                        message: LocaleKeys.supportedCountries_availableNetworks
-                            .tr(),
-                      ),
-                    ],
                   );
                 },
               ),

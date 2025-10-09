@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:esim_open_source/data/remote/auth_reload_interface.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
+import "package:esim_open_source/data/remote/responses/auth/otp_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/unauthorized_access_interface.dart";
 import "package:esim_open_source/domain/data/api_auth.dart";
@@ -14,7 +15,7 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
   final APIAuth apiAuth;
 
   @override
-  FutureOr<Resource<EmptyResponse?>> login({
+  FutureOr<Resource<OtpResponseModel?>> login({
     required String? email,
     required String? phoneNumber,
   }) async {
@@ -68,7 +69,7 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
   @override
   FutureOr<Resource<AuthResponseModel>> updateUserInfo({
     required String? email,
-    required String msisdn,
+    required String? msisdn,
     required String firstName,
     required String lastName,
     required bool isNewsletterSubscribed,
@@ -122,11 +123,13 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
 
   @override
   FutureOr<Resource<AuthResponseModel?>> tmpLogin({
-    required String email,
+    required String? email,
+    required String? phone,
   }) async {
     return responseToResource(
       apiAuth.tmpLogin(
         email: email,
+        phone: phone,
       ),
     );
   }

@@ -10,8 +10,7 @@ import "package:stacked_services/stacked_services.dart";
 
 class OrderHistoryViewModel extends BaseModel {
   //#region UseCases
-  GetOrderHistoryPaginationUseCase getOrderHistoryUseCase =
-      locator<GetOrderHistoryPaginationUseCase>();
+  GetOrderHistoryPaginationUseCase getOrderHistoryUseCase = GetOrderHistoryPaginationUseCase(locator());
 
   //#endregion
 

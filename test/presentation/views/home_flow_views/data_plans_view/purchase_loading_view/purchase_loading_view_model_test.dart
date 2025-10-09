@@ -45,8 +45,8 @@ Future<void> main() async {
       const String testOrderID = "test_order_123";
       const String testBearerToken = "test_token_456";
 
-      viewModel.orderID = testOrderID;
-      viewModel.bearerToken = testBearerToken;
+      viewModel..orderID = testOrderID
+      ..bearerToken = testBearerToken;
 
       expect(viewModel.orderID, testOrderID);
       expect(viewModel.bearerToken, testBearerToken);
@@ -150,8 +150,8 @@ Future<void> main() async {
     });
 
     test("getOrderDetails handles empty orderID", () async {
-      viewModel.orderID = null;
-      viewModel.bearerToken = "test_token";
+      viewModel..orderID = null
+      ..bearerToken = "test_token";
 
       final Resource<PurchaseEsimBundleResponseModel?> mockResponse = 
           TestDataFactory.createSuccessResource<PurchaseEsimBundleResponseModel?>(
@@ -206,8 +206,8 @@ Future<void> main() async {
       const String testOrderID = "test_order_123";
       const String testBearerToken = "test_token_456";
       
-      viewModel.orderID = testOrderID;
-      viewModel.bearerToken = testBearerToken;
+      viewModel..orderID = testOrderID
+      ..bearerToken = testBearerToken;
 
       final Resource<PurchaseEsimBundleResponseModel?> mockResponse = 
           TestDataFactory.createSuccessResource<PurchaseEsimBundleResponseModel?>(

@@ -1,34 +1,31 @@
 import "dart:async";
 
-import "package:esim_open_source/app/environment/app_environment.dart";
-import "package:esim_open_source/data/remote/responses/empty_response.dart";
+import "package:esim_open_source/data/remote/responses/auth/otp_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
-import "package:esim_open_source/presentation/enums/login_type.dart";
 
 class LoginParams {
   LoginParams({
-    required this.username,
+    required this.email,
+    required this.phoneNumber,
   });
-  final String username;
+
+  final String? email;
+  final String? phoneNumber;
 }
 
-class LoginUseCase implements UseCase<Resource<EmptyResponse?>, LoginParams> {
+class LoginUseCase
+    implements UseCase<Resource<OtpResponseModel?>, LoginParams> {
   LoginUseCase(this.repository);
+
   final ApiAuthRepository repository;
 
   @override
-  FutureOr<Resource<EmptyResponse?>> execute(LoginParams params) async {
+  FutureOr<Resource<OtpResponseModel?>> execute(LoginParams params) async {
     return await repository.login(
-      email:
-          AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
-              ? null
-              : params.username,
-      phoneNumber:
-          AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
-              ? params.username
-              : null,
+      email: params.email,
+      phoneNumber: params.phoneNumber,
     );
   }
 }
