@@ -1,5 +1,4 @@
 enum LanguageEnum {
-  arabic,
   english,
   french;
 
@@ -9,7 +8,7 @@ enum LanguageEnum {
     } else if (language == LanguageEnum.french.languageText) {
       return LanguageEnum.french;
     } else {
-      return LanguageEnum.arabic;
+      return LanguageEnum.english;
     }
   }
 
@@ -19,14 +18,12 @@ enum LanguageEnum {
     } else if (languageCode == LanguageEnum.french.code) {
       return LanguageEnum.french;
     } else {
-      return LanguageEnum.arabic;
+      return LanguageEnum.english;
     }
   }
 
   String get code {
     switch (this) {
-      case LanguageEnum.arabic:
-        return "ar";
       case LanguageEnum.english:
         return "en";
       case LanguageEnum.french:
@@ -36,8 +33,6 @@ enum LanguageEnum {
 
   String get languageText {
     switch (this) {
-      case LanguageEnum.arabic:
-        return "العربية";
       case LanguageEnum.english:
         return "English";
       case LanguageEnum.french:
@@ -47,8 +42,6 @@ enum LanguageEnum {
 
   bool get isRTL {
     switch (this) {
-      case LanguageEnum.arabic:
-        return true;
       case LanguageEnum.french:
       case LanguageEnum.english:
         return false;

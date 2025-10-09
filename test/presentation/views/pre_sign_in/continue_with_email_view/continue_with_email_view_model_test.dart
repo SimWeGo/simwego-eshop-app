@@ -87,8 +87,10 @@ Future<void> main() async {
           phoneNumber: null,
         ),
       ).thenAnswer(
-        (_) async => Resource<OtpResponseModel?>.success(OtpResponseModel(),
-            message: ""),
+        (_) async => Resource<OtpResponseModel?>.success(
+          OtpResponseModel(),
+          message: "",
+        ),
       );
 
       when(
