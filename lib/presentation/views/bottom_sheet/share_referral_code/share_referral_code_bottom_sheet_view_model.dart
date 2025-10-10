@@ -16,16 +16,22 @@ class ShareReferralCodeBottomSheetViewModel extends BaseModel {
   String get deepLink =>
       "https://${AppEnvironment.appEnvironmentHelper.websiteUrl}/${DeepLinkDecodeKeys.referralCode.pathKey}?${DeepLinkDecodeKeys.referralCode.decodingKey}=$referralCode";
 
-  String get amount => locator<ReferralInfoService>().getReferralAmountAndCurrency;
+  String get amount =>
+      locator<ReferralInfoService>().getReferralAmountAndCurrency;
 
-  String get getReferralMessage => locator<ReferralInfoService>().getReferralMessage;
-
+  String get getReferralMessage =>
+      locator<ReferralInfoService>().getReferralMessage;
 
   Future<void> shareButtonTapped() async {
-    String? link = await locator<DynamicLinkingService>()
-        .generateBranchLink(deepLinkUrl: deepLink, referUserID: referralCode);
+    String? link;
+    if (AppEnvironment.appEnvironmentHelper.enableBranchIO) {
+      link = await locator<DynamicLinkingService>()
+          .generateBranchLink(deepLinkUrl: deepLink, referUserID: referralCode);
+    } else {
+      link = deepLink;
+    }
 
-    log(deepLink);
+    log(link ?? "");
 
     SharePlus.instance.share(
       ShareParams(
@@ -33,10 +39,7 @@ class ShareReferralCodeBottomSheetViewModel extends BaseModel {
           namedArgs: <String, String>{
             "amount": amount,
             "code": referralCode,
-            "link": (AppEnvironment.appEnvironmentHelper.enableBranchIO
-                    ? link
-                    : deepLink) ??
-                "",
+            "link": link ?? "",
           },
         ),
       ),

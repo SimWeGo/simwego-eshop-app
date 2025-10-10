@@ -144,7 +144,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     _promoCodeController.addListener(notifyListeners);
 
     if (_referralCode.isNotEmpty) {
-      unawaited(validatePromoCode(_referralCode));
+      unawaited(validatePromoCode(_referralCode, isReferral: true));
     }
   }
 
@@ -573,7 +573,10 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     return bundleExists;
   }
 
-  Future<void> validatePromoCode(String promoCode) async {
+  Future<void> validatePromoCode(
+    String promoCode, {
+    bool isReferral = false,
+  }) async {
     if (!promoCodeFieldEnabled) {
       _promoCode = null;
       _bundle = _tempBundle;
@@ -598,8 +601,10 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       onSuccess: (Resource<BundleResponseModel?> result) async {
         _bundle = result.data;
         _promoCode = promoCode;
-        _promoCodeController.text = _referralCode;
-        isPromoCodeExpanded = true;
+        if (isReferral) {
+          _promoCodeController.text = _referralCode;
+          isPromoCodeExpanded = true;
+        }
         updatePromoCodeView(
           message: result.message ?? "",
           isEnabled: false,
@@ -609,16 +614,17 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       onFailure: (Resource<BundleResponseModel?> result) async {
         _bundle = _tempBundle;
         _promoCode = null;
-        isPromoCodeExpanded = false;
-        _removePromoCodeFromLocalStorage();
-        if (isPromoCodeExpanded) {
+
+        if (isReferral) {
+          isPromoCodeExpanded = false;
+          _removePromoCodeFromLocalStorage();
+          updatePromoCodeView(isEnabled: true);
+        } else {
           updatePromoCodeView(
             message: result.message ?? "",
             isEnabled: true,
             fieldColor: Colors.red,
           );
-        } else {
-          updatePromoCodeView(isEnabled: true);
         }
       },
     );

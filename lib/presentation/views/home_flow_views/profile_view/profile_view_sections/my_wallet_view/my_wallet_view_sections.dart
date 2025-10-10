@@ -6,7 +6,6 @@ import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
@@ -16,7 +15,7 @@ import "package:stacked_services/stacked_services.dart";
 enum MyWalletViewSections {
   voucherCode,
   referEarn,
-  cashbackRewards,
+  // cashbackRewards,
   rewardHistory,
   upgradeWallet;
 
@@ -28,8 +27,8 @@ enum MyWalletViewSections {
         return LocaleKeys.myWallet_voucherSectionText.tr();
       case MyWalletViewSections.referEarn:
         return LocaleKeys.myWallet_referSectionText.tr();
-      case MyWalletViewSections.cashbackRewards:
-        return LocaleKeys.myWallet_cashbackSectionText.tr();
+      // case MyWalletViewSections.cashbackRewards:
+      //   return LocaleKeys.myWallet_cashbackSectionText.tr();
       case MyWalletViewSections.rewardHistory:
         return LocaleKeys.myWallet_rewardsSectionText.tr();
       case MyWalletViewSections.upgradeWallet:
@@ -43,6 +42,7 @@ enum MyWalletViewSections {
         orElse: () => EnvironmentImages.wallet,
       )
       .fullImagePath;
+
   //"assets/images/esim_wallet/$_sectionImage.png";
 
   String get _sectionImage {
@@ -51,8 +51,8 @@ enum MyWalletViewSections {
         return "walletVoucher";
       case MyWalletViewSections.referEarn:
         return "walletReferEarn";
-      case MyWalletViewSections.cashbackRewards:
-        return "walletCashback";
+      // case MyWalletViewSections.cashbackRewards:
+      //   return "walletCashback";
       case MyWalletViewSections.rewardHistory:
         return "walletRewardHistory";
       case MyWalletViewSections.upgradeWallet:
@@ -61,7 +61,9 @@ enum MyWalletViewSections {
   }
 
   Future<void> tapAction(
-      BuildContext context, MyWalletViewModel viewModel,) async {
+    BuildContext context,
+    MyWalletViewModel viewModel,
+  ) async {
     switch (this) {
       case MyWalletViewSections.voucherCode:
         SheetResponse<EmptyBottomSheetResponse>? voucherCodeResponse =
@@ -78,11 +80,11 @@ enum MyWalletViewSections {
           StoryViewer.routeName,
           arguments: ReferalStoriesView(context).storyViewerArgs,
         );
-      case MyWalletViewSections.cashbackRewards:
-        viewModel.navigationService.navigateTo(
-          StoryViewer.routeName,
-          arguments: CashbackStoriesView().storyViewerArgs,
-        );
+      // case MyWalletViewSections.cashbackRewards:
+      //   viewModel.navigationService.navigateTo(
+      //     StoryViewer.routeName,
+      //     arguments: CashbackStoriesView().storyViewerArgs,
+      //   );
       case MyWalletViewSections.rewardHistory:
         viewModel.navigationService.navigateTo(RewardsHistoryView.routeName);
       case MyWalletViewSections.upgradeWallet:

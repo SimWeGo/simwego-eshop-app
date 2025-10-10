@@ -33,9 +33,9 @@ class RewardHistoryView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            viewHeaderBadge(
-              context,
-            ),
+            // viewHeaderBadge(
+            //   context,
+            // ),
             verticalSpaceSmallMedium,
             viewBundleContent(
               context,

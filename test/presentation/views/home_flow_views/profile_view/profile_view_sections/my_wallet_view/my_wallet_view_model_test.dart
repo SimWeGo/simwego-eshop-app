@@ -34,10 +34,14 @@ Future<void> main() async {
   group("MyWalletViewModel Tests", () {
     test("initialization sets wallet sections correctly", () {
       expect(viewModel.walletSections, isNotEmpty);
-      expect(viewModel.walletSections.length,
-          equals(MyWalletViewSections.values.length),);
       expect(
-          viewModel.walletSections, containsAll(MyWalletViewSections.values),);
+        viewModel.walletSections.length,
+        equals(MyWalletViewSections.values.length),
+      );
+      expect(
+        viewModel.walletSections,
+        containsAll(MyWalletViewSections.values),
+      );
     });
 
     test("getUserInfoUseCase is initialized correctly", () {
@@ -76,8 +80,10 @@ Future<void> main() async {
     test("refreshUserInfo handles success response correctly", () async {
       final AuthResponseModel mockResponse = AuthResponseModel();
       when(mockApiAuthRepository.getUserInfo()).thenAnswer(
-        (_) async => Resource<AuthResponseModel?>.success(mockResponse,
-            message: "Success",),
+        (_) async => Resource<AuthResponseModel?>.success(
+          mockResponse,
+          message: "Success",
+        ),
       );
 
       await viewModel.refreshUserInfo();
@@ -107,7 +113,7 @@ Future<void> main() async {
           <MyWalletViewSections>[
         MyWalletViewSections.voucherCode,
         MyWalletViewSections.referEarn,
-        MyWalletViewSections.cashbackRewards,
+        // MyWalletViewSections.cashbackRewards,
         MyWalletViewSections.rewardHistory,
         MyWalletViewSections.upgradeWallet,
       ];
@@ -121,16 +127,24 @@ Future<void> main() async {
     });
 
     test("wallet sections maintain correct order", () {
-      expect(viewModel.walletSections[0],
-          equals(MyWalletViewSections.voucherCode),);
       expect(
-          viewModel.walletSections[1], equals(MyWalletViewSections.referEarn),);
-      expect(viewModel.walletSections[2],
-          equals(MyWalletViewSections.cashbackRewards),);
-      expect(viewModel.walletSections[3],
-          equals(MyWalletViewSections.rewardHistory),);
-      expect(viewModel.walletSections[4],
-          equals(MyWalletViewSections.upgradeWallet),);
+        viewModel.walletSections[0],
+        equals(MyWalletViewSections.voucherCode),
+      );
+      expect(
+        viewModel.walletSections[1],
+        equals(MyWalletViewSections.referEarn),
+      );
+      // expect(viewModel.walletSections[2],
+      //     equals(MyWalletViewSections.cashbackRewards),);
+      expect(
+        viewModel.walletSections[2],
+        equals(MyWalletViewSections.rewardHistory),
+      );
+      expect(
+        viewModel.walletSections[3],
+        equals(MyWalletViewSections.upgradeWallet),
+      );
     });
 
     test("wallet sections are properly typed", () {
