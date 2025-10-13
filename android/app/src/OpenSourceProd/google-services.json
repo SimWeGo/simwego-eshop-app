@@ -12,7 +12,12 @@
           "package_name": "com.simwego.esim"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "763933589891-otigrhfu09qillh6028ho06uqtjij39r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCtvHcXIR8Atjtpv-4dr28bLeUQr4uDMyk"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763933589891-otigrhfu09qillh6028ho06uqtjij39r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.simwego.esim"
+              }
+            }
+          ]
         }
       }
     }

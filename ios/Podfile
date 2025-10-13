@@ -40,14 +40,6 @@ target 'Runner' do
     inherit! :search_paths
   end
 end
-
-target 'RunnerAppClip' do
-    use_frameworks!
-  use_modular_headers!
-  pod 'GoogleUtilities'
-  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-end
-
 target 'NotificationServiceExtension' do
   use_frameworks!
   pod 'GoogleUtilities'
