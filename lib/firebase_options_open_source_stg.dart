@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '763933589891',
     projectId: 'simwego-live',
     storageBucket: 'simwego-live.firebasestorage.app',
+    androidClientId: '763933589891-jnh6qckmumvaqbu39cc12dgf2rj93gn2.apps.googleusercontent.com',
+    iosClientId: '763933589891-ch17f44qu1cga5s2j4fntv3034dr4250.apps.googleusercontent.com',
     iosBundleId: 'com.simwego.esim',
   );
 

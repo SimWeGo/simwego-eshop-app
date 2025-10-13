@@ -90,12 +90,12 @@ android {
             dimension "environment"
             applicationId "com.simwego.esim.test"
             versionNameSuffix "-dev"
-            resValue "string", "app_name", "SIM We Go Dev"
+            resValue "string", "app_name", "SimWeGo Dev"
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
             manifestPlaceholders = [
-                    scheme: "iosupabaseflutter",
+                    scheme: "fbsupabasesimwego",
                     domain: "",
                     branchScheme: "",
                     branchDomain: "",
@@ -109,12 +109,12 @@ android {
             dimension "environment"
             applicationId "com.simwego.esim"
             versionNameSuffix "-staging"
-            resValue "string", "app_name", "SIM We Go Stg"
-            resValue "string", "facebook_app_id", ""
-            resValue "string", "fb_login_protocol_scheme", ""
-            resValue "string", "fb_client_token", ""
+            resValue "string", "app_name", "SimWeGo Stg"
+            resValue "string", "facebook_app_id", "1724588091576653"
+            resValue "string", "fb_login_protocol_scheme", "fb1724588091576653"
+            resValue "string", "fb_client_token", "969eae74a597b9468c8acf9e0b0429f7"
             manifestPlaceholders = [
-                    scheme: "iosupabaseflutter",
+                    scheme: "fbsupabasesimwego",
                     domain: "",
                     branchScheme: "",
                     branchDomain: "",
@@ -128,12 +128,12 @@ android {
             dimension "environment"
             applicationId "com.simwego.esim"
             versionNameSuffix ""
-            resValue "string", "app_name", "SIM We Go"
-            resValue "string", "facebook_app_id", ""
-            resValue "string", "fb_login_protocol_scheme", ""
-            resValue "string", "fb_client_token", ""
+            resValue "string", "app_name", "SimWeGo"
+            resValue "string", "facebook_app_id", "1724588091576653"
+            resValue "string", "fb_login_protocol_scheme", "fb1724588091576653"
+            resValue "string", "fb_client_token", "969eae74a597b9468c8acf9e0b0429f7"
             manifestPlaceholders = [
-                    scheme: "iosupabaseflutter",
+                    scheme: "fbsupabasesimwego",
                     domain: "",
                     branchScheme: "",
                     branchDomain: "",

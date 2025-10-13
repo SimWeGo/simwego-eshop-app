@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -205,11 +205,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9429F29C2E01A1BB00657654 /* RunnerAppClip */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RunnerAppClip;
-			sourceTree = "<group>";
-		};
 		945059BC2D96A36C0080F222 /* NotificationServiceExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -285,7 +280,6 @@
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				945059BC2D96A36C0080F222 /* NotificationServiceExtension */,
-				9429F29C2E01A1BB00657654 /* RunnerAppClip */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
 				F17EE0CC94D438B12DBB0EA7 /* Pods */,
@@ -484,7 +478,7 @@
 				8FE355902DA6D0E000497155 /* Set Status Bar Appearance : UIViewControllerBasedStatusBarAppearance true */,
 				8F1ED5DD2DF177DE00729D61 /* BRANCH_USE_TEST_MODE flag */,
 				593B207AC6DA7C65C1A142C4 /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
-				D063E7F92D7BB0C6EE9C0E79 /* FlutterFire: "flutterfire bundle-service-file" */,
+				D63CE5413F826E7783B75BA4 /* FlutterFire: "flutterfire bundle-service-file" */,
 			);
 			buildRules = (
 			);
@@ -616,13 +610,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -751,20 +741,16 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D063E7F92D7BB0C6EE9C0E79 /* FlutterFire: "flutterfire bundle-service-file" */ = {
+		D63CE5413F826E7783B75BA4 /* FlutterFire: "flutterfire bundle-service-file" */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -922,10 +908,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -935,7 +921,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim.test;
-				PRODUCT_DISPLAY_NAME = "SIM We Go Dev";
+				PRODUCT_DISPLAY_NAME = "SimWeGo Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1044,10 +1030,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1057,7 +1043,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
-				PRODUCT_DISPLAY_NAME = "SIM We Go Stg";
+				PRODUCT_DISPLAY_NAME = "SimWeGo Stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1166,10 +1152,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1179,7 +1165,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
-				PRODUCT_DISPLAY_NAME = "SIM We Go";
+				PRODUCT_DISPLAY_NAME = SimWeGo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1285,10 +1271,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1298,7 +1284,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim.test;
-				PRODUCT_DISPLAY_NAME = "SIM We Go Dev";
+				PRODUCT_DISPLAY_NAME = "SimWeGo Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1401,10 +1387,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1414,7 +1400,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
-				PRODUCT_DISPLAY_NAME = "SIM We Go Stg";
+				PRODUCT_DISPLAY_NAME = "SimWeGo Stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1517,10 +1503,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1530,7 +1516,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
-				PRODUCT_DISPLAY_NAME = "SIM We Go";
+				PRODUCT_DISPLAY_NAME = SimWeGo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1631,10 +1617,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1644,7 +1630,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim.test;
-				PRODUCT_DISPLAY_NAME = "SIM We Go Dev";
+				PRODUCT_DISPLAY_NAME = "SimWeGo Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1745,10 +1731,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1758,7 +1744,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
-				PRODUCT_DISPLAY_NAME = "SIM We Go Stg";
+				PRODUCT_DISPLAY_NAME = "SimWeGo Stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1859,10 +1845,10 @@
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
-				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
-				FACEBOOK_CLIENT_TOKEN = "";
-				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				FACEBOOK_CALLBACK_DOMAIN = fbsupabasesimwego;
+				FACEBOOK_CLIENT_TOKEN = 969eae74a597b9468c8acf9e0b0429f7;
+				FACEBOOK_SIGN_IN_APP_ID = 1724588091576653;
+				GOOGLE_SIGN_IN_CLIENT_ID = "763933589891-ch17f44qu1cga5s2j4fntv3034dr4250";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = com.simwego.esim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1872,7 +1858,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simwego.esim;
-				PRODUCT_DISPLAY_NAME = "SIM We Go";
+				PRODUCT_DISPLAY_NAME = SimWeGo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
