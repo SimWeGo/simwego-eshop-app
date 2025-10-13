@@ -62,24 +62,31 @@ class AddDeviceUseCase implements UseCase<Resource<EmptyResponse?>, NoParams> {
     );
 
     try {
-      unawaited(
-        await deviceRepository.registerDevice(
-          fcmToken: fcmToken,
-          deviceId: uniqueDeviceID,
-          platformTag: DeviceInfoRequestModel.platformTag,
-          osTag: DeviceInfoRequestModel.osTag,
-          appGuid: AppEnvironment.appEnvironmentHelper.omniConfigAppGuid,
-          version: deviceParams.appVersion,
-          userGuid: locator<LocalStorageService>()
-                  .authResponse
-                  ?.userInfo
-                  ?.userToken ??
-              "",
-          deviceInfo: DeviceInfoRequestModel(
-            deviceName: deviceParams.deviceModel,
+      if (AppEnvironment.appEnvironmentHelper.omniConfigApiKey
+              .trim()
+              .isNotEmpty &&
+          AppEnvironment.appEnvironmentHelper.omniConfigAppGuid
+              .trim()
+              .isNotEmpty) {
+        unawaited(
+          await deviceRepository.registerDevice(
+            fcmToken: fcmToken,
+            deviceId: uniqueDeviceID,
+            platformTag: DeviceInfoRequestModel.platformTag,
+            osTag: DeviceInfoRequestModel.osTag,
+            appGuid: AppEnvironment.appEnvironmentHelper.omniConfigAppGuid,
+            version: deviceParams.appVersion,
+            userGuid: locator<LocalStorageService>()
+                    .authResponse
+                    ?.userInfo
+                    ?.userToken ??
+                "",
+            deviceInfo: DeviceInfoRequestModel(
+              deviceName: deviceParams.deviceModel,
+            ),
           ),
-        ),
-      );
+        );
+      }
     } on Object catch (ex) {
       log(ex.toString());
     }
