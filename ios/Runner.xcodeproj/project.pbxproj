@@ -904,7 +904,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1026,7 +1026,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1148,7 +1148,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1267,7 +1267,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1383,7 +1383,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1499,7 +1499,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1613,7 +1613,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1727,7 +1727,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1841,7 +1841,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "";
+				DEEP_LINK_DOMAIN = "simwego-eshop-web.onrender.com";
 				DEVELOPMENT_TEAM = HAFLM5CVTF;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";

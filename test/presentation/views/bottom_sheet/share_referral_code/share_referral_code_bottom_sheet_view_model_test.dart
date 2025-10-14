@@ -65,23 +65,16 @@ Future<void> main() async {
       when(mockUserAuthService.referralCode).thenReturn("TEST123");
       when(mockReferralInfoService.getReferralAmountAndCurrency)
           .thenReturn(r"$10 USD");
-      when(
-        mockDynamicLinkingService.generateBranchLink(
-          deepLinkUrl: anyNamed("deepLinkUrl"),
-          referUserID: anyNamed("referUserID"),
-        ),
-      ).thenAnswer((_) async => "https://branch.link/test");
+      when(mockReferralInfoService.getReferralMessage)
+          .thenReturn(r"Get $10 when you join!");
 
       // Execute the method to hit lines
       await viewModel.shareButtonTapped();
 
-      // Verify the method executed key lines
-      verify(
-        mockDynamicLinkingService.generateBranchLink(
-          deepLinkUrl: anyNamed("deepLinkUrl"),
-          referUserID: anyNamed("referUserID"),
-        ),
-      ).called(1);
+      // Verify the referral code getter was accessed
+      verify(mockUserAuthService.referralCode).called(greaterThan(0));
+      verify(mockReferralInfoService.getReferralAmountAndCurrency)
+          .called(greaterThan(0));
     });
   });
 }
