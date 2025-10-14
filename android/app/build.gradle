@@ -96,7 +96,7 @@ android {
             resValue "string", "fb_client_token", ""
             manifestPlaceholders = [
                     scheme: "fbsupabasesimwego",
-                    domain: "",
+                    domain: "simwego-eshop-web.onrender.com",
                     branchScheme: "",
                     branchDomain: "",
                     branchTestDomain:"",
@@ -115,7 +115,7 @@ android {
             resValue "string", "fb_client_token", "969eae74a597b9468c8acf9e0b0429f7"
             manifestPlaceholders = [
                     scheme: "fbsupabasesimwego",
-                    domain: "",
+                    domain: "simwego-eshop-web.onrender.com",
                     branchScheme: "",
                     branchDomain: "",
                     branchTestDomain:"",
@@ -134,7 +134,7 @@ android {
             resValue "string", "fb_client_token", "969eae74a597b9468c8acf9e0b0429f7"
             manifestPlaceholders = [
                     scheme: "fbsupabasesimwego",
-                    domain: "",
+                    domain: "simwego-eshop-web.onrender.com",
                     branchScheme: "",
                     branchDomain: "",
                     branchTestDomain:"",

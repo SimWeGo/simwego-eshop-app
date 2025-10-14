@@ -13,7 +13,7 @@ class AppEnvironmentHelper {
     required this.omniConfigAppGuid,
     this.websiteUrl = "",
     this.defaultLoginType = LoginType.email,
-    this.enableBranchIO = true,
+    this.enableBranchIO = false,
     this.enablePromoCode = true,
     this.enableWalletView = true,
     this.enableBannersView = true,
