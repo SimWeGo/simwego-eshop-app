@@ -14,18 +14,22 @@ import "package:esim_open_source/presentation/reactive_service/user_authenticati
 
 class UpdateUserInfoParams {
   UpdateUserInfoParams({
-    required this.email,
-    required this.msisdn,
-    required this.firstName,
-    required this.lastName,
-    required this.isNewsletterSubscribed,
+    this.email,
+    this.msisdn,
+    this.firstName,
+    this.lastName,
+    this.isNewsletterSubscribed,
+    this.currencyCode,
+    this.languageCode,
   });
 
-  final String email;
-  final String msisdn;
-  final String firstName;
-  final String lastName;
-  final bool isNewsletterSubscribed;
+  final String? email;
+  final String? msisdn;
+  final String? firstName;
+  final String? lastName;
+  final bool? isNewsletterSubscribed;
+  final String? currencyCode;
+  final String? languageCode;
 }
 
 class UpdateUserInfoUseCase
@@ -72,6 +76,8 @@ class UpdateUserInfoUseCase
       firstName: params.firstName,
       lastName: params.lastName,
       isNewsletterSubscribed: params.isNewsletterSubscribed,
+      currencyCode: params.currencyCode,
+      languageCode: params.languageCode,
     );
 
     await userAuthenticationService.updateUserResponse(response.data);

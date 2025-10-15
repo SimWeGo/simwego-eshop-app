@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/apis/api_provider.dart";
 import "package:esim_open_source/data/remote/apis/auth_apis/auth_apis.dart";
 import "package:esim_open_source/data/remote/auth_reload_interface.dart";
@@ -10,6 +11,8 @@ import "package:esim_open_source/data/remote/responses/base_response_model.dart"
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/unauthorized_access_interface.dart";
 import "package:esim_open_source/domain/data/api_auth.dart";
+import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/utils/generation_helper.dart";
 
 class APIAuthImpl extends APIService implements APIAuth {
   APIAuthImpl._privateConstructor() : super.privateConstructor();
@@ -121,16 +124,20 @@ class APIAuthImpl extends APIService implements APIAuth {
   FutureOr<ResponseMain<AuthResponseModel>> updateUserInfo({
     required String? email,
     required String? msisdn,
-    required String firstName,
-    required String lastName,
-    required bool isNewsletterSubscribed,
+    required String? firstName,
+    required String? lastName,
+    required bool? isNewsletterSubscribed,
+    String? currencyCode,
+    String? languageCode,
   }) async {
     Map<String, dynamic> params = <String, dynamic>{
       if (email != null) "email": email,
       if (msisdn != null) "msisdn": msisdn,
-      "first_name": firstName,
-      "last_name": lastName,
-      "should_notify": isNewsletterSubscribed,
+      if (firstName != null)"first_name": firstName,
+      if (lastName != null)"last_name": lastName,
+      if (isNewsletterSubscribed != null)"should_notify": isNewsletterSubscribed,
+      "currency": currencyCode ?? getSelectedCurrencyCode(),
+      "language": languageCode ?? locator<LocalStorageService>().languageCode,
     };
 
     ResponseMain<AuthResponseModel> authResponse = await sendRequest(

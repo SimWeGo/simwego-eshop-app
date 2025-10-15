@@ -70,9 +70,11 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
   FutureOr<Resource<AuthResponseModel>> updateUserInfo({
     required String? email,
     required String? msisdn,
-    required String firstName,
-    required String lastName,
-    required bool isNewsletterSubscribed,
+    required String? firstName,
+    required String? lastName,
+    required bool? isNewsletterSubscribed,
+    String? currencyCode,
+    String? languageCode,
   }) async {
     return responseToResource(
       apiAuth.updateUserInfo(
@@ -81,6 +83,8 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
         firstName: firstName,
         lastName: lastName,
         isNewsletterSubscribed: isNewsletterSubscribed,
+        currencyCode: currencyCode,
+        languageCode: languageCode,
       ),
     );
   }

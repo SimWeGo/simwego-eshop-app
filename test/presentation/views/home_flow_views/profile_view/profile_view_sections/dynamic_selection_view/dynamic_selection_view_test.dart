@@ -220,4 +220,7 @@ class MockDataSource implements DynamicSelectionViewDataSource {
 
   @override
   Future<void> setNewSelection(String code) async {}
+
+  @override
+  DynamicSelectionViewModel? viewModel;
 }

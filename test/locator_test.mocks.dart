@@ -1970,26 +1970,6 @@ class MockApiAuthRepository extends _i1.Mock implements _i48.ApiAuthRepository {
       )) as _i19.FutureOr<dynamic>);
 
   @override
-  _i19.FutureOr<dynamic> updateUserInfo({
-    required String? email,
-    required String? msisdn,
-    required String? firstName,
-    required String? lastName,
-    required bool? isNewsletterSubscribed,
-  }) =>
-      (super.noSuchMethod(Invocation.method(
-        #updateUserInfo,
-        [],
-        {
-          #email: email,
-          #msisdn: msisdn,
-          #firstName: firstName,
-          #lastName: lastName,
-          #isNewsletterSubscribed: isNewsletterSubscribed,
-        },
-      )) as _i19.FutureOr<dynamic>);
-
-  @override
   _i19.FutureOr<_i4.Resource<_i44.AuthResponseModel>>
       refreshTokenAPITrigger() => (super.noSuchMethod(
             Invocation.method(

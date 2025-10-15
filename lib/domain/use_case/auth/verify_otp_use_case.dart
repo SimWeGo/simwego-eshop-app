@@ -13,6 +13,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/apply_referral_code_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
+import "package:esim_open_source/utils/language_currency_helper.dart";
 
 class VerifyOtpParams {
   VerifyOtpParams({
@@ -61,16 +62,24 @@ class VerifyOtpUseCase
       providerType: params.providerType,
       providerToken: params.providerToken,
     );
-    await userAuthenticationService.saveUserResponse(response.data);
-    String referralCode =
-        localStorageService.getString(LocalStorageKeys.referralCode) ?? "";
-    log("Referral code from otp use case: $referralCode");
 
-    if (referralCode.isNotEmpty) {
-      await applyReferralCodeUseCase
-          .execute(ApplyReferralCodeUserCaseParams(referralCode: referralCode));
+    if (response.resourceType == ResourceType.success) {
+      await userAuthenticationService.saveUserResponse(response.data);
+      await syncLanguageAndCurrencyCode(
+        languageCode: response.data?.userInfo?.language,
+        currencyCode: response.data?.userInfo?.currencyCode,
+      );
+      String referralCode =
+          localStorageService.getString(LocalStorageKeys.referralCode) ?? "";
+      log("Referral code from otp use case: $referralCode");
+
+      if (referralCode.isNotEmpty) {
+        await applyReferralCodeUseCase.execute(
+          ApplyReferralCodeUserCaseParams(referralCode: referralCode),
+        );
+      }
+      addDeviceUseCase.execute(NoParams());
     }
-    addDeviceUseCase.execute(NoParams());
     return response;
   }
 }

@@ -30,9 +30,11 @@ abstract interface class ApiAuthRepository {
   FutureOr<dynamic> updateUserInfo({
     required String? email,
     required String? msisdn,
-    required String firstName,
-    required String lastName,
-    required bool isNewsletterSubscribed,
+    required String? firstName,
+    required String? lastName,
+    required bool? isNewsletterSubscribed,
+    String? currencyCode,
+    String? languageCode,
   });
 
   FutureOr<dynamic> getUserInfo({

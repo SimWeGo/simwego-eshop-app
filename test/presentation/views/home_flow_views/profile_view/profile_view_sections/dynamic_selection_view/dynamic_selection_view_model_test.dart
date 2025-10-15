@@ -3,15 +3,14 @@ import "package:esim_open_source/data/remote/responses/auth/auth_response_model.
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view_model.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
-import "package:shared_preferences/shared_preferences.dart";
 import "package:stacked_services/stacked_services.dart";
 
 import "../../../../../../helpers/view_helper.dart";
@@ -24,7 +23,7 @@ Future<void> main() async {
   late DynamicSelectionViewModel viewModel;
   late MockNavigationService mockNavigationService;
   late MockBottomSheetService mockBottomSheetService;
-  late HomePagerViewModel homePagerViewModel;
+  // late HomePagerViewModel homePagerViewModel;
   late MockDataSource mockDataSource;
   late ApiAuthRepository authRepo;
 
@@ -35,7 +34,7 @@ Future<void> main() async {
         locator<NavigationService>() as MockNavigationService;
     mockBottomSheetService =
         locator<BottomSheetService>() as MockBottomSheetService;
-    homePagerViewModel = locator<HomePagerViewModel>();
+    // homePagerViewModel = locator<HomePagerViewModel>();
 
     authRepo = locator<ApiAuthRepository>();
     mockDataSource = MockDataSource();
@@ -305,13 +304,20 @@ Future<void> main() async {
     });
 
     test("currency setNewSelection executes", () async {
+      // Mock getString to return a different currency (so change is detected)
       when(
-        locator<SharedPreferences>().setString("appCurrency", "USD"),
-      ).thenAnswer((_) async => true);
+        locator<LocalStorageService>()
+            .getString(LocalStorageKeys.appCurrency),
+      ).thenReturn("EUR");
+
       when(
         locator<LocalStorageService>()
             .setString(LocalStorageKeys.appCurrency, "USD"),
       ).thenAnswer((_) async => true);
+
+      when(
+        locator<ReferralInfoService>().refreshReferralInfo(),
+      ).thenAnswer((_) async => Future<void>.value());
 
       final CurrenciesDataSource dataSource = CurrenciesDataSource();
       await dataSource.setNewSelection("USD");
@@ -457,4 +463,7 @@ class MockDataSource implements DynamicSelectionViewDataSource {
 
   @override
   Future<void> setNewSelection(String code) async {}
+
+  @override
+  DynamicSelectionViewModel? viewModel;
 }

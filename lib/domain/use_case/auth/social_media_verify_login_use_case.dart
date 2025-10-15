@@ -12,6 +12,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/apply_referral_code_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
+import "package:esim_open_source/utils/language_currency_helper.dart";
 
 class SocialMediaVerifyLoginParams {
   SocialMediaVerifyLoginParams({
@@ -58,6 +59,10 @@ class SocialMediaVerifyLoginUseCase
     );
     if (responseAuth != null) {
       await userAuthenticationService.saveUserResponse(responseAuth);
+      await syncLanguageAndCurrencyCode(
+        languageCode: response.data?.userInfo?.language,
+        currencyCode: response.data?.userInfo?.currencyCode,
+      );
     }
     String referralCode =
         localStorageService.getString(LocalStorageKeys.referralCode) ?? "";

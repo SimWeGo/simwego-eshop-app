@@ -1,17 +1,15 @@
 import "dart:developer";
-import "dart:ui";
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/app/currencies_response_model.dart";
+import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
-import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
-import "package:esim_open_source/domain/use_case/app/get_banner_use_case.dart";
 import "package:esim_open_source/domain/use_case/app/get_currencies_use_case.dart";
+import "package:esim_open_source/domain/use_case/auth/update_user_info_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
-import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/language_enum.dart";
@@ -21,19 +19,29 @@ import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/generation_helper.dart";
+import "package:esim_open_source/utils/language_currency_helper.dart";
 import "package:stacked_services/stacked_services.dart";
 
 abstract class DynamicSelectionViewDataSource {
   String get viewTitle;
+
   List<String> get data;
+
   set data(List<String> newData);
+
   String get dialogTitleText;
+
   String get dialogContentText;
+
   String get selectedData;
 
   bool isSelected(int index);
+
   Future<List<String>> getSelections();
+
   Future<void> setNewSelection(String code);
+
+  DynamicSelectionViewModel? viewModel;
 }
 
 class CurrenciesDataSource implements DynamicSelectionViewDataSource {
@@ -78,13 +86,13 @@ class CurrenciesDataSource implements DynamicSelectionViewDataSource {
 
   @override
   Future<void> setNewSelection(String code) async {
-    GetUserInfoUseCase getUserInfoUseCase =
-        GetUserInfoUseCase(locator<ApiAuthRepository>());
-    await getUserInfoUseCase.execute(NoParams());
-    await locator<LocalStorageService>()
-        .setString(LocalStorageKeys.appCurrency, code);
-    await locator<ReferralInfoService>().refreshReferralInfo();
-    GetBannerUseCase(locator()).resetBannerStream();
+    if (viewModel?.isUserLoggedIn ?? false) {
+      await viewModel?.updateLanguageAndCurrencyCode(currencyCode: code);
+    } else {
+      await syncLanguageAndCurrencyCode(
+        currencyCode: code,
+      );
+    }
   }
 
   @override
@@ -92,6 +100,9 @@ class CurrenciesDataSource implements DynamicSelectionViewDataSource {
     String value = _data[index];
     return value == selectedData;
   }
+
+  @override
+  DynamicSelectionViewModel? viewModel;
 }
 
 class LanguagesDataSource implements DynamicSelectionViewDataSource {
@@ -128,12 +139,13 @@ class LanguagesDataSource implements DynamicSelectionViewDataSource {
 
   @override
   Future<void> setNewSelection(String code) async {
-    String value = LanguageEnum.fromString(code).code;
-    StackedService.navigatorKey?.currentContext!.setLocale(Locale(value));
-    await locator<LocalStorageService>()
-        .setString(LocalStorageKeys.appLanguage, value);
-    await locator<ReferralInfoService>().refreshReferralInfo();
-     GetBannerUseCase(locator()).resetBannerStream();
+    if (viewModel?.isUserLoggedIn ?? false) {
+      await viewModel?.updateLanguageAndCurrencyCode(languageCode: code);
+    } else {
+      await syncLanguageAndCurrencyCode(
+        languageCode: code,
+      );
+    }
   }
 
   @override
@@ -141,6 +153,9 @@ class LanguagesDataSource implements DynamicSelectionViewDataSource {
     String value = LanguageEnum.fromString(_data[index]).code;
     return value == selectedData;
   }
+
+  @override
+  DynamicSelectionViewModel? viewModel;
 }
 
 class DynamicSelectionViewModel extends BaseModel {
@@ -148,6 +163,7 @@ class DynamicSelectionViewModel extends BaseModel {
 
   @override
   Future<void> onViewModelReady() async {
+    dataSource.viewModel = this;
     setViewState(ViewState.busy);
     List<String> response = await dataSource.getSelections();
     if (response.isEmpty) {
@@ -176,6 +192,39 @@ class DynamicSelectionViewModel extends BaseModel {
       refreshData();
       locator<HomePagerViewModel>().changeSelectedTabIndex(index: 0);
       navigationService.back();
+    }
+  }
+
+  Future<void> updateLanguageAndCurrencyCode({
+    String? languageCode,
+    String? currencyCode,
+  }) async {
+    bool hasNewLanguageCode = hasLanguageCodeChanged(languageCode);
+    bool hasNewCurrencyCode = hasLanguageCodeChanged(currencyCode);
+
+    if (hasNewLanguageCode || hasNewCurrencyCode) {
+      setViewState(ViewState.busy);
+      Resource<AuthResponseModel> updateInfoResponse =
+          await UpdateUserInfoUseCase(locator<ApiAuthRepository>()).execute(
+        UpdateUserInfoParams(
+          languageCode: languageCode,
+          currencyCode: currencyCode,
+        ),
+      );
+
+      await handleResponse(
+        updateInfoResponse,
+        onSuccess: (Resource<AuthResponseModel> response) async {
+          String? apiCurrency = response.data?.userInfo?.currencyCode;
+          String? apiLanguageCode = response.data?.userInfo?.language;
+
+          await syncLanguageAndCurrencyCode(
+            languageCode: apiLanguageCode,
+            currencyCode: apiCurrency,
+          );
+        },
+      );
+      setViewState(ViewState.idle);
     }
   }
 }
