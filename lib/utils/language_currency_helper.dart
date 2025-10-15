@@ -1,3 +1,4 @@
+import "dart:developer";
 import "dart:ui";
 
 import "package:easy_localization/easy_localization.dart";
@@ -12,8 +13,12 @@ Future<void> syncLanguageAndCurrencyCode({
   String? languageCode,
   String? currencyCode,
 }) async {
+  log("syncLanguageAndCurrencyCode >>> languageCode:$languageCode >> currencyCode:$currencyCode");
+
   bool currencyCodeChanged = hasCurrencyCodeChanged(currencyCode);
   bool languageCodeChanged = hasLanguageCodeChanged(languageCode);
+
+  log("syncLanguageAndCurrencyCode >>> is called >> languageCodeChanged:$languageCodeChanged >> currencyCodeChanged:$currencyCodeChanged");
 
   if (currencyCodeChanged || languageCodeChanged) {
     if (currencyCodeChanged) {
@@ -46,12 +51,13 @@ bool hasCurrencyCodeChanged(String? currencyCode) {
 }
 
 bool hasLanguageCodeChanged(String? languageCode) {
-  if (languageCode != null &&
-      languageCode.trim().isNotEmpty &&
-      languageCode !=
-          locator<LocalStorageService>()
-              .getString(LocalStorageKeys.appLanguage)) {
-    return true;
+  if (languageCode != null && languageCode.trim().isNotEmpty) {
+    LanguageEnum lang = LanguageEnum.fromString(languageCode);
+    if (lang.code !=
+        locator<LocalStorageService>()
+            .getString(LocalStorageKeys.appLanguage)) {
+      return true;
+    }
   }
   return false;
 }

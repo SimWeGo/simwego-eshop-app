@@ -17,6 +17,7 @@ import "package:esim_open_source/domain/use_case/auth/set_unauthorized_access_ca
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/presentation/enums/language_enum.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
+import "package:esim_open_source/utils/language_currency_helper.dart";
 import "package:flutter/material.dart";
 import "package:http/http.dart";
 import "package:stacked/stacked.dart";
@@ -94,6 +95,10 @@ class MainViewModel extends ReactiveViewModel
     AuthResponseModel? authResponseModel = response?.dataOfType;
     if (authResponseModel != null) {
       locator<UserAuthenticationService>().saveUserResponse(authResponseModel);
+      await syncLanguageAndCurrencyCode(
+        languageCode: authResponseModel.userInfo?.language,
+        currencyCode: authResponseModel.userInfo?.currencyCode,
+      );
     }
   }
 
