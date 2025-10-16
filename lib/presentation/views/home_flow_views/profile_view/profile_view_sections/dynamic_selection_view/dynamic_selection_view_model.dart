@@ -200,7 +200,7 @@ class DynamicSelectionViewModel extends BaseModel {
     String? currencyCode,
   }) async {
     bool hasNewLanguageCode = hasLanguageCodeChanged(languageCode);
-    bool hasNewCurrencyCode = hasLanguageCodeChanged(currencyCode);
+    bool hasNewCurrencyCode = hasCurrencyCodeChanged(currencyCode);
 
     if (hasNewLanguageCode || hasNewCurrencyCode) {
       setViewState(ViewState.busy);
