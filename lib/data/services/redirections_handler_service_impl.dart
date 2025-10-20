@@ -167,16 +167,16 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
 
       // TOP UP
       case BuyTopUp():
-        if (isClicked) {
-          unawaited(
-            bottomSheetService.showCustomSheet(
-              enableDrag: false,
-              isScrollControlled: true,
-              variant: BottomSheetType.bundleQrCode,
-              data: BundleQrBottomRequest(iccID: iccid),
-            ),
-          );
-        }
+        // if (isClicked) {
+        //   unawaited(
+        //     bottomSheetService.showCustomSheet(
+        //       enableDrag: false,
+        //       isScrollControlled: true,
+        //       variant: BottomSheetType.bundleQrCode,
+        //       data: BundleQrBottomRequest(iccID: iccid),
+        //     ),
+        //   );
+        // }
         unawaited(refreshMyEsims());
 
       // Consumption Bundle Detail
