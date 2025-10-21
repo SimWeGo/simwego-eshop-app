@@ -7,6 +7,7 @@ import "package:esim_open_source/domain/repository/services/local_storage_servic
 import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/use_case/app/get_banner_use_case.dart";
 import "package:esim_open_source/presentation/enums/language_enum.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
 import "package:stacked_services/stacked_services.dart";
 
 Future<void> syncLanguageAndCurrencyCode({
@@ -34,6 +35,7 @@ Future<void> syncLanguageAndCurrencyCode({
           .setString(LocalStorageKeys.appLanguage, value);
     }
 
+    await locator<MyESimViewModel>().refreshScreen();
     await locator<ReferralInfoService>().refreshReferralInfo();
     GetBannerUseCase(locator()).resetBannerStream();
   }
