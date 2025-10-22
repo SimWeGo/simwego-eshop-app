@@ -48,8 +48,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" android:host="${domain}" />
                 <data android:scheme="https" android:host="${domain}" />
-                <data android:scheme="http" android:host="www.${domain}" />
-                <data android:scheme="https" android:host="www.${domain}" />
             </intent-filter>
 
             <meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
@@ -73,30 +71,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
-
-            <!-- Branch App Links - Live App -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- REPLACE `android:host` with your `app.link` domain -->
-                <data android:scheme="https" android:host="${branchDomain}.app.link" />
-                <!-- REPLACE `android:host` with your `-alternate` domain (required for proper functioning of App Links and Deepviews) -->
-                <data android:scheme="https" android:host="${branchDomain}-alternate.app.link" />
-            </intent-filter>
-
-            <!-- Branch App Links - Test App -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="${branchTestDomain}.test-app.link" />
-                <!-- REPLACE `android:host` with your `-alternate` domain (required for proper functioning of App Links and Deepviews) -->
-                <data android:scheme="https" android:host="${branchTestDomain}-alternate.test-app.link" />
-            </intent-filter>
-
-
-
         </activity>
 
         <activity
