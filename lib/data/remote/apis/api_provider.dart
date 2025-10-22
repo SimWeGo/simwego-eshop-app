@@ -15,6 +15,7 @@ import "package:esim_open_source/domain/repository/services/connectivity_service
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
+import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/utils/generation_helper.dart";
 import "package:http/http.dart" as http;
 
@@ -282,6 +283,9 @@ class APIService {
         ),
         fromJson: AuthResponseModel.fromAPIJson,
       );
+
+      await locator<UserAuthenticationService>()
+          .saveUserResponse(authResponse.dataOfType);
 
       HttpRequest.notifyAuthReloadListeners(authResponse);
 

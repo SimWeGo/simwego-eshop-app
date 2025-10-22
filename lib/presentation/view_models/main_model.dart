@@ -71,7 +71,9 @@ class MainViewModel extends ReactiveViewModel
       log("onUnauthorizedAccessCallBackUseCase: General Error");
     }
 
-    logoutUser();
+    if(locator<UserAuthenticationService>().isUserLoggedIn) {
+      logoutUser();
+    }
     //_navigationService.navigateTo(ContinueWithEmailView.routeName);
   }
 
@@ -94,7 +96,7 @@ class MainViewModel extends ReactiveViewModel
   ) async {
     AuthResponseModel? authResponseModel = response?.dataOfType;
     if (authResponseModel != null) {
-      locator<UserAuthenticationService>().saveUserResponse(authResponseModel);
+      // locator<UserAuthenticationService>().saveUserResponse(authResponseModel);
       await syncLanguageAndCurrencyCode(
         languageCode: authResponseModel.userInfo?.language,
         currencyCode: authResponseModel.userInfo?.currencyCode,

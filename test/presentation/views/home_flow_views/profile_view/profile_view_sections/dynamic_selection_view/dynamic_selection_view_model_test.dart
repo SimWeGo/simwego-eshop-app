@@ -307,7 +307,7 @@ Future<void> main() async {
       // Mock getString to return a different currency (so change is detected)
       when(
         locator<LocalStorageService>()
-            .getString(LocalStorageKeys.appCurrency),
+            .currencyCode,
       ).thenReturn("EUR");
 
       when(

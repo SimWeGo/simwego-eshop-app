@@ -12,6 +12,7 @@ import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/unauthorized_access_interface.dart";
 import "package:esim_open_source/domain/data/api_auth.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/presentation/enums/language_enum.dart";
 import "package:esim_open_source/utils/generation_helper.dart";
 
 class APIAuthImpl extends APIService implements APIAuth {
@@ -137,7 +138,7 @@ class APIAuthImpl extends APIService implements APIAuth {
       if (lastName != null)"last_name": lastName,
       if (isNewsletterSubscribed != null)"should_notify": isNewsletterSubscribed,
       "currency": currencyCode ?? getSelectedCurrencyCode(),
-      "language": languageCode ?? locator<LocalStorageService>().languageCode,
+      "language": languageCode ?? LanguageEnum.fromCode(locator<LocalStorageService>().languageCode).languageText,
     };
 
     ResponseMain<AuthResponseModel> authResponse = await sendRequest(

@@ -28,7 +28,7 @@ Future<void> syncLanguageAndCurrencyCode({
     }
 
     if (languageCodeChanged) {
-      String value = LanguageEnum.fromString(languageCode ?? "en").code;
+      String value = LanguageEnum.fromString(languageCode ?? "English").code;
       await StackedService.navigatorKey?.currentContext!
           .setLocale(Locale(value));
       await locator<LocalStorageService>()
@@ -45,8 +45,7 @@ bool hasCurrencyCodeChanged(String? currencyCode) {
   if (currencyCode != null &&
       currencyCode.trim().isNotEmpty &&
       currencyCode !=
-          locator<LocalStorageService>()
-              .getString(LocalStorageKeys.appCurrency)) {
+          locator<LocalStorageService>().currencyCode) {
     return true;
   }
   return false;
@@ -56,8 +55,7 @@ bool hasLanguageCodeChanged(String? languageCode) {
   if (languageCode != null && languageCode.trim().isNotEmpty) {
     LanguageEnum lang = LanguageEnum.fromString(languageCode);
     if (lang.code !=
-        locator<LocalStorageService>()
-            .getString(LocalStorageKeys.appLanguage)) {
+        locator<LocalStorageService>().languageCode) {
       return true;
     }
   }
