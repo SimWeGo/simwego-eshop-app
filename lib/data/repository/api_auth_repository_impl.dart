@@ -68,13 +68,14 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
 
   @override
   FutureOr<Resource<AuthResponseModel>> updateUserInfo({
-    required String? email,
-    required String? msisdn,
-    required String? firstName,
-    required String? lastName,
-    required bool? isNewsletterSubscribed,
+    String? email,
+    String? msisdn,
+    String? firstName,
+    String? lastName,
+    bool? isNewsletterSubscribed,
     String? currencyCode,
     String? languageCode,
+    String? bearerToken,
   }) async {
     return responseToResource(
       apiAuth.updateUserInfo(
@@ -85,6 +86,7 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
         isNewsletterSubscribed: isNewsletterSubscribed,
         currencyCode: currencyCode,
         languageCode: languageCode,
+        bearerToken: bearerToken,
       ),
     );
   }

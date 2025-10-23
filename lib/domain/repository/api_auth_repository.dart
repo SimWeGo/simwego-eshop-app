@@ -28,13 +28,14 @@ abstract interface class ApiAuthRepository {
   FutureOr<dynamic> deleteAccount();
 
   FutureOr<dynamic> updateUserInfo({
-    required String? email,
-    required String? msisdn,
-    required String? firstName,
-    required String? lastName,
-    required bool? isNewsletterSubscribed,
+    String? email,
+    String? msisdn,
+    String? firstName,
+    String? lastName,
+    bool? isNewsletterSubscribed,
     String? currencyCode,
     String? languageCode,
+    String? bearerToken,
   });
 
   FutureOr<dynamic> getUserInfo({

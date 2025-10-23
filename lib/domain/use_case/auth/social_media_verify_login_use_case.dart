@@ -50,7 +50,7 @@ class SocialMediaVerifyLoginUseCase
   FutureOr<Resource<AuthResponseModel>> execute(
     SocialMediaVerifyLoginParams params,
   ) async {
-    Resource<AuthResponseModel> response = await repository.getUserInfo(
+    Resource<AuthResponseModel> response = await repository.updateUserInfo(
       bearerToken: params.accessToken,
     );
     AuthResponseModel? responseAuth = response.data?.copyWith(

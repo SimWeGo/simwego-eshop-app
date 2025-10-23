@@ -48,16 +48,6 @@ class RegisterResponse {
   }
 }
 
-/// telephoneNumber : "96170736943"
-/// mobileNumber : "96170736943"
-/// email : "hassan.yass211ine@montyholding.com"
-/// isPrimary : true
-/// firstName : "georges"
-/// lastName : "nicolas"
-/// companyEmail : "georges@example.com"
-/// companyWebsite : "georges@example.com"
-/// recordGuid : "e8991440-6476-46f3-a5e6-d57e29d9fd9c"
-
 Contacts contactsFromJson(String str) => Contacts.fromJson(json.decode(str));
 String contactsToJson(Contacts data) => json.encode(data.toJson());
 
@@ -150,20 +140,6 @@ class Contacts {
     return map;
   }
 }
-
-/// titleId : 1053
-/// clientTypeId : 1063
-/// zoneId : null
-/// isPrimary : true
-/// isActive : true
-/// name : null
-/// firstName : "georges"
-/// lastName : "nicolas"
-/// email : "hassan.yass211ine@montyholding.com"
-/// username : "gn_12111"
-/// externalUserId : "f1b84903-24f4-499d-b5d5-054ed7e703b1"
-/// createdDate : 1693898713
-/// recordGuid : "a93c17c2-57e6-4fbf-9ff1-c17f225897d1"
 
 Client clientFromJson(String str) => Client.fromJson(json.decode(str));
 String clientToJson(Client data) => json.encode(data.toJson());

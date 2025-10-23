@@ -123,28 +123,35 @@ class APIAuthImpl extends APIService implements APIAuth {
 
   @override
   FutureOr<ResponseMain<AuthResponseModel>> updateUserInfo({
-    required String? email,
-    required String? msisdn,
-    required String? firstName,
-    required String? lastName,
-    required bool? isNewsletterSubscribed,
+    String? email,
+    String? msisdn,
+    String? firstName,
+    String? lastName,
+    bool? isNewsletterSubscribed,
+    String? bearerToken,
     String? currencyCode,
     String? languageCode,
   }) async {
+    Map<String, String> headers = <String, String>{
+      "Authorization": "Bearer $bearerToken",
+    };
+
     Map<String, dynamic> params = <String, dynamic>{
       if (email != null) "email": email,
       if (msisdn != null) "msisdn": msisdn,
-      if (firstName != null)"first_name": firstName,
-      if (lastName != null)"last_name": lastName,
-      if (isNewsletterSubscribed != null)"should_notify": isNewsletterSubscribed,
-      "currency": currencyCode ?? getSelectedCurrencyCode(),
-      "language": languageCode ?? LanguageEnum.fromCode(locator<LocalStorageService>().languageCode).languageText,
+      if (firstName != null) "first_name": firstName,
+      if (lastName != null) "last_name": lastName,
+      if (isNewsletterSubscribed != null) "should_notify": isNewsletterSubscribed,
+      if (currencyCode != null) "currency": currencyCode, //?? getSelectedCurrencyCode(),
+      if (languageCode != null) "language": languageCode , //?? LanguageEnum.fromCode(locator<LocalStorageService>().languageCode).languageText,
     };
 
     ResponseMain<AuthResponseModel> authResponse = await sendRequest(
       endPoint: createAPIEndpoint(
         parameters: params,
         endPoint: AuthApis.updateUserInfo,
+        additionalHeaders:
+            (bearerToken?.isNotEmpty ?? false) ? headers : <String, String>{},
       ),
       fromJson: AuthResponseModel.fromAPIJson,
     );
