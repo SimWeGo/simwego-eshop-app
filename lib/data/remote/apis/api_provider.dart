@@ -213,6 +213,17 @@ class APIService {
     }
 
     if (endPoint.isRefreshToken) {
+      String refreshToken = locator<LocalStorageService>().refreshToken;
+
+      if (refreshToken.isEmpty) {
+        throw ResponseMainException(
+          ResponseMain<dynamic>.createError(
+            responseCode: 401,
+            errorMessage: "unauthorized user",
+          ),
+        );
+      }
+
       request.headers.putIfAbsent(
         "x-refresh-token",
         () => locator<LocalStorageService>().refreshToken,

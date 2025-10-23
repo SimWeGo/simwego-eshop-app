@@ -64,17 +64,21 @@ class MyESimViewModel extends BaseModel {
     unawaited(navigationService.navigateTo(NotificationsView.routeName));
   }
 
-  PurchaseEsimBundleResponseModel? _getEsimBundleByICCID(String iccid){
+  PurchaseEsimBundleResponseModel? _getEsimBundleByICCID(String iccid) {
     PurchaseEsimBundleResponseModel? selectedItem;
-    selectedItem = _state.currentESimList.where((PurchaseEsimBundleResponseModel item) => item.iccid == iccid).firstOrNull;
-    selectedItem ??= _state.expiredESimList.where((PurchaseEsimBundleResponseModel item) => item.iccid == iccid).firstOrNull;
+    selectedItem = _state.currentESimList
+        .where((PurchaseEsimBundleResponseModel item) => item.iccid == iccid)
+        .firstOrNull;
+    selectedItem ??= _state.expiredESimList
+        .where((PurchaseEsimBundleResponseModel item) => item.iccid == iccid)
+        .firstOrNull;
     return selectedItem;
   }
 
   Future<void> onTopUpClick({required String iccid}) async {
     PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -106,7 +110,7 @@ class MyESimViewModel extends BaseModel {
   Future<void> onConsumptionClick({required String iccid}) async {
     PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -130,7 +134,7 @@ class MyESimViewModel extends BaseModel {
   Future<void> onQrCodeClick({required String iccid}) async {
     PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -149,7 +153,7 @@ class MyESimViewModel extends BaseModel {
     try {
       PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
 
-      if(item == null) {
+      if (item == null) {
         return;
       }
 
@@ -180,7 +184,7 @@ class MyESimViewModel extends BaseModel {
   Future<void> onEditNameClick({required String iccid}) async {
     PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -215,7 +219,7 @@ class MyESimViewModel extends BaseModel {
     }
     PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -241,7 +245,7 @@ class MyESimViewModel extends BaseModel {
     }
     PurchaseEsimBundleResponseModel? item = _getEsimBundleByICCID(iccid);
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -302,8 +306,10 @@ class MyESimViewModel extends BaseModel {
   Future<void> refreshScreen({
     bool isSilent = true,
   }) async {
-    handleNotificationBadge();
-    fetchESimData(isSilent: isSilent);
+    if (isUserLoggedIn) {
+      handleNotificationBadge();
+      fetchESimData(isSilent: isSilent);
+    }
   }
 
   Future<void> fetchESimData({

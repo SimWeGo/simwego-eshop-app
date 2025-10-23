@@ -74,10 +74,19 @@ class LocalStorageServiceImpl implements LocalStorageService {
 
   @override
   Future<void> clear() async {
-    String? tempFcm = getString(LocalStorageKeys.fcmToken);
-    await _sharedPrefs.clear();
-    _authResponse = null;
-    await setString(LocalStorageKeys.fcmToken, tempFcm ?? "");
+    List<LocalStorageKeys> exceptionKeys = <LocalStorageKeys>[
+      LocalStorageKeys.fcmToken,
+      LocalStorageKeys.appLanguage,
+      LocalStorageKeys.appCurrency,
+      LocalStorageKeys.appConfigurations,
+      LocalStorageKeys.hasPreviouslyStarted,
+    ];
+
+    LocalStorageKeys.values.forEach((LocalStorageKeys key) async {
+      if (!exceptionKeys.contains(key)) {
+        await _sharedPrefs.remove(key.value);
+      }
+    });
   }
 
   @override
