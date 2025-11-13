@@ -1,4 +1,7 @@
+import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
+import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
+import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view_model.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -98,13 +101,15 @@ Future<void> main() async {
     });
 
     test("updateButtonState handles validation errors", () {
-      viewModel..userPhoneNumber = "invalid"
-      ..isPhoneValid = false
-      ..updateButtonState();
+      viewModel
+        ..userPhoneNumber = "invalid"
+        ..isPhoneValid = false
+        ..updateButtonState();
       expect(viewModel.validationError, isNotNull);
 
-      viewModel..isPhoneValid = true
-      ..updateButtonState();
+      viewModel
+        ..isPhoneValid = true
+        ..updateButtonState();
       expect(viewModel.validationError, isNull);
     });
 
@@ -118,6 +123,71 @@ Future<void> main() async {
 
     test("updateUserInfoUseCase is initialized", () {
       expect(viewModel.updateUserInfoUseCase, isNotNull);
+    });
+
+    test("onViewModelReady initializes data", () async {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
+
+      await viewModel.onViewModelReady();
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+
+      expect(viewModel.nameController, isNotNull);
+      expect(viewModel.familyNameController, isNotNull);
+      expect(viewModel.emailController, isNotNull);
+    });
+
+    test("saveButtonTapped executes successfully", () async {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
+      when(locator<ApiAuthRepository>().updateUserInfo(
+        msisdn: anyNamed("msisdn"),
+        firstName: anyNamed("firstName"),
+        lastName: anyNamed("lastName"),
+        email: anyNamed("email"),
+        isNewsletterSubscribed: anyNamed("isNewsletterSubscribed"),
+      ),).thenAnswer(
+        (_) async => Resource<AuthResponseModel>.success(
+          AuthResponseModel(),
+          message: "",
+        ),
+      );
+
+      viewModel.nameController.text = "John";
+      viewModel.familyNameController.text = "Doe";
+      viewModel.emailController.text = "test@example.com";
+
+      await viewModel.saveButtonTapped();
+
+      expect(viewModel.viewState.name, isA<String>());
+    });
+
+    test("isPhoneInputEnabled returns correct value for each login type", () {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
+      expect(viewModel.isPhoneInputEnabled, isTrue);
+
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.phoneNumber);
+      expect(viewModel.isPhoneInputEnabled, isFalse);
+
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.emailAndPhone);
+      expect(viewModel.isPhoneInputEnabled, isFalse);
+    });
+
+    test("isEmailFieldEditable returns correct value for each login type", () {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.email);
+      expect(viewModel.isEmailFieldEditable, isFalse);
+
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.phoneNumber);
+      expect(viewModel.isEmailFieldEditable, isTrue);
+
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.emailAndPhone);
+      expect(viewModel.isEmailFieldEditable, isFalse);
     });
   });
 }

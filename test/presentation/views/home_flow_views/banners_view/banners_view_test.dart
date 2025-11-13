@@ -1,4 +1,3 @@
-import "package:esim_open_source/data/remote/responses/app/banner_response_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banner_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banners_view.dart";
 import "package:flutter/material.dart";
@@ -155,28 +154,52 @@ void main() async {
       expect(find.byType(BannersView), findsOneWidget);
       expect(find.byType(PageView), findsOneWidget);
     });
-  });
-}
 
-List<BannerResponseModel> getMockBanners() {
-  return <BannerResponseModel>[
-    BannerResponseModel(
-      title: "Live Chat Support",
-      description: "Get instant help from our team",
-      action: "CHAT",
-      image: "https://example.com/chat.jpg",
-    ),
-    BannerResponseModel(
-      title: "Refer and Earn",
-      description: "Invite friends and earn rewards",
-      action: "REFER_NOW",
-      image: "https://example.com/refer.jpg",
-    ),
-    BannerResponseModel(
-      title: "Cashback Rewards",
-      description: "Earn cashback on every purchase",
-      action: "CASHBACK",
-      image: "https://example.com/cashback.jpg",
-    ),
-  ];
+    testWidgets("widget build method executes fully", (WidgetTester tester) async {
+      const BannersView view = BannersView();
+
+      await tester.pumpWidget(
+        createTestableWidget(view),
+      );
+
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // Verify widget tree is built correctly
+      expect(find.byType(BannersView), findsOneWidget);
+      expect(find.byType(PageView), findsOneWidget);
+    });
+
+    testWidgets("onDispose callback executes", (WidgetTester tester) async {
+      const BannersView view = BannersView();
+
+      await tester.pumpWidget(
+        createTestableWidget(view),
+      );
+
+      await tester.pump();
+
+      // Replace widget to trigger dispose
+      await tester.pumpWidget(
+        createTestableWidget(Container()),
+      );
+
+      // Should dispose without errors
+      expect(find.byType(BannersView), findsNothing);
+    });
+
+    testWidgets("onViewModelReady callback is invoked", (WidgetTester tester) async {
+      const BannersView view = BannersView();
+
+      await tester.pumpWidget(
+        createTestableWidget(view),
+      );
+
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // View model should be initialized
+      expect(find.byType(BannersView), findsOneWidget);
+    });
+  });
 }

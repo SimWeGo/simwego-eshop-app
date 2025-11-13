@@ -31,7 +31,7 @@ class DataPlansView extends StatelessWidget {
   static const String routeName = "DataPlansView";
 
   final BundlesByCountriesViewModel bundleByCountryViewModel =
-      BundlesByCountriesViewModel(
+  BundlesByCountriesViewModel(
     const EsimArguments(
       id: "9651b0b3-8ace-479b-98bd-3960b6b3957b,c9cbd3ca-54c9-436f-b4d2-cf53a84c78e8",
       name: "",
@@ -50,70 +50,70 @@ class DataPlansView extends StatelessWidget {
       fireOnViewModelReadyOnce: true,
       staticChild: const BannersView(),
       viewModel: locator<DataPlansViewModel>(),
-      builder: (
-        BuildContext context,
-        DataPlansViewModel viewModel,
-        Widget? childWidget,
-        double screenHeight,
-      ) =>
+      builder: (BuildContext context,
+          DataPlansViewModel viewModel,
+          Widget? childWidget,
+          double screenHeight,) =>
           KeyboardDismissOnTap(
-        child: SizedBox(
-          height: double.infinity,
-          child: PaddingWidget.applyPadding(
-            top: 20,
-            child: Column(
-              children: <Widget>[
-                PaddingWidget.applySymmetricPadding(
-                  horizontal: 15,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        LocaleKeys.dataPlans_titleText.tr(),
-                        style: headerTwoBoldTextStyle(
+            child: SizedBox(
+              height: double.infinity,
+              child: PaddingWidget.applyPadding(
+                top: 20,
+                child: Column(
+                  children: <Widget>[
+                    PaddingWidget.applySymmetricPadding(
+                      horizontal: 15,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            LocaleKeys.dataPlans_titleText.tr(),
+                            style: headerTwoBoldTextStyle(
+                              context: context,
+                              fontColor: mainDarkTextColor(context: context),
+                            ),
+                          ),
+                          getTopTrialingWidget(
+                            context: context,
+                            viewModel: viewModel,
+                          ),
+                        ],
+                      ),
+                    ),
+                    verticalSpaceMedium,
+                    PaddingWidget.applySymmetricPadding(
+                      horizontal: 15,
+                      child: MainInputField.searchField(
+                        clearSearchEnabled: true,
+                        themeColor: themeColor,
+                        controller: viewModel.searchTextFieldController,
+                        backGroundColor: whiteBackGroundColor(context: context),
+                        hintText: LocaleKeys.dataPlans_SearchPlaceHolderText
+                            .tr(),
+                        labelStyle: captionOneNormalTextStyle(
                           context: context,
-                          fontColor: mainDarkTextColor(context: context),
+                          fontColor: secondaryTextColor(context: context),
                         ),
                       ),
-                      getTopTrialingWidget(
-                        context: context,
-                        viewModel: viewModel,
-                      ),
-                    ],
-                  ),
-                ),
-                verticalSpaceMedium,
-                PaddingWidget.applySymmetricPadding(
-                  horizontal: 15,
-                  child: MainInputField.searchField(
-                    themeColor: themeColor,
-                    controller: viewModel.searchTextFieldController,
-                    backGroundColor: whiteBackGroundColor(context: context),
-                    hintText: LocaleKeys.dataPlans_SearchPlaceHolderText.tr(),
-                    labelStyle: captionOneNormalTextStyle(
-                      context: context,
-                      fontColor: secondaryTextColor(context: context),
                     ),
-                  ),
+                    verticalSpace(15),
+                    AppEnvironment.appEnvironmentHelper.isCruiseEnabled
+                        ? getCruisePagerView(
+                      context: context,
+                      viewModel: viewModel,
+                      childWidget: childWidget,
+                    )
+                        : getTabSection(
+                      context: context,
+                      viewModel: viewModel,
+                      isCruiseEnabled: false,
+                      childWidget: childWidget,
+                    ),
+                  ],
                 ),
-                verticalSpace(15),
-                AppEnvironment.appEnvironmentHelper.isCruiseEnabled
-                    ? getCruisePagerView(
-                        context: context,
-                        viewModel: viewModel,
-                        childWidget: childWidget,
-                      )
-                    : getTabSection(
-                        context: context,
-                        viewModel: viewModel,
-                        isCruiseEnabled: false,
-                        childWidget: childWidget,
-                      ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 
@@ -134,8 +134,8 @@ class DataPlansView extends StatelessWidget {
       selectedTabTextStyle: captionOneMediumTextStyle(context: context),
       childWidget: DataPlansViewModel.cruiseTabBarSelectedIndex == 0
           ? viewModel.showBanner
-              ? childWidget
-              : null
+          ? childWidget
+          : null
           : null,
       tabs: <Tab>[
         Tab(
@@ -154,23 +154,23 @@ class DataPlansView extends StatelessWidget {
             start: 15,
             child: viewModel.filteredCruiseBundles.isEmpty
                 ? Center(
-                    child: Text(
-                      LocaleKeys.bundleDetails_emptyText.tr(),
-                      style: captionOneNormalTextStyle(
-                        context: context,
-                        fontColor: emptyStateTextColor(context: context),
-                      ),
-                    ),
-                  )
+              child: Text(
+                LocaleKeys.bundleDetails_emptyText.tr(),
+                style: captionOneNormalTextStyle(
+                  context: context,
+                  fontColor: emptyStateTextColor(context: context),
+                ),
+              ),
+            )
                 : BundlesListView(
-                    showShimmer: viewModel.isBundleServicesBusy(),
-                    bundles: viewModel.filteredCruiseBundles,
-                    hideSupportedCountries: true,
-                    onBundleSelected:
-                        (BundleResponseModel selectedBundle) async =>
-                            viewModel.navigateToEsimDetail(selectedBundle),
-                    lastItemBottomPadding: 90,
-                  ),
+              showShimmer: viewModel.isBundleServicesBusy(),
+              bundles: viewModel.filteredCruiseBundles,
+              hideSupportedCountries: true,
+              onBundleSelected:
+                  (BundleResponseModel selectedBundle) async =>
+                  viewModel.navigateToEsimDetail(selectedBundle),
+              lastItemBottomPadding: 90,
+            ),
           ),
         ),
         Column(

@@ -40,14 +40,6 @@ import "package:phone_input/phone_input_package.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class BundleDetailBottomSheetViewModel extends BaseModel {
-  BundleDetailBottomSheetViewModel({
-    RegionRequestModel? region,
-    List<CountriesRequestModel>? countries,
-    BundleResponseModel? bundle,
-  })  : _bundle = bundle,
-        _region = region,
-        _tempBundle = bundle,
-        _countries = countries;
 
   //#region UseCases
   final TmpLoginUseCase tmpLoginUseCase = TmpLoginUseCase(locator());
@@ -59,12 +51,10 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   //#endregion
 
   //#region Variables
-  final RegionRequestModel? _region;
-  BundleResponseModel? _bundle;
-  final BundleResponseModel? _tempBundle;
-  final List<CountriesRequestModel>? _countries;
-
-  BundleResponseModel? get bundle => _bundle;
+  late RegionRequestModel? region;
+  late BundleResponseModel? bundle;
+  late BundleResponseModel? tempBundle;
+  late List<CountriesRequestModel>? countriesList;
 
   PhoneController phoneController =
       PhoneController(const PhoneNumber(isoCode: IsoCode.LB, nsn: ""));
@@ -363,8 +353,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
                 .appEnvironmentHelper.defaultPaymentTypeList.first.type,
         bearerToken: bearerToken,
         relatedSearch: RelatedSearchRequestModel(
-          region: _region,
-          countries: _countries,
+          region: region,
+          countries: countriesList,
         ),
       ),
     );
@@ -502,8 +492,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       event: AnalyticEvent.buySuccess(
         utm: utm,
         platform: Platform.isAndroid ? "Android" : "iOS",
-        amount: _bundle?.priceDisplay ?? "",
-        currency: _bundle?.currencyCode ?? "",
+        amount: bundle?.priceDisplay ?? "",
+        currency: bundle?.currencyCode ?? "",
       ),
     );
 
@@ -579,7 +569,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   }) async {
     if (!promoCodeFieldEnabled) {
       _promoCode = null;
-      _bundle = _tempBundle;
+      bundle = tempBundle;
       _promoCodeController.clear();
       updatePromoCodeView(isEnabled: true);
       notifyListeners();
@@ -599,7 +589,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     handleResponse(
       response,
       onSuccess: (Resource<BundleResponseModel?> result) async {
-        _bundle = result.data;
+        bundle = result.data;
         _promoCode = promoCode;
         if (isReferral) {
           _promoCodeController.text = _referralCode;
@@ -612,7 +602,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         );
       },
       onFailure: (Resource<BundleResponseModel?> result) async {
-        _bundle = _tempBundle;
+        bundle = tempBundle;
         _promoCode = null;
 
         if (isReferral) {

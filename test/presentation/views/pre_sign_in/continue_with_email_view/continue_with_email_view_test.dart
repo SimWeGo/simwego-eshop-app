@@ -1,5 +1,6 @@
 // continue_with_email_view_test.dart
 
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view.dart";
@@ -45,6 +46,18 @@ Future<void> main() async {
       expect(find.byType(MainInputField), findsOneWidget);
       expect(find.byType(MainButton), findsOneWidget);
       expect(find.textContaining("terms"), findsOneWidget);
+    });
+
+    testWidgets("ContinueWithEmailViewArgs constructor initializes correctly",
+        (WidgetTester tester) async {
+      final InAppRedirection redirection = InAppRedirection.cashback();
+      final ContinueWithEmailViewArgs args = ContinueWithEmailViewArgs(
+        redirection: redirection,
+        localLoginType: LoginType.email,
+      );
+
+      expect(args.redirection, equals(redirection));
+      expect(args.localLoginType, equals(LoginType.email));
     });
 
     testWidgets("Tapping on terms checkbox calls updateTermsSelections",
@@ -109,6 +122,73 @@ Future<void> main() async {
 
       expect(redirectionProp.value, isNotNull);
       // expect(redirectionProp.value!.route, '/home');
+    });
+
+    testWidgets("Terms checkbox shows selected state when checked",
+        (WidgetTester tester) async {
+      tester.view.physicalSize = Size(tester.view.physicalSize.width, 2556);
+      tester.view.devicePixelRatio = 3.0;
+
+      when(mockViewModel.state).thenReturn(
+        ContinueWithEmailState()..isTermsChecked = true,
+      );
+
+      await tester.pumpWidget(
+        createTestableWidget(
+          const ContinueWithEmailView(),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(mockViewModel.state?.isTermsChecked, true);
+    });
+
+    testWidgets("Tapping terms text calls showTermsSheet",
+        (WidgetTester tester) async {
+      tester.view.physicalSize = Size(tester.view.physicalSize.width, 2556);
+      tester.view.devicePixelRatio = 3.0;
+
+      when(mockViewModel.state).thenReturn(ContinueWithEmailState());
+
+      await tester.pumpWidget(
+        createTestableWidget(
+          const ContinueWithEmailView(),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final Finder termsText = find.textContaining("terms");
+      expect(termsText, findsWidgets);
+    });
+
+    testWidgets("getContinueWithEmailSubtitleText returns correct text for email",
+        (WidgetTester tester) async {
+      const ContinueWithEmailView view = ContinueWithEmailView(
+        localLoginType: LoginType.email,
+      );
+
+      final String subtitleText = view.getContinueWithEmailSubtitleText();
+      expect(subtitleText, isNotEmpty);
+    });
+
+    testWidgets("getContinueWithEmailSubtitleText returns correct text for phoneNumber",
+        (WidgetTester tester) async {
+      const ContinueWithEmailView view = ContinueWithEmailView(
+        localLoginType: LoginType.phoneNumber,
+      );
+
+      final String subtitleText = view.getContinueWithEmailSubtitleText();
+      expect(subtitleText, isNotEmpty);
+    });
+
+    testWidgets("getContinueWithEmailSubtitleText returns correct text for emailAndPhone",
+        (WidgetTester tester) async {
+      const ContinueWithEmailView view = ContinueWithEmailView(
+        localLoginType: LoginType.emailAndPhone,
+      );
+
+      final String subtitleText = view.getContinueWithEmailSubtitleText();
+      expect(subtitleText, isNotEmpty);
     });
   });
 

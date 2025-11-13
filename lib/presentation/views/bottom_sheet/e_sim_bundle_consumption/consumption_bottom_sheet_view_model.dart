@@ -11,10 +11,10 @@ import "package:esim_open_source/presentation/views/base/esim_base_model.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class ConsumptionBottomSheetViewModel extends EsimBaseModel {
-  ConsumptionBottomSheetViewModel({
-    required this.request,
-    required this.completer,
-  });
+  // ConsumptionBottomSheetViewModel({
+  //   required this.request,
+  //   required this.completer,
+  // });
 
   //#region UseCases
   final GetUserConsumptionUseCase getUserConsumptionUseCase =
@@ -26,8 +26,8 @@ class ConsumptionBottomSheetViewModel extends EsimBaseModel {
   final ConsumptionState _state = ConsumptionState();
 
   ConsumptionState get state => _state;
-  final SheetRequest<BundleConsumptionBottomRequest> request;
-  final Function(SheetResponse<MainBottomSheetResponse>) completer;
+  late SheetRequest<BundleConsumptionBottomRequest> request;
+  late Function(SheetResponse<MainBottomSheetResponse>) completer;
 
   //#endregion
 

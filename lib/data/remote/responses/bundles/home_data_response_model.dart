@@ -15,24 +15,28 @@ class HomeDataResponseModel {
   factory HomeDataResponseModel.fromJson(Map<String, dynamic> json) {
     return HomeDataResponseModel(
       regions: json["regions"] != null
-          ? (json["regions"] as List<RegionsResponseModel>)
-              .map((dynamic item) => RegionsResponseModel.fromJson(item))
-              .toList()
+          ? List<RegionsResponseModel>.from(
+              (json["regions"] as List<dynamic>)
+                  .map((dynamic item) => RegionsResponseModel.fromJson(item)),
+            )
           : null,
       countries: json["countries"] != null
-          ? (json["countries"] as List<CountryResponseModel>)
-              .map((dynamic item) => CountryResponseModel.fromJson(item))
-              .toList()
+          ? List<CountryResponseModel>.from(
+              (json["countries"] as List<dynamic>)
+                  .map((dynamic item) => CountryResponseModel.fromJson(item)),
+            )
           : null,
       globalBundles: json["global_bundles"] != null
-          ? (json["global_bundles"] as List<BundleResponseModel>)
-              .map((dynamic item) => BundleResponseModel.fromJson(json: item))
-              .toList()
+          ? List<BundleResponseModel>.from(
+              (json["global_bundles"] as List<dynamic>)
+                  .map((dynamic item) => BundleResponseModel.fromJson(json: item)),
+            )
           : null,
       cruiseBundles: json["cruise_bundles"] != null
-          ? (json["cruise_bundles"] as List<BundleResponseModel>)
-              .map((dynamic item) => BundleResponseModel.fromJson(json: item))
-              .toList()
+          ? List<BundleResponseModel>.from(
+              (json["cruise_bundles"] as List<dynamic>)
+                  .map((dynamic item) => BundleResponseModel.fromJson(json: item)),
+            )
           : null,
     );
   }

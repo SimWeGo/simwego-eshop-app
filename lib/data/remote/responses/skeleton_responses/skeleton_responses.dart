@@ -80,7 +80,7 @@ class RefreshTokenModel {
 
   RefreshTokenModel.fromJson(Map<String, dynamic> json) {
     token = json["token"] ?? "";
-    refreshToken = json["refreshToken"] ?? 0;
+    refreshToken = json["refreshToken"] ?? "";
   }
   String? token;
   String? refreshToken;

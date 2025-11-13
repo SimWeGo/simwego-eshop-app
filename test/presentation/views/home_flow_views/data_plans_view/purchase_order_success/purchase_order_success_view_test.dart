@@ -139,11 +139,11 @@ Future<void> main() async {
 
     testWidgets("widget constructor and routeName coverage",
         (WidgetTester tester) async {
-      final PurchaseEsimBundleResponseModel testBundle =
-          PurchaseEsimBundleResponseModel(
-        smdpAddress: "test-smdp-address",
-        activationCode: "test-activation-code",
-      );
+      // final PurchaseEsimBundleResponseModel testBundle =
+      //     PurchaseEsimBundleResponseModel(
+      //   smdpAddress: "test-smdp-address",
+      //   activationCode: "test-activation-code",
+      // );
 
       const PurchaseOrderSuccessView widget = PurchaseOrderSuccessView(
         purchaseESimBundle: null,

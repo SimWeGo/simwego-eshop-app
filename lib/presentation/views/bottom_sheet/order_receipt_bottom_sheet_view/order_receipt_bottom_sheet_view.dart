@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -30,9 +31,11 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder(
-      viewModel: OrderReceiptBottomSheetViewModel(
-        bundleOrderModel: requestBase.data,
-      ),
+      viewModel: locator<OrderReceiptBottomSheetViewModel>()
+        ..bundleOrderModel = requestBase.data,
+      // OrderReceiptBottomSheetViewModel(
+      //   bundleOrderModel: requestBase.data,
+      // ),
       builder: (
         BuildContext context,
         OrderReceiptBottomSheetViewModel viewModel,

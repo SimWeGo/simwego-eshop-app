@@ -298,6 +298,49 @@ Future<void> main() async {
     // expect(redirectionProp.value!.route, '/home');
   });
 
+  testWidgets("getContinueWithText returns correct text for email",
+      (WidgetTester tester) async {
+    const LoginView view = LoginView();
+    final String continueWithText = view.getContinueWithText();
+    expect(continueWithText, isNotEmpty);
+  });
+
+  testWidgets("termsAndConditionTappableWidget displays correctly",
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(800, 1200);
+    tester.view.devicePixelRatio = 1.0;
+
+    await tester.pumpWidget(
+      createTestableWidget(
+        const LoginView(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining("terms"), findsOneWidget);
+  });
+
+  testWidgets("termsAndConditionTappableWidget can be created directly",
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(800, 1200);
+    tester.view.devicePixelRatio = 1.0;
+
+    const LoginView view = LoginView();
+
+    await tester.pumpWidget(
+      createTestableWidget(
+        Builder(
+          builder: (BuildContext context) {
+            return view.termsAndConditionTappableWidget(context);
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining("terms"), findsAtLeastNWidgets(1));
+  });
+
   tearDown(() async {
     await tearDownTest();
   });

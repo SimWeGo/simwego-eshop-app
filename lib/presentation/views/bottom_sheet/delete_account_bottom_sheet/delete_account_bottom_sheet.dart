@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -31,7 +32,7 @@ class DeleteAccountBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder(
-      viewModel: DeleteAccountBottomSheetViewModel(),
+      viewModel: locator<DeleteAccountBottomSheetViewModel>(),
       builder: (
         BuildContext context,
         DeleteAccountBottomSheetViewModel viewModel,

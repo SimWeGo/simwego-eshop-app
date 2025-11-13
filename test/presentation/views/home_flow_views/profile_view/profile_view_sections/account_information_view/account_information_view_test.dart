@@ -93,5 +93,38 @@ Future<void> main() async {
       final Widget result = widget.build(context);
       expect(result, isNotNull);
     });
+
+    testWidgets("getSpacersWidgets method returns correct widgets",
+        (WidgetTester tester) async {
+      const AccountInformationView widget = AccountInformationView();
+
+      await tester.pumpWidget(
+        createTestableWidget(
+          Builder(
+            builder: (BuildContext context) => widget.getSpacersWidgets(context),
+          ),
+        ),
+      );
+
+      expect(find.byType(Column), findsOneWidget);
+      expect(find.byType(Divider), findsOneWidget);
+    });
+
+    testWidgets("widget renders keyboard visibility logic",
+        (WidgetTester tester) async {
+      when(locator<AppConfigurationService>().getLoginType)
+          .thenReturn(LoginType.emailAndPhone);
+      onViewModelReadyMock(viewName: "AccountInformationView");
+
+      await tester.pumpWidget(
+        createTestableWidget(
+          const AccountInformationView(),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AccountInformationView), findsOneWidget);
+    });
   });
 }

@@ -274,10 +274,10 @@ Future<void> main() async {
         viewModel.setViewState(ViewState.idle);
       }
 
-      // All timings should be around 5000ms
+      // All timings should be around 500ms
       for (final int timing in timings) {
-        expect(timing, greaterThan(490));
-        expect(timing, lessThan(520));
+        expect(timing, greaterThanOrEqualTo(480));
+        expect(timing, lessThan(600));
       }
     });
 

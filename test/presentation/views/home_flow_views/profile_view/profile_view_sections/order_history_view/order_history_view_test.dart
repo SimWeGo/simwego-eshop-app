@@ -1,6 +1,7 @@
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view_model.dart";
 import "package:esim_open_source/presentation/widgets/common_navigation_title.dart";
 import "package:esim_open_source/presentation/widgets/empty_paginated_state_list_view.dart";
 import "package:flutter/material.dart";
@@ -89,6 +90,67 @@ Future<void> main() async {
 
       // Basic verification that the widget renders without errors
       expect(find.byType(OrderHistoryView), findsOneWidget);
+    });
+
+    testWidgets("bundleOrderHistoryView method executes correctly",
+        (WidgetTester tester) async {
+      const OrderHistoryView orderHistoryView = OrderHistoryView();
+
+      // Create mock order data
+      final OrderHistoryResponseModel mockOrder = OrderHistoryResponseModel(
+        orderDate: "1640995200000",
+        orderNumber: "test-order-123",
+      );
+
+      // Get view model from locator
+      final OrderHistoryViewModel viewModel =
+          locator<OrderHistoryViewModel>();
+
+      await tester.pumpWidget(
+        createTestableWidget(
+          Builder(
+            builder: (BuildContext context) {
+              // Call bundleOrderHistoryView method
+              return orderHistoryView.bundleOrderHistoryView(
+                context: context,
+                viewModel: viewModel,
+                bundleOrder: mockOrder,
+              );
+            },
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      // Verify the widget was built
+      expect(find.byType(GestureDetector), findsOneWidget);
+      expect(find.byType(DecoratedBox), findsWidgets);
+    });
+
+    testWidgets("getShimmerData returns correct ListView structure",
+        (WidgetTester tester) async {
+      const OrderHistoryView orderHistoryView = OrderHistoryView();
+
+      // Call getShimmerData method directly
+      final Widget shimmerWidget = orderHistoryView.getShimmerData();
+
+      // Verify it returns a ListView
+      expect(shimmerWidget, isA<ListView>());
+
+      // Test the widget can be rendered
+      await tester.pumpWidget(
+        createTestableWidget(shimmerWidget),
+      );
+
+      await tester.pump();
+
+      // Verify it renders without errors
+      expect(find.byType(ListView), findsOneWidget);
+    });
+
+    test("routeName constant is correctly defined", () {
+      expect(OrderHistoryView.routeName, equals("OrderHistoryView"));
     });
   });
 }

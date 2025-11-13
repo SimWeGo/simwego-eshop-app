@@ -39,21 +39,9 @@ Future<void> main() async {
     );
     await tester.pumpAndSettle();
 
-    // Verify complete widget tree was built (covers all build method lines)
-    // expect(find.byType(ContactUsView), findsOneWidget);
-    // expect(find.byType(PaddingWidget), findsWidgets);
-    // expect(find.byType(Column), findsWidgets);
-    // expect(find.byType(CommonNavigationTitle), findsOneWidget);
-    // expect(find.byType(Expanded), findsOneWidget);
-    // expect(find.byType(KeyboardDismissOnTap), findsOneWidget);
-    // expect(find.byType(SingleChildScrollView), findsOneWidget);
-    // expect(find.byType(SizedBox), findsWidgets);
-    // expect(find.byType(Text), findsWidgets);
-    // expect(find.byType(MainInputField), findsNWidgets(2));
-    // expect(find.byType(MainButton), findsOneWidget);
-
     // Verify widget properties and route name
     expect(ContactUsView.routeName, equals("ContactUsView"));
+    expect(find.byType(ContactUsView), findsOneWidget);
   });
 
   testWidgets("button interaction and form submission",
@@ -87,48 +75,6 @@ Future<void> main() async {
     // Verify no exceptions thrown during interaction
     expect(tester.takeException(), isNull);
   });
-
-  // testWidgets("input field interaction", (WidgetTester tester) async {
-  //   await tester.pumpWidget(
-  //     createTestableWidget(
-  //       const ContactUsView(),
-  //     ),
-  //   );
-  //   await tester.pumpAndSettle();
-  //
-  //   // Find input fields
-  //   final Finder inputFields = find.byType(MainInputField);
-  //   expect(inputFields, findsNWidgets(2));
-  //
-  //   // Test input field interaction (covers keyboard visibility logic)
-  //   if (inputFields.evaluate().isNotEmpty) {
-  //     await tester.tap(inputFields.first);
-  //     await tester.pumpAndSettle();
-  //   }
-  //
-  //   expect(tester.takeException(), isNull);
-  // });
-  //
-  // testWidgets("keyboard visibility handling", (WidgetTester tester) async {
-  //   await tester.pumpWidget(
-  //     createTestableWidget(
-  //       const ContactUsView(),
-  //     ),
-  //   );
-  //   await tester.pumpAndSettle();
-  //
-  //   // Verify keyboard visibility components are present
-  //   expect(find.byType(KeyboardDismissOnTap), findsOneWidget);
-  //
-  //   // Test keyboard dismiss interaction
-  //   final Finder dismissArea = find.byType(KeyboardDismissOnTap);
-  //   if (dismissArea.evaluate().isNotEmpty) {
-  //     await tester.tap(dismissArea.first);
-  //     await tester.pumpAndSettle();
-  //   }
-  //
-  //   expect(tester.takeException(), isNull);
-  // });
 
   testWidgets("scroll view interaction", (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -185,10 +131,14 @@ Future<void> main() async {
     final Widget testWidget = MaterialApp(home: Container());
     final BuildContext context = testWidget.createElement();
 
-    when(locator<ApiAppRepository>()
-            .contactUs(email: "test@example.com", message: "Test message"),)
-        .thenAnswer(
-            (_) => Resource<StringResponse?>.success(null, message: ""),);
+    when(
+      locator<ApiAppRepository>().contactUs(
+        email: "test@example.com",
+        message: "Test message",
+      ),
+    ).thenAnswer(
+      (_) async => Resource<StringResponse?>.success(null, message: ""),
+    );
     viewModel.onSendMessageClicked(context);
 
     // Verify error path was executed

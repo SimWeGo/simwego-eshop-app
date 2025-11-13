@@ -245,6 +245,9 @@ class TestDataFactory {
     return Resource<T>.error(
       message ?? "Test Error",
       data: data,
+      error: code != null
+          ? GeneralError(message: message ?? "Test Error", errorCode: code)
+          : null,
     );
   }
 

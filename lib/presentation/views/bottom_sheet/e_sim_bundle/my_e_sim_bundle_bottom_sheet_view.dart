@@ -2,6 +2,7 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/transaction_history_response_model.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -40,10 +41,9 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder(
-      viewModel: MyESimBundleBottomSheetViewModel(
-        request: request,
-        completer: completer,
-      ),
+      viewModel: locator<MyESimBundleBottomSheetViewModel>()
+        ..request = request
+        ..completer =  completer,
       builder: (
         BuildContext context,
         MyESimBundleBottomSheetViewModel viewModel,

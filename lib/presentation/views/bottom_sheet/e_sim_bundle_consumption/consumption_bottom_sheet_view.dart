@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -28,10 +29,9 @@ class ConsumptionBottomSheetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder(
       hideLoader: true,
-      viewModel: ConsumptionBottomSheetViewModel(
-        request: request,
-        completer: completer,
-      ),
+      viewModel: locator<ConsumptionBottomSheetViewModel>()
+        ..request = request
+        ..completer = completer,
       builder: (
         BuildContext context,
         ConsumptionBottomSheetViewModel viewModel,

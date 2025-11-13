@@ -4,9 +4,9 @@ import "package:esim_open_source/utils/file_helper.dart";
 import "package:flutter/cupertino.dart";
 
 class OrderReceiptBottomSheetViewModel extends BaseModel {
-  OrderReceiptBottomSheetViewModel({required this.bundleOrderModel});
+  // OrderReceiptBottomSheetViewModel({required this.bundleOrderModel});
 
-  OrderHistoryResponseModel? bundleOrderModel;
+  late OrderHistoryResponseModel? bundleOrderModel;
 
   final GlobalKey globalKey = GlobalKey();
 

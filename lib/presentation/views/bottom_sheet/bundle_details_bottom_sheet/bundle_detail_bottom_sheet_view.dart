@@ -3,6 +3,7 @@ import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -41,11 +42,12 @@ class BundleDetailBottomSheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder(
-      viewModel: BundleDetailBottomSheetViewModel(
-        region: requestBase.data?.region,
-        countries: requestBase.data?.countries,
-        bundle: requestBase.data?.bundleResponseModel,
-      ),
+      viewModel: locator<BundleDetailBottomSheetViewModel>()
+        ..bundle = requestBase.data?.bundleResponseModel
+        ..tempBundle = requestBase.data?.bundleResponseModel
+        ..region = requestBase.data?.region
+        ..countriesList = requestBase.data?.countries
+      ,
       builder: (
         BuildContext context,
         BundleDetailBottomSheetViewModel viewModel,

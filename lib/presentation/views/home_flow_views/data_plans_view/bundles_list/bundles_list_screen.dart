@@ -35,80 +35,81 @@ class BundlesListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<BundlesListViewModel>(
       routeName: routeName,
-      viewModel: locator<BundlesListViewModel>()..esimArguments = esimItem,
+      viewModel: locator<BundlesListViewModel>()
+        ..esimArguments = esimItem,
       hideLoader: true,
       statusBarColor: Colors.transparent,
       hideAppBar: true,
       disableInteractionWhileBusy: false,
-      builder: (
-        BuildContext context,
-        BundlesListViewModel viewModel,
-        Widget? childWidget,
-        double screenHeight,
-      ) =>
+      builder: (BuildContext context,
+          BundlesListViewModel viewModel,
+          Widget? childWidget,
+          double screenHeight,) =>
           Stack(
-        children: <Widget>[
-          KeyboardDismissOnTap(
-            dismissOnCapturedTaps: true,
-            child: Column(
-              children: <Widget>[
-                CommonNavigationTitle(
-                  navigationTitle: esimItem.name,
-                  textStyle: headerTwoMediumTextStyle(
-                    context: context,
-                    fontColor: mainDarkTextColor(context: context),
-                  ),
-                ),
-                esimItem.type == EsimArgumentType.country
-                    ? PaddingWidget.applySymmetricPadding(
-                        horizontal: 15,
-                        vertical: 10,
-                        child: MainInputField.searchField(
-                          themeColor: themeColor,
-                          controller: viewModel.searchTextFieldController,
-                          backGroundColor: context.appColors.baseWhite,
-                          hintText:
-                              LocaleKeys.dataPlans_SearchPlaceHolderText.tr(),
-                          labelStyle: captionOneNormalTextStyle(
-                            context: context,
-                            fontColor: secondaryTextColor(context: context),
-                          ),
-                          enterPressed: () => <dynamic, dynamic>{},
-                          onTap: () =>
-                              viewModel.setSearchFocused(focused: true),
+            children: <Widget>[
+              KeyboardDismissOnTap(
+                dismissOnCapturedTaps: true,
+                child: Column(
+                  children: <Widget>[
+                    CommonNavigationTitle(
+                      navigationTitle: esimItem.name,
+                      textStyle: headerTwoMediumTextStyle(
+                        context: context,
+                        fontColor: mainDarkTextColor(context: context),
+                      ),
+                    ),
+                    esimItem.type == EsimArgumentType.country
+                        ? PaddingWidget.applySymmetricPadding(
+                      horizontal: 15,
+                      vertical: 10,
+                      child: MainInputField.searchField(
+                        clearSearchEnabled: true,
+                        themeColor: themeColor,
+                        controller: viewModel.searchTextFieldController,
+                        backGroundColor: context.appColors.baseWhite,
+                        hintText:
+                        LocaleKeys.dataPlans_SearchPlaceHolderText.tr(),
+                        labelStyle: captionOneNormalTextStyle(
+                          context: context,
+                          fontColor: secondaryTextColor(context: context),
                         ),
-                      )
-                    : const SizedBox.shrink(),
-                if (esimItem.type == EsimArgumentType.country)
-                  FlagChipsRow(
-                    selectedCountries: viewModel.selectedCountryChips,
-                    onChipRemoved: (CountryResponseModel country) async =>
-                        viewModel.removeCountry(country),
-                  ),
-                Expanded(
-                  child: PaddingWidget.applyPadding(
-                    top: viewModel.esimArguments.type == EsimArgumentType.region
-                        ? 20
-                        : 0,
-                    child: viewModel.childViewModel != null
-                        ? BundlesByCountriesView(
-                            horizontalPadding: 10,
-                            viewModel: viewModel.childViewModel!,
-                            onBundleSelected:
-                                (BundleResponseModel bundle) async =>
-                                    viewModel.navigateToEsimDetail(bundle),
-                          )
-                        : Container(),
-                  ),
+                        enterPressed: () => <dynamic, dynamic>{},
+                        onTap: () =>
+                            viewModel.setSearchFocused(focused: true),
+                      ),
+                    )
+                        : const SizedBox.shrink(),
+                    if (esimItem.type == EsimArgumentType.country)
+                      FlagChipsRow(
+                        selectedCountries: viewModel.selectedCountryChips,
+                        onChipRemoved: (CountryResponseModel country) async =>
+                            viewModel.removeCountry(country),
+                      ),
+                    Expanded(
+                      child: PaddingWidget.applyPadding(
+                        top: viewModel.esimArguments.type ==
+                            EsimArgumentType.region
+                            ? 20
+                            : 0,
+                        child: viewModel.childViewModel != null
+                            ? BundlesByCountriesView(
+                          horizontalPadding: 10,
+                          viewModel: viewModel.childViewModel!,
+                          onBundleSelected:
+                              (BundleResponseModel bundle) async =>
+                              viewModel.navigateToEsimDetail(bundle),
+                        )
+                            : Container(),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              esimItem.type == EsimArgumentType.country
+                  ? _buildSearchList(context, viewModel)
+                  : const SizedBox.shrink(),
+            ],
           ),
-          esimItem.type == EsimArgumentType.country
-              ? _buildSearchList(context, viewModel)
-              : const SizedBox.shrink(),
-        ],
-      ),
     );
   }
 
@@ -183,7 +184,10 @@ Widget _buildSearchList(BuildContext context, BundlesListViewModel model) {
 }
 
 double getContainerHeight(BuildContext context, int count) {
-  double maxHeight = MediaQuery.of(context).size.height * 0.25;
+  double maxHeight = MediaQuery
+      .of(context)
+      .size
+      .height * 0.25;
   double height = count * 80;
   return min(maxHeight, height);
 }
@@ -224,15 +228,13 @@ class CountrySearchList extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(IterableProperty<CountryResponseModel>("countries", countries))
-      ..add(
-        ObjectFlagProperty<Function(CountryResponseModel p1)>.has(
-          "onCountrySelected",
-          onCountrySelected,
-        ),
-      )
-      ..add(StringProperty("searchQuery", searchQuery));
+    properties..add(
+        IterableProperty<CountryResponseModel>("countries", countries))..add(
+      ObjectFlagProperty<Function(CountryResponseModel p1)>.has(
+        "onCountrySelected",
+        onCountrySelected,
+      ),
+    )..add(StringProperty("searchQuery", searchQuery));
   }
 }
 
@@ -275,10 +277,9 @@ class FlagChip extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(StringProperty("icon", icon))
-      ..add(StringProperty("countryName", countryName))
-      ..add(ObjectFlagProperty<VoidCallback>.has("onRemove", onRemove));
+    properties..add(StringProperty("icon", icon))..add(
+        StringProperty("countryName", countryName))..add(
+        ObjectFlagProperty<VoidCallback>.has("onRemove", onRemove));
   }
 }
 
@@ -298,19 +299,17 @@ class FlagChipsRow extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(
-        IterableProperty<CountryResponseModel>(
-          "selectedCountries",
-          selectedCountries,
-        ),
-      )
-      ..add(
-        ObjectFlagProperty<Function(CountryResponseModel p1)>.has(
-          "onChipRemoved",
-          onChipRemoved,
-        ),
-      );
+    properties..add(
+      IterableProperty<CountryResponseModel>(
+        "selectedCountries",
+        selectedCountries,
+      ),
+    )..add(
+      ObjectFlagProperty<Function(CountryResponseModel p1)>.has(
+        "onChipRemoved",
+        onChipRemoved,
+      ),
+    );
   }
 }
 
@@ -324,7 +323,7 @@ class _FlagChipsRowState extends State<FlagChipsRow> {
         child: Wrap(
           spacing: 10,
           children:
-              widget.selectedCountries.map((CountryResponseModel country) {
+          widget.selectedCountries.map((CountryResponseModel country) {
             return FlagChip(
               icon: country.icon ?? "",
               countryName: country.country ?? "",

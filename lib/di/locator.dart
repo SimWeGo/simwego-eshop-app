@@ -59,6 +59,12 @@ import "package:esim_open_source/domain/repository/services/social_login_service
 import "package:esim_open_source/objectbox.g.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/view_models/main_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/bundle_details_bottom_sheet/bundle_detail_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/cashback_reward_bottom_sheet/cashback_reward_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/delete_account_bottom_sheet/delete_account_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_list_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view_model.dart";
@@ -301,6 +307,24 @@ Future<void> viewModelInjectionModules() async {
     )
     ..registerFactory<BundlesListViewModel>(
       BundlesListViewModel.new,
+    )
+    ..registerFactory<BundleDetailBottomSheetViewModel>(
+      BundleDetailBottomSheetViewModel.new,
+    )
+    ..registerFactory<OrderReceiptBottomSheetViewModel>(
+      OrderReceiptBottomSheetViewModel.new,
+    )
+    ..registerFactory<EditNameBottomSheetViewModel>(
+      EditNameBottomSheetViewModel.new,
+    )
+    ..registerFactory<DeleteAccountBottomSheetViewModel>(
+      DeleteAccountBottomSheetViewModel.new,
+    )
+    ..registerFactory<CashbackRewardBottomSheetViewModel>(
+      CashbackRewardBottomSheetViewModel.new,
+    )
+    ..registerFactory<OrderBottomSheetViewModel>(
+      OrderBottomSheetViewModel.new,
     );
 }
 

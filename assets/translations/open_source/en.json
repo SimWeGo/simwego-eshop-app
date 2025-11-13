@@ -235,6 +235,7 @@
   "error_generating_qr_code": "Error generating QR code",
   "copied_to_clipboard": "Copied to clipboard",
   "top_up_plan" : "Top Up Plan",
+  "validity": "Validity",
   "faq_not_available" : "FAQ are not available",
   "your_message_has_been_sent": "Your message has been sent successfully",
   "second": "second",

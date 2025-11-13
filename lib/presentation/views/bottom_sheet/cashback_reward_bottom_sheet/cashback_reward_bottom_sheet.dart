@@ -1,3 +1,4 @@
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -25,10 +26,13 @@ class CashbackRewardBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder<CashbackRewardBottomSheetViewModel>(
-      viewModel: CashbackRewardBottomSheetViewModel(
-        request: request,
-        completer: completer,
-      ),
+      viewModel: locator<CashbackRewardBottomSheetViewModel>()
+        ..request = request
+        ..completer = completer,
+      // CashbackRewardBottomSheetViewModel(
+      //   request: request,
+      //   completer: completer,
+      // ),
       builder: (
         BuildContext context,
         CashbackRewardBottomSheetViewModel viewModel,

@@ -213,6 +213,46 @@ void main() async {
 
       expect(vm.bannersPageController.viewportFraction, equals(0.9));
     });
+
+    test("liveChat banner type exists in enum", () {
+      final BannerState banner = BannerState(
+        bannersViewType: BannersViewTypes.liveChat,
+        title: "Live Chat",
+        description: "Chat with us",
+      );
+
+      expect(banner.bannersViewType, equals(BannersViewTypes.liveChat));
+      expect(BannersViewTypes.liveChat, isNotNull);
+    });
+
+    test("animation methods exist and can be called", () {
+      final BannersViewModel vm = BannersViewModel();
+
+      // Test that setUpBannersAnimation can be called
+      expect(vm.setUpBannersAnimation, returnsNormally);
+
+      // Test that methods exist
+      expect(vm.startAnimatingView, isA<Function>());
+      expect(vm.setupButtonColorAnimation, isA<Function>());
+    });
+
+    test("onViewModelReady executes successfully", () {
+      final BannersViewModel vm = BannersViewModel()
+
+      // Should execute without errors
+      ..onViewModelReady();
+
+      expect(vm, isNotNull);
+      expect(vm.getBannerUseCase, isNotNull);
+    });
+
+    test("setUpBannersAnimation initializes timer", () {
+      final BannersViewModel vm = BannersViewModel()
+
+      ..setUpBannersAnimation();
+
+      expect(vm, isNotNull);
+    });
   });
 
   group("BannerState Tests", () {

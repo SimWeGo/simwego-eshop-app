@@ -11,11 +11,14 @@ import "package:esim_open_source/domain/repository/services/environment_service.
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:esim_open_source/utils/value_stream.dart";
+import "package:flutter/material.dart";
 import "package:mockito/mockito.dart";
 import "package:stacked_services/stacked_services.dart";
 
@@ -137,9 +140,16 @@ void onViewModelReadyMock({
   when(mockApiAppRepository.getBannerStream()).thenReturn(bannerStream);
   when(mockApiAppRepository.resetBannerStream()).thenAnswer((_) async {});
 
-
-  // Setup UserGuideDetailedViewModel mock
-  // setupUserGuideDetailedViewModelMock();
+  // OrderReceiptBottomSheetViewModel specific mocks
+  if (viewName == "OrderReceiptBottomSheetView") {
+    MockOrderReceiptBottomSheetViewModel mockOrderReceiptViewModel =
+        locator<OrderReceiptBottomSheetViewModel>()
+            as MockOrderReceiptBottomSheetViewModel;
+    when(mockOrderReceiptViewModel.globalKey).thenReturn(GlobalKey());
+    when(mockOrderReceiptViewModel.bundleOrderModel).thenReturn(null);
+    when(mockOrderReceiptViewModel.viewState).thenReturn(ViewState.idle);
+    when(mockOrderReceiptViewModel.isBusy).thenReturn(false);
+  }
 }
 
 // Empty main function to prevent Flutter test runner from treating this as a test file

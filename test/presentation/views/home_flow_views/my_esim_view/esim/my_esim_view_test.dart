@@ -6,6 +6,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view
 import "package:esim_open_source/presentation/widgets/custom_tab_view.dart";
 import "package:esim_open_source/presentation/widgets/empty_content.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
@@ -104,6 +105,23 @@ Future<void> main() async {
       expect(widget, isA<MyESimView>());
       expect(widget.onRequestDataPlansTab, isNotNull);
       expect(widget, isA<StatelessWidget>());
+    });
+
+    test("debugFillProperties includes onRequestDataPlansTab", () {
+      void testCallback() {}
+      final MyESimView widget = MyESimView(onRequestDataPlansTab: testCallback);
+
+      final DiagnosticPropertiesBuilder builder = DiagnosticPropertiesBuilder();
+      widget.debugFillProperties(builder);
+
+      final List<DiagnosticsNode> properties = builder.properties;
+      expect(properties, isNotEmpty);
+
+      // Verify that onRequestDataPlansTab property exists
+      final bool hasCallback = properties.any(
+        (DiagnosticsNode prop) => prop.name == "onRequestDataPlansTab",
+      );
+      expect(hasCallback, isTrue);
     });
   });
 

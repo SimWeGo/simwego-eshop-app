@@ -28,10 +28,18 @@ import "package:esim_open_source/domain/use_case/app/get_about_us_use_case.dart"
 import "package:esim_open_source/domain/use_case/app/get_banner_use_case.dart";
 import "package:esim_open_source/domain/use_case/app/get_terms_and_condition_use_case.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/cashback_reward_bottom_sheet/cashback_reward_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/delete_account_bottom_sheet/delete_account_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle/my_e_sim_bundle_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_consumption/consumption_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_service.dart";
 import "package:esim_open_source/presentation/view_models/main_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/bundle_details_bottom_sheet/bundle_detail_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_list_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view_model.dart";
@@ -54,6 +62,7 @@ import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_em
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view_model.dart";
+// import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view_model.dart";
 import "package:esim_open_source/presentation/views/skeleton_view/skeleton_view_model.dart";
 import "package:esim_open_source/presentation/views/start_up_view/startup_view_model.dart";
 import "package:flutter_esim/flutter_esim.dart";
@@ -83,6 +92,14 @@ import "locator_test.mocks.dart";
   ReferralInfoService,
   FlutterChannelHandlerService,
   AnalyticsService,
+  BundleDetailBottomSheetViewModel,
+  OrderBottomSheetViewModel,
+  OrderReceiptBottomSheetViewModel,
+  EditNameBottomSheetViewModel,
+  CashbackRewardBottomSheetViewModel,
+  DeleteAccountBottomSheetViewModel,
+  MyESimBundleBottomSheetViewModel,
+  ConsumptionBottomSheetViewModel,
   //RemoteConfigService,
   ConnectivityService,
   ApiAuthRepository,
@@ -156,7 +173,8 @@ Future<void> setupTestLocator() async {
 Future<void> appServicesModule() async {
   locator
     ..registerLazySingleton<DeviceInfoService>(MockDeviceInfoService.new)
-    ..registerLazySingleton<DynamicLinkingService>(MockDynamicLinkingService.new)
+    ..registerLazySingleton<DynamicLinkingService>(
+        MockDynamicLinkingService.new)
     ..registerLazySingleton<PushNotificationService>(
       MockPushNotificationService.new,
     )
@@ -233,6 +251,27 @@ Future<void> thirdPartyServicesModule() async {
 
 Future<void> viewModelModules() async {
   locator
+    ..registerFactory<OrderBottomSheetViewModel>(
+      MockOrderBottomSheetViewModel.new,
+    )
+    ..registerLazySingleton<OrderReceiptBottomSheetViewModel>(
+      MockOrderReceiptBottomSheetViewModel.new,
+    )
+    ..registerFactory<EditNameBottomSheetViewModel>(
+      MockEditNameBottomSheetViewModel.new,
+    )
+    ..registerFactory<CashbackRewardBottomSheetViewModel>(
+      MockCashbackRewardBottomSheetViewModel.new,
+    )
+    ..registerFactory<MyESimBundleBottomSheetViewModel>(
+      MockMyESimBundleBottomSheetViewModel.new,
+    )
+    ..registerFactory<ConsumptionBottomSheetViewModel>(
+      ConsumptionBottomSheetViewModel.new,
+    )
+    ..registerLazySingleton<BundleDetailBottomSheetViewModel>(
+      MockBundleDetailBottomSheetViewModel.new,
+    )
     ..registerLazySingleton<AndroidUserGuideViewModel>(
       MockAndroidUserGuideViewModel.new,
     )

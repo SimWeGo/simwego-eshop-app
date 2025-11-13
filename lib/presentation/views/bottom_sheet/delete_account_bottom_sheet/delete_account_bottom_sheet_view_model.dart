@@ -43,6 +43,8 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
   @override
   void onViewModelReady() {
     super.onViewModelReady();
+    _emailController.addListener(_validateForm);
+
     PhoneNumber? parsed;
     try {
       parsed = PhoneNumber.parse(userMsisdn);
@@ -54,8 +56,6 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
           nsn: "",
         );
       }
-
-      _emailController.addListener(_validateForm);
     });
   }
 

@@ -62,13 +62,16 @@ class MainInputField extends StatefulWidget {
     this.textFieldHeight = 55,
     this.hintTextStyle,
     this.onTap,
+    this.clearSearchEnabled = false,
   });
+
   final TextEditingController controller;
   final TextInputType? textInputType;
   final bool password;
   final bool? isObscure;
   final bool isReadOnly;
   final bool hideInternalObfuscator;
+  final bool clearSearchEnabled;
 
   // final String placeholder;
   // final String? validationMessage;
@@ -305,6 +308,8 @@ class MainInputField extends StatefulWidget {
     Color? backGroundColor,
     TextStyle? labelStyle,
     VoidCallback? enterPressed,
+    bool clearSearchEnabled = false,
+    void Function({required String text})? onChanged,
   }) =>
       MainInputField(
         themeColor: themeColor,
@@ -324,6 +329,8 @@ class MainInputField extends StatefulWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         labelStyle: labelStyle,
+        clearSearchEnabled: clearSearchEnabled,
+        onChanged: onChanged,
       );
 
   @override
@@ -332,90 +339,85 @@ class MainInputField extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(
-        DiagnosticsProperty<TextEditingController>("controller", controller),
-      )
-      ..add(DiagnosticsProperty<TextInputType?>("textInputType", textInputType))
-      ..add(DiagnosticsProperty<bool>("password", password))
-      ..add(DiagnosticsProperty<bool?>("isObscure", isObscure))
-      ..add(DiagnosticsProperty<bool>("isReadOnly", isReadOnly))
-      ..add(
-        DiagnosticsProperty<bool>(
-          "hideInternalObfuscator",
-          hideInternalObfuscator,
-        ),
-      )
-      ..add(
-        ObjectFlagProperty<void Function()?>.has(
-          "enterPressed",
-          enterPressed,
-        ),
-      )
-      ..add(DiagnosticsProperty<FocusNode?>("fieldFocusNode", fieldFocusNode))
-      ..add(DiagnosticsProperty<FocusNode?>("nextFocusNode", nextFocusNode))
-      ..add(EnumProperty<TextInputAction?>("textInputAction", textInputAction))
-      ..add(
-        ObjectFlagProperty<void Function({required String text})?>.has(
-          "onChanged",
-          onChanged,
-        ),
-      )
-      ..add(
-        ObjectFlagProperty<void Function({required bool value})?>.has(
-          "onObscureChange",
-          onObscureChange,
-        ),
-      )
-      ..add(DiagnosticsProperty<TextInputFormatter?>("formatter", formatter))
-      ..add(ColorProperty("themeColor", themeColor))
-      ..add(ColorProperty("backgroundColor", backgroundColor))
-      ..add(ColorProperty("cursorColor", cursorColor))
-      ..add(ColorProperty("focusColor", focusColor))
-      ..add(DoubleProperty("borderRadius", borderRadius))
-      ..add(StringProperty("initialValue", initialValue))
-      ..add(IntProperty("maxLength", maxLength))
-      ..add(DiagnosticsProperty<InputBorder?>("inputBorder", inputBorder))
-      ..add(DiagnosticsProperty<InputBorder?>("enabledBorder", enabledBorder))
-      ..add(DiagnosticsProperty<InputBorder?>("disabledBorder", disabledBorder))
-      ..add(DiagnosticsProperty<InputBorder?>("errorBorder", errorBorder))
-      ..add(DiagnosticsProperty<InputBorder?>("focusedBorder", focusedBorder))
-      ..add(
+    properties..add(
+      DiagnosticsProperty<TextEditingController>("controller", controller),
+    )..add(DiagnosticsProperty<TextInputType?>(
+        "textInputType", textInputType))..add(
+        DiagnosticsProperty<bool>("password", password))..add(
+        DiagnosticsProperty<bool?>("isObscure", isObscure))..add(
+        DiagnosticsProperty<bool>("isReadOnly", isReadOnly))..add(
+      DiagnosticsProperty<bool>(
+        "hideInternalObfuscator",
+        hideInternalObfuscator,
+      ),
+    )..add(
+      ObjectFlagProperty<void Function()?>.has(
+        "enterPressed",
+        enterPressed,
+      ),
+    )..add(
+        DiagnosticsProperty<FocusNode?>("fieldFocusNode", fieldFocusNode))..add(
+        DiagnosticsProperty<FocusNode?>("nextFocusNode", nextFocusNode))..add(
+        EnumProperty<TextInputAction?>(
+            "textInputAction", textInputAction))..add(
+      ObjectFlagProperty<void Function({required String text})?>.has(
+        "onChanged",
+        onChanged,
+      ),
+    )..add(
+      ObjectFlagProperty<void Function({required bool value})?>.has(
+        "onObscureChange",
+        onObscureChange,
+      ),
+    )..add(
+        DiagnosticsProperty<TextInputFormatter?>("formatter", formatter))..add(
+        ColorProperty("themeColor", themeColor))..add(
+        ColorProperty("backgroundColor", backgroundColor))..add(
+        ColorProperty("cursorColor", cursorColor))..add(
+        ColorProperty("focusColor", focusColor))..add(
+        DoubleProperty("borderRadius", borderRadius))..add(
+        StringProperty("initialValue", initialValue))..add(
+        IntProperty("maxLength", maxLength))..add(
+        DiagnosticsProperty<InputBorder?>("inputBorder", inputBorder))..add(
+        DiagnosticsProperty<InputBorder?>("enabledBorder", enabledBorder))..add(
         DiagnosticsProperty<InputBorder?>(
-          "focusedErrorBorder",
-          focusedErrorBorder,
-        ),
-      )
-      ..add(StringProperty("hintText", hintText))
-      ..add(StringProperty("labelText", labelText))
-      ..add(StringProperty("helperText", helperText))
-      ..add(StringProperty("prefixText", prefixText))
-      ..add(DiagnosticsProperty<TextStyle?>("labelStyle", labelStyle))
-      ..add(DiagnosticsProperty<TextStyle?>("prefixStyle", prefixStyle))
-      ..add(
-        DiagnosticsProperty<bool>(
-          "forceSuffixDirection",
-          forceSuffixDirection,
-        ),
-      )
-      ..add(IterableProperty<String>("autofillHints", autofillHints))
-      ..add(DiagnosticsProperty<bool>("autofocus", autofocus))
-      ..add(DiagnosticsProperty<bool>("removeBorder", removeBorder))
-      ..add(DiagnosticsProperty<TextStyle?>("inputTextStyle", inputTextStyle))
-      ..add(EnumProperty<TextAlign?>("textAlign", textAlign))
-      ..add(IntProperty("maxLines", maxLines))
-      ..add(StringProperty("placeHolderText", labelTitleText))
-      ..add(StringProperty("errorMessage", errorMessage))
-      ..add(DoubleProperty("textFieldHeight", textFieldHeight))
-      ..add(DiagnosticsProperty<TextStyle?>("hintTextStyle", hintTextStyle))
-      ..add(ObjectFlagProperty<VoidCallback?>.has("onTap", onTap))
-      ..add(ColorProperty("errorBorderColor", errorBorderColor))
-      ..add(DiagnosticsProperty<IconData?>("errorIcon", errorIcon));
+            "disabledBorder", disabledBorder))..add(
+        DiagnosticsProperty<InputBorder?>("errorBorder", errorBorder))..add(
+        DiagnosticsProperty<InputBorder?>("focusedBorder", focusedBorder))..add(
+      DiagnosticsProperty<InputBorder?>(
+        "focusedErrorBorder",
+        focusedErrorBorder,
+      ),
+    )..add(StringProperty("hintText", hintText))..add(
+        StringProperty("labelText", labelText))..add(
+        StringProperty("helperText", helperText))..add(
+        StringProperty("prefixText", prefixText))..add(
+        DiagnosticsProperty<TextStyle?>("labelStyle", labelStyle))..add(
+        DiagnosticsProperty<TextStyle?>("prefixStyle", prefixStyle))..add(
+      DiagnosticsProperty<bool>(
+        "forceSuffixDirection",
+        forceSuffixDirection,
+      ),
+    )..add(IterableProperty<String>("autofillHints", autofillHints))..add(
+        DiagnosticsProperty<bool>("autofocus", autofocus))..add(
+        DiagnosticsProperty<bool>("removeBorder", removeBorder))..add(
+        DiagnosticsProperty<TextStyle?>("inputTextStyle", inputTextStyle))..add(
+        EnumProperty<TextAlign?>("textAlign", textAlign))..add(
+        IntProperty("maxLines", maxLines))..add(
+        StringProperty("placeHolderText", labelTitleText))..add(
+        StringProperty("errorMessage", errorMessage))..add(
+        DoubleProperty("textFieldHeight", textFieldHeight))..add(
+        DiagnosticsProperty<TextStyle?>("hintTextStyle", hintTextStyle))..add(
+        ObjectFlagProperty<VoidCallback?>.has("onTap", onTap))..add(
+        ColorProperty("errorBorderColor", errorBorderColor))..add(
+        DiagnosticsProperty<IconData?>("errorIcon", errorIcon))..add(
+      DiagnosticsProperty<bool>("clearSearchEnabled", clearSearchEnabled),);
   }
 }
 
 class _MainInputFieldState extends State<MainInputField> {
   bool isPassword = false;
+  bool hasText = false;
 
   @override
   void initState() {
@@ -424,13 +426,27 @@ class _MainInputFieldState extends State<MainInputField> {
     if (widget.initialValue != null) {
       widget.controller.text = widget.initialValue!;
     }
+    hasText = widget.controller.text.isNotEmpty;
+    widget.controller.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    setState(() {
+      hasText = widget.controller.text.isNotEmpty;
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onTextChanged);
+    super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant MainInputField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if ((oldWidget.errorMessage != null ||
-            (oldWidget.errorMessage?.isEmpty ?? true)) &&
+        (oldWidget.errorMessage?.isEmpty ?? true)) &&
         oldWidget.errorMessage != widget.errorMessage) {
       playHapticFeedback(HapticFeedbackType.validationError);
     }
@@ -442,15 +458,15 @@ class _MainInputFieldState extends State<MainInputField> {
       children: <Widget>[
         widget.labelTitleText != null
             ? PaddingWidget.applySymmetricPadding(
-                vertical: 5,
-                child: Text(
-                  widget.labelTitleText ?? "",
-                  style: captionOneMediumTextStyle(
-                    context: context,
-                    fontColor: secondaryTextColor(context: context),
-                  ),
-                ).textSupportsRTL(context),
-              )
+          vertical: 5,
+          child: Text(
+            widget.labelTitleText ?? "",
+            style: captionOneMediumTextStyle(
+              context: context,
+              fontColor: secondaryTextColor(context: context),
+            ),
+          ).textSupportsRTL(context),
+        )
             : const SizedBox.shrink(),
         SizedBox(
           height: widget.maxLines == 1 ? widget.textFieldHeight : null,
@@ -458,19 +474,22 @@ class _MainInputFieldState extends State<MainInputField> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(widget.borderRadius),
               color: widget.backgroundColor ??
-                  Theme.of(context).colorScheme.cBackground(context),
+                  Theme
+                      .of(context)
+                      .colorScheme
+                      .cBackground(context),
               boxShadow: widget.removeBorder
                   ? null
                   : <BoxShadow>[
-                      BoxShadow(
-                        color: (widget.errorMessage == null ||
-                                widget.errorMessage == "")
-                            ? greyBackGroundColor(context: context)
-                            : widget.errorBorderColor ??
-                                errorTextColor(context: context),
-                        spreadRadius: 1,
-                      ),
-                    ],
+                BoxShadow(
+                  color: (widget.errorMessage == null ||
+                      widget.errorMessage == "")
+                      ? greyBackGroundColor(context: context)
+                      : widget.errorBorderColor ??
+                      errorTextColor(context: context),
+                  spreadRadius: 1,
+                ),
+              ],
               // boxShadow: [
               //   BoxShadow(
               //       color: Theme.of(context).colorScheme.cHintTextColor(context).withAlpha(20), spreadRadius: 2, blurRadius: 1, offset: const Offset(0, 2)),
@@ -513,7 +532,10 @@ class _MainInputFieldState extends State<MainInputField> {
                       obscureText: widget.isObscure ?? isPassword,
                       readOnly: widget.isReadOnly,
                       cursorColor: widget.cursorColor ??
-                          Theme.of(context).colorScheme.cHintTextColor(context),
+                          Theme
+                              .of(context)
+                              .colorScheme
+                              .cHintTextColor(context),
                       // initialValue: widget.initialValue,
                       maxLines: widget.maxLines,
                       maxLength: widget.maxLength,
@@ -551,23 +573,23 @@ class _MainInputFieldState extends State<MainInputField> {
         widget.errorMessage == null
             ? const SizedBox.shrink()
             : widget.errorMessage!.isEmpty
-                ? const SizedBox(
-                    height: 30,
-                  )
-                : SizedBox(
-                    height: 30,
-                    child: PaddingWidget.applySymmetricPadding(
-                      vertical: 5,
-                      child: Text(
-                        widget.errorMessage!,
-                        style: captionOneNormalTextStyle(
-                          context: context,
-                          fontColor: widget.errorBorderColor ??
-                              errorTextColor(context: context),
-                        ),
-                      ).textSupportsRTL(context),
-                    ),
-                  ),
+            ? const SizedBox(
+          height: 30,
+        )
+            : SizedBox(
+          height: 30,
+          child: PaddingWidget.applySymmetricPadding(
+            vertical: 5,
+            child: Text(
+              widget.errorMessage!,
+              style: captionOneNormalTextStyle(
+                context: context,
+                fontColor: widget.errorBorderColor ??
+                    errorTextColor(context: context),
+              ),
+            ).textSupportsRTL(context),
+          ),
+        ),
       ],
     );
   }
@@ -577,80 +599,99 @@ class _MainInputFieldState extends State<MainInputField> {
   }
 
   Widget? getSuffixIcon(BuildContext context) {
+    // Handle clear search button
+    if (widget.clearSearchEnabled && hasText) {
+      return IconButton(
+        icon: Icon(
+          Icons.clear,
+          color: widget.themeColor,
+          size: 20,
+        ),
+        onPressed: () {
+          widget.controller.clear();
+          widget.onChanged?.call(text: "");
+        },
+      );
+    }
+
     return widget.forceSuffixDirection
         ? (Directionality.of(context) != TextDirection.rtl
-            ? (((widget.password && !widget.hideInternalObfuscator) ||
-                    (widget.isObscure != null &&
-                        !widget.hideInternalObfuscator))
-                ? IconButton(
-                    icon: Icon(
-                      (widget.isObscure ?? !isPassword)
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: widget.themeColor,
-                    ),
-                    onPressed: () => setState(() {
-                      isPassword = !isPassword;
-                      widget.onObscureChange
-                          ?.call(value: !(widget.isObscure ?? false));
-                    }),
-                  )
-                : widget.suffixIcon)
-            : usePrefixIconWidget(context))
+        ? (((widget.password && !widget.hideInternalObfuscator) ||
+        (widget.isObscure != null &&
+            !widget.hideInternalObfuscator))
+        ? IconButton(
+      icon: Icon(
+        (widget.isObscure ?? !isPassword)
+            ? Icons.visibility_off
+            : Icons.visibility,
+        color: widget.themeColor,
+      ),
+      onPressed: () =>
+          setState(() {
+            isPassword = !isPassword;
+            widget.onObscureChange
+                ?.call(value: !(widget.isObscure ?? false));
+          }),
+    )
+        : widget.suffixIcon)
+        : usePrefixIconWidget(context))
         : (((widget.password && !widget.hideInternalObfuscator) ||
-                (widget.isObscure != null && !widget.hideInternalObfuscator))
-            ? IconButton(
-                icon: Icon(
-                  (widget.isObscure ?? !isPassword)
-                      ? Icons.visibility_off
-                      : Icons.visibility,
-                  color: widget.themeColor,
-                ),
-                onPressed: () => setState(() {
-                  isPassword = !isPassword;
-                  widget.onObscureChange
-                      ?.call(value: !(widget.isObscure ?? false));
-                }),
-              )
-            : widget.errorMessage != null
-                ? widget.errorMessage != ""
-                    ? Icon(
-                        widget.errorIcon ?? Icons.error_outline,
-                        color: widget.errorBorderColor ??
-                            errorTextColor(context: context),
-                        size: 16,
-                      )
-                    : widget.suffixIcon
-                : widget.suffixIcon);
+        (widget.isObscure != null && !widget.hideInternalObfuscator))
+        ? IconButton(
+      icon: Icon(
+        (widget.isObscure ?? !isPassword)
+            ? Icons.visibility_off
+            : Icons.visibility,
+        color: widget.themeColor,
+      ),
+      onPressed: () =>
+          setState(() {
+            isPassword = !isPassword;
+            widget.onObscureChange
+                ?.call(value: !(widget.isObscure ?? false));
+          }),
+    )
+        : widget.errorMessage != null
+        ? widget.errorMessage != ""
+        ? Icon(
+      widget.errorIcon ?? Icons.error_outline,
+      color: widget.errorBorderColor ??
+          errorTextColor(context: context),
+      size: 16,
+    )
+        : widget.suffixIcon
+        : widget.suffixIcon);
   }
 
   Widget? getPrefixIcon(BuildContext context) {
     return widget.forceSuffixDirection
         ? (Directionality.of(context) == TextDirection.rtl
-            ? (((widget.password && !widget.hideInternalObfuscator) ||
-                    (widget.isObscure != null &&
-                        !widget.hideInternalObfuscator))
-                ? IconButton(
-                    icon: Icon(
-                      (widget.isObscure ?? !isPassword)
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: widget.themeColor,
-                    ),
-                    onPressed: () => setState(() {
-                      isPassword = !isPassword;
-                      widget.onObscureChange
-                          ?.call(value: !(widget.isObscure ?? false));
-                    }),
-                  )
-                : widget.suffixIcon)
-            : usePrefixIconWidget(context))
+        ? (((widget.password && !widget.hideInternalObfuscator) ||
+        (widget.isObscure != null &&
+            !widget.hideInternalObfuscator))
+        ? IconButton(
+      icon: Icon(
+        (widget.isObscure ?? !isPassword)
+            ? Icons.visibility_off
+            : Icons.visibility,
+        color: widget.themeColor,
+      ),
+      onPressed: () =>
+          setState(() {
+            isPassword = !isPassword;
+            widget.onObscureChange
+                ?.call(value: !(widget.isObscure ?? false));
+          }),
+    )
+        : widget.suffixIcon)
+        : usePrefixIconWidget(context))
         : usePrefixIconWidget(context);
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<bool>("isPassword", isPassword));
+    properties..add(DiagnosticsProperty<bool>("isPassword", isPassword))..add(
+        DiagnosticsProperty<bool>("hasText", hasText));
   }
 }

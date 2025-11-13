@@ -5,6 +5,7 @@ import "package:esim_open_source/domain/repository/services/flutter_channel_hand
 import "package:esim_open_source/domain/use_case/user/get_bundle_label_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_notifications_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
@@ -115,6 +116,50 @@ Future<void> main() async {
         ).called(1);
       });
 
+      test("onTopUpClick with successful response shows success sheet", () async {
+        viewModel.state.currentESimList.add(
+          PurchaseEsimBundleResponseModel(
+            iccid: "test-iccid",
+            bundleCode: "test-bundle",
+          ),
+        );
+
+        // Mock top-up response (not canceled)
+        when(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).thenAnswer(
+          (_) async => SheetResponse<MainBottomSheetResponse>(
+            data: const MainBottomSheetResponse(canceled: false),
+          ),
+        );
+
+        await viewModel.onTopUpClick(iccid: "test-iccid");
+
+        // Verify that both bottom sheets were called (top-up + success)
+        verify(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).called(2); // Once for top-up, once for success
+      });
+
+      test("onTopUpClick returns early for invalid iccid", () async {
+        await viewModel.onTopUpClick(iccid: "invalid-iccid");
+        verifyNever(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        );
+      });
+
       test("onConsumptionClick handles valid iccid", () async {
         viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
         await viewModel.onConsumptionClick(iccid: "test-iccid");
@@ -127,6 +172,65 @@ Future<void> main() async {
         ).called(1);
       });
 
+      test("onConsumptionClick with top-up tag triggers onTopUpClick", () async {
+        viewModel.state.currentESimList.add(
+          PurchaseEsimBundleResponseModel(
+            iccid: "test-iccid",
+            bundleCode: "test-bundle",
+            isTopupAllowed: true,
+          ),
+        );
+
+        // First call: consumption bottom sheet returns with top-up tag
+        // Second call: top-up bottom sheet
+        int callCount = 0;
+        when(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).thenAnswer((_) async {
+          callCount++;
+          if (callCount == 1) {
+            // Consumption sheet returns with top-up tag
+            return SheetResponse<MainBottomSheetResponse>(
+              data: const MainBottomSheetResponse(
+                canceled: false,
+                tag: "top-up",
+              ),
+            );
+          } else {
+            // Top-up sheet
+            return SheetResponse<MainBottomSheetResponse>(
+              data: const MainBottomSheetResponse(),
+            );
+          }
+        });
+
+        await viewModel.onConsumptionClick(iccid: "test-iccid");
+
+        // Verify bottom sheet was called twice (consumption + top-up)
+        verify(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).called(2);
+      });
+
+      test("onConsumptionClick returns early for invalid iccid", () async {
+        await viewModel.onConsumptionClick(iccid: "invalid-iccid");
+        verifyNever(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        );
+      });
+
       test("onQrCodeClick handles valid iccid", () async {
         viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
         await viewModel.onQrCodeClick(iccid: "test-iccid");
@@ -137,6 +241,17 @@ Future<void> main() async {
             data: anyNamed("data"),
           ),
         ).called(1);
+      });
+
+      test("onQrCodeClick returns early for invalid iccid", () async {
+        await viewModel.onQrCodeClick(iccid: "invalid-iccid");
+        verifyNever(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        );
       });
 
       test("onCurrentBundleClick handles valid iccid", () async {
@@ -152,6 +267,57 @@ Future<void> main() async {
         ).called(1);
       });
 
+      test("onCurrentBundleClick with top_up tag triggers onTopUpClick", () async {
+        viewModel.state.currentESimList.add(
+          PurchaseEsimBundleResponseModel(
+            iccid: "test-iccid",
+            bundleCode: "test-bundle",
+          ),
+        );
+
+        int callCount = 0;
+        when(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            ignoreSafeArea: anyNamed("ignoreSafeArea"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).thenAnswer((_) async {
+          callCount++;
+          if (callCount == 1) {
+            return SheetResponse<MainBottomSheetResponse>(
+              data: const MainBottomSheetResponse(
+                canceled: false,
+                tag: "top_up",
+              ),
+            );
+          } else {
+            return SheetResponse<MainBottomSheetResponse>(
+              data: const MainBottomSheetResponse(),
+            );
+          }
+        });
+
+        await viewModel.onCurrentBundleClick(iccid: "test-iccid");
+
+        verify(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            ignoreSafeArea: anyNamed("ignoreSafeArea"),
+            data: anyNamed("data"),
+          ),
+        ).called(2);
+      });
+
+      test("onCurrentBundleClick returns early when busy", () async {
+        viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        viewModel.setViewState(ViewState.busy);
+        await viewModel.onCurrentBundleClick(iccid: "test-iccid");
+        // Should not call bottom sheet when busy
+      });
+
       test("onExpiredBundleClick handles valid iccid", () async {
         viewModel.state.expiredESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
         await viewModel.onExpiredBundleClick(iccid: "test-iccid");
@@ -165,6 +331,57 @@ Future<void> main() async {
         ).called(1);
       });
 
+      test("onExpiredBundleClick with top_up tag triggers onTopUpClick", () async {
+        viewModel.state.expiredESimList.add(
+          PurchaseEsimBundleResponseModel(
+            iccid: "test-iccid",
+            bundleCode: "test-bundle",
+          ),
+        );
+
+        int callCount = 0;
+        when(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            ignoreSafeArea: anyNamed("ignoreSafeArea"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).thenAnswer((_) async {
+          callCount++;
+          if (callCount == 1) {
+            return SheetResponse<MainBottomSheetResponse>(
+              data: const MainBottomSheetResponse(
+                canceled: false,
+                tag: "top_up",
+              ),
+            );
+          } else {
+            return SheetResponse<MainBottomSheetResponse>(
+              data: const MainBottomSheetResponse(),
+            );
+          }
+        });
+
+        await viewModel.onExpiredBundleClick(iccid: "test-iccid");
+
+        verify(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            ignoreSafeArea: anyNamed("ignoreSafeArea"),
+            data: anyNamed("data"),
+          ),
+        ).called(2);
+      });
+
+      test("onExpiredBundleClick returns early when busy", () async {
+        viewModel.state.expiredESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
+        viewModel.setViewState(ViewState.busy);
+        await viewModel.onExpiredBundleClick(iccid: "test-iccid");
+        // Should not call bottom sheet when busy
+      });
+
       test("onEditNameClick handles valid iccid", () async {
         viewModel.state.currentESimList.add(PurchaseEsimBundleResponseModel(iccid: "test-iccid"));
         await viewModel.onEditNameClick(iccid: "test-iccid");
@@ -175,6 +392,49 @@ Future<void> main() async {
             data: anyNamed("data"),
           ),
         ).called(1);
+      });
+
+      test("onEditNameClick with canceled response does not change name", () async {
+        viewModel.state.currentESimList.add(
+          PurchaseEsimBundleResponseModel(
+            iccid: "test-iccid",
+            displayTitle: "Old Name",
+          ),
+        );
+
+        when(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).thenAnswer(
+          (_) async => SheetResponse<MainBottomSheetResponse>(
+            data: const MainBottomSheetResponse(),
+          ),
+        );
+
+        await viewModel.onEditNameClick(iccid: "test-iccid");
+
+        // Verify sheet was shown
+        verify(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        ).called(1);
+      });
+
+      test("onEditNameClick returns early for invalid iccid", () async {
+        await viewModel.onEditNameClick(iccid: "invalid-iccid");
+        verifyNever(
+          mockBottomSheetService.showCustomSheet(
+            isScrollControlled: anyNamed("isScrollControlled"),
+            variant: anyNamed("variant"),
+            data: anyNamed("data"),
+          ),
+        );
       });
     });
 
@@ -198,6 +458,32 @@ Future<void> main() async {
 
         await viewModel.onInstallClick(iccid: "test-iccid");
         expect(viewModel.isInstallationFailed, isTrue);
+        expect(viewModel.state.showInstallButton, isFalse);
+      });
+
+      test("onInstallClick returns early for invalid iccid", () async {
+        await viewModel.onInstallClick(iccid: "invalid-iccid");
+        expect(viewModel.isInstallationFailed, isFalse);
+      });
+
+      test("onInstallClick handles successful installation", () async {
+        viewModel.state.currentESimList.add(
+          PurchaseEsimBundleResponseModel(
+            iccid: "test-iccid",
+            smdpAddress: "test-smdp",
+            activationCode: "test-code",
+          ),
+        );
+
+        when(
+          mockFlutterChannelHandlerService.openEsimSetupForAndroid(
+            smdpAddress: anyNamed("smdpAddress"),
+            activationCode: anyNamed("activationCode"),
+          ),
+        ).thenAnswer((_) async => true);
+
+        await viewModel.onInstallClick(iccid: "test-iccid");
+        expect(viewModel.isInstallationFailed, isFalse);
       });
     });
 
@@ -230,6 +516,43 @@ Future<void> main() async {
             <UserNotificationModel>[
               UserNotificationModel(status: false), // Unread
             ],
+            message: "Success",
+          ),
+        );
+
+        await viewModel.handleNotificationBadge();
+        expect(viewModel.state.showNotificationBadge, isTrue);
+      });
+
+      test("handleNotificationBadge with all read notifications", () async {
+        when(
+          mockApiUserRepository.getUserNotifications(
+            pageIndex: anyNamed("pageIndex"),
+            pageSize: anyNamed("pageSize"),
+          ),
+        ).thenAnswer(
+          (_) async => Resource<List<UserNotificationModel>>.success(
+            <UserNotificationModel>[
+              UserNotificationModel(status: true), // Read
+              UserNotificationModel(status: true), // Read
+            ],
+            message: "Success",
+          ),
+        );
+
+        await viewModel.handleNotificationBadge();
+        expect(viewModel.state.showNotificationBadge, isTrue);
+      });
+
+      test("handleNotificationBadge with null response", () async {
+        when(
+          mockApiUserRepository.getUserNotifications(
+            pageIndex: anyNamed("pageIndex"),
+            pageSize: anyNamed("pageSize"),
+          ),
+        ).thenAnswer(
+          (_) async => Resource<List<UserNotificationModel>>.success(
+            <UserNotificationModel>[],
             message: "Success",
           ),
         );

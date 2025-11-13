@@ -13,10 +13,10 @@ import "package:esim_open_source/utils/date_time_utils.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class MyESimBundleBottomSheetViewModel extends BaseModel {
-  MyESimBundleBottomSheetViewModel({
-    required this.request,
-    required this.completer,
-  });
+  // MyESimBundleBottomSheetViewModel({
+  //   required this.request,
+  //   required this.completer,
+  // });
 
   //#region UseCases
   final GetUserConsumptionUseCase getUserConsumptionUseCase =
@@ -29,8 +29,8 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
 
   MyESimBundleBottomState get state => _state;
 
-  final SheetRequest<MyESimBundleRequest> request;
-  final Function(SheetResponse<MainBottomSheetResponse>) completer;
+  late SheetRequest<MyESimBundleRequest> request;
+  late Function(SheetResponse<MainBottomSheetResponse>) completer;
 
 //#endregion
 

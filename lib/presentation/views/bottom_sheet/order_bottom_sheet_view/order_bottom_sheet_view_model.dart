@@ -8,14 +8,11 @@ import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class OrderBottomSheetViewModel extends BaseModel {
-  OrderBottomSheetViewModel({
-    required this.initBundleOrderModel,
-    required this.completer,
-  });
+  // OrderBottomSheetViewModel();
 
   OrderHistoryResponseModel? bundleOrderModel;
   OrderHistoryResponseModel? initBundleOrderModel;
-  final Function(SheetResponse<OrderHistoryResponseModel>) completer;
+  Function(SheetResponse<OrderHistoryResponseModel>)? completer;
 
   bool _isButtonEnabled = false;
   bool get isButtonEnabled => _isButtonEnabled;
@@ -50,7 +47,7 @@ class OrderBottomSheetViewModel extends BaseModel {
       onFailure: (Resource<OrderHistoryResponseModel?> result) async {
         bundleOrderModel = null;
         await handleError(response);
-        completer(
+        completer?.call(
           SheetResponse<OrderHistoryResponseModel>(),
         );
       },
