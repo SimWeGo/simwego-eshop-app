@@ -112,8 +112,6 @@ Future<void> main() async {
               bundleName: "Top Up 1",
               price: 10,
               priceDisplay: r"$10.00",
-              planType: "type",
-              activityPolicy: "policy",
             ),
           ],
           message: "Success",
@@ -201,8 +199,8 @@ Future<void> main() async {
       );
 
       viewModel.bundleItems.addAll(<BundleResponseModel>[
-        BundleResponseModel(planType: "type", activityPolicy: "policy"),
-        BundleResponseModel(planType: "type", activityPolicy: "policy"),
+        BundleResponseModel(),
+        BundleResponseModel(),
       ]);
 
       // Act
@@ -231,7 +229,7 @@ Future<void> main() async {
       // Add many items to exceed screen height
       for (int i = 0; i < 10; i++) {
         viewModel.bundleItems.add(
-          BundleResponseModel(planType: "type", activityPolicy: "policy"),
+          BundleResponseModel(),
         );
       }
 
@@ -259,16 +257,12 @@ Future<void> main() async {
           bundleName: "Top Up 1",
           price: 10,
           priceDisplay: r"$10.00",
-          planType: "type",
-          activityPolicy: "policy",
         ),
         BundleResponseModel(
           bundleCode: "TOP_UP_2",
           bundleName: "Top Up 2",
           price: 20,
           priceDisplay: r"$20.00",
-          planType: "type",
-          activityPolicy: "policy",
         ),
       ];
 
@@ -403,8 +397,6 @@ Future<void> main() async {
         BundleResponseModel(
           bundleCode: "TEST_BUNDLE",
           price: 50,
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 
@@ -480,8 +472,6 @@ Future<void> main() async {
           price: 50,
           priceDisplay: r"$50.00",
           currencyCode: "USD",
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 
@@ -524,8 +514,6 @@ Future<void> main() async {
         BundleResponseModel(
           bundleCode: "TEST_BUNDLE",
           price: 50,
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 
@@ -598,8 +586,6 @@ Future<void> main() async {
           price: 50,
           priceDisplay: r"$50.00",
           currencyCode: "USD",
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 
@@ -678,8 +664,6 @@ Future<void> main() async {
           price: 50,
           priceDisplay: r"$50.00",
           currencyCode: "USD",
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 
@@ -771,8 +755,6 @@ Future<void> main() async {
           price: 30,
           priceDisplay: r"$30.00",
           currencyCode: "USD",
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 
@@ -828,8 +810,6 @@ Future<void> main() async {
         BundleResponseModel(
           bundleCode: "TEST_BUNDLE",
           price: 30,
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 
@@ -1103,8 +1083,6 @@ Future<void> main() async {
           price: 50,
           priceDisplay: r"$50.00",
           currencyCode: "USD",
-          planType: "type",
-          activityPolicy: "policy",
         ),
       );
 

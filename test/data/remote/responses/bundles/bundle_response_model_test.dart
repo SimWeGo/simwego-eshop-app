@@ -36,8 +36,6 @@ void main() {
             "iso3_code": "FRA",
           },
         ],
-        "plan_type": "Data Only",
-        "activity_policy": "Activation on first use",
       };
 
       // Act
@@ -63,8 +61,6 @@ void main() {
       expect(model.icon, "https://example.com/icon.png");
       expect(model.countries, isNotNull);
       expect(model.countries?.length, 1);
-      expect(model.planType, "Data Only");
-      expect(model.activityPolicy, "Activation on first use");
     });
 
     test("fromJson handles null bundle_category", () {
@@ -194,8 +190,6 @@ void main() {
         validityDisplay: "15 Days",
         icon: "https://example.com/de.png",
         countries: countries,
-        planType: "Data + Voice",
-        activityPolicy: "Immediate activation",
       );
 
       // Act
@@ -218,8 +212,6 @@ void main() {
       expect(json["validity_display"], "15 Days");
       expect(json["icon"], "https://example.com/de.png");
       expect(json["countries"], isNotNull);
-      expect(json["plan_type"], "Data + Voice");
-      expect(json["activity_policy"], "Immediate activation");
     });
 
     test("toJson handles null fields", () {

@@ -368,5 +368,7 @@
   "summary_of_payment": "Résumé du paiement",
   "subtotal": "Sous-total",
   "estimated_tax": "Taxe estimée",
-  "total": "Total"
+  "total": "Total",
+  "bundleDetails_planTypeText_dataOnly": "Données uniquement",
+  "bundleDetails_activationPolicy_Value": "La période de validité commence lorsque l'eSIM se connecte à l'un des réseaux pris en charge."
 }

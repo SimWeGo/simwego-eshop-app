@@ -60,9 +60,9 @@ Future<void> main() async {
       isRooted: false,
     );
     when(mockDeviceInfoService.addDeviceParams).thenAnswer((
-        _) async => mockDeviceParams);
+        _,) async => mockDeviceParams,);
     when(mockDeviceInfoService.deviceID).thenAnswer((
-        _) async => "mock_device_id");
+        _,) async => "mock_device_id",);
 
     // Mock ApiAppRepository addDevice to return success
     when(mockAppRepository.addDevice(
@@ -75,9 +75,9 @@ Future<void> main() async {
       ramSize: anyNamed("ramSize"),
       screenResolution: anyNamed("screenResolution"),
       isRooted: anyNamed("isRooted"),
-    )).thenAnswer((_) async =>
+    ),).thenAnswer((_) async =>
         TestDataFactory.createSuccessResource<EmptyResponse?>(
-            data: EmptyResponse()));
+            data: EmptyResponse(),),);
   });
 
   tearDown(() async {
@@ -112,7 +112,7 @@ Future<void> main() async {
         isNewsletterSubscribed: anyNamed("isNewsletterSubscribed"),
         currencyCode: anyNamed("currencyCode"),
         languageCode: anyNamed("languageCode"),
-      )).thenAnswer((_) async => expectedResponse);
+      ),).thenAnswer((_) async => expectedResponse);
 
       // Act
       final Resource<AuthResponseModel> result = await useCase.execute(params);
@@ -146,7 +146,7 @@ Future<void> main() async {
         isNewsletterSubscribed: anyNamed("isNewsletterSubscribed"),
         currencyCode: anyNamed("currencyCode"),
         languageCode: anyNamed("languageCode"),
-      )).thenAnswer((_) async => expectedResponse);
+      ),).thenAnswer((_) async => expectedResponse);
 
       // Act
       final Resource<AuthResponseModel> result = await useCase.execute(params);
@@ -181,7 +181,7 @@ Future<void> main() async {
         isNewsletterSubscribed: anyNamed("isNewsletterSubscribed"),
         currencyCode: anyNamed("currencyCode"),
         languageCode: anyNamed("languageCode"),
-      )).thenAnswer((_) async => expectedResponse);
+      ),).thenAnswer((_) async => expectedResponse);
 
       // Act
       final Resource<AuthResponseModel> result = await useCase.execute(params);
@@ -214,7 +214,7 @@ Future<void> main() async {
         isNewsletterSubscribed: anyNamed("isNewsletterSubscribed"),
         currencyCode: anyNamed("currencyCode"),
         languageCode: anyNamed("languageCode"),
-      )).thenAnswer((_) async => expectedResponse);
+      ),).thenAnswer((_) async => expectedResponse);
 
       // Act
       final Resource<AuthResponseModel> result = await useCase.execute(params);
@@ -246,7 +246,7 @@ Future<void> main() async {
         isNewsletterSubscribed: anyNamed("isNewsletterSubscribed"),
         currencyCode: anyNamed("currencyCode"),
         languageCode: anyNamed("languageCode"),
-      )).thenAnswer((_) async => expectedResponse);
+      ),).thenAnswer((_) async => expectedResponse);
 
       // Act
       final Resource<AuthResponseModel> result = await useCase.execute(params);
@@ -279,7 +279,7 @@ Future<void> main() async {
         isNewsletterSubscribed: anyNamed("isNewsletterSubscribed"),
         currencyCode: anyNamed("currencyCode"),
         languageCode: anyNamed("languageCode"),
-      )).thenAnswer((_) async => expectedResponse);
+      ),).thenAnswer((_) async => expectedResponse);
 
       // Act
       final Resource<AuthResponseModel> result = await useCase.execute(params);

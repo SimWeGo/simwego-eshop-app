@@ -49,8 +49,6 @@ Future<void> main() async {
             validityDisplay: "30 days",
             icon: "https://example.com/icon.png",
             unlimited: false,
-            planType: "type",
-            activityPolicy: "policy",
           ),
         ],
         message: "Success",
@@ -157,8 +155,6 @@ Future<void> main() async {
               validityDisplay: "30 days",
               icon: "https://example.com/icon.png",
               unlimited: false,
-              planType: "type",
-              activityPolicy: "policy",
             ),
             BundleResponseModel(
               bundleCode: "TOP_UP_2",
@@ -169,8 +165,6 @@ Future<void> main() async {
               validityDisplay: "60 days",
               icon: "https://example.com/icon2.png",
               unlimited: false,
-              planType: "type",
-              activityPolicy: "policy",
             ),
           ],
           message: "Success",
@@ -350,8 +344,6 @@ Future<void> main() async {
           validityDisplay: "15 days",
           icon: "icon.png",
           unlimited: false,
-          planType: "type",
-          activityPolicy: "policy",
         ),
         BundleResponseModel(
           bundleCode: "TEST_2",
@@ -362,8 +354,6 @@ Future<void> main() async {
           validityDisplay: "45 days",
           icon: "icon2.png",
           unlimited: false,
-          planType: "type",
-          activityPolicy: "policy",
         ),
       ]);
 

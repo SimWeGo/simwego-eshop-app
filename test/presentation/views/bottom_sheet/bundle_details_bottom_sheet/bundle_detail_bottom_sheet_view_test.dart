@@ -66,8 +66,6 @@ Future<void> main() async {
             gprsLimitDisplay: "5GB",
             priceDisplay: r"$10.00",
             validityDisplay: "7 days",
-            planType: "Prepaid",
-            activityPolicy: "Auto-activate",
           );
 
           when(mockViewModel.bundle).thenReturn(testBundle);

@@ -129,8 +129,8 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   Future<void> fetchTopUpRelated() async {
     bundleItems
       ..clear()
-      ..add(BundleResponseModel(planType: "type", activityPolicy: "policy"))
-      ..add(BundleResponseModel(planType: "type", activityPolicy: "policy"));
+      ..add(BundleResponseModel())
+      ..add(BundleResponseModel());
 
     applyShimmer = true;
     // await Future<void>.delayed(Duration(seconds: 2));

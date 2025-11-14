@@ -24,8 +24,6 @@ class EsimBundleEntity {
     required this.validityDisplay,
     required this.bundleTypeValue,
     required this.icon,
-    required this.planType,
-    required this.activityPolicy,
   });
 
   factory EsimBundleEntity.fromModel(
@@ -48,8 +46,6 @@ class EsimBundleEntity {
       validity: model.validity,
       validityDisplay: model.validityDisplay,
       bundleTypeValue: type.index,
-      planType: model.planType,
-      activityPolicy: model.activityPolicy,
     );
   }
 
@@ -70,8 +66,6 @@ class EsimBundleEntity {
   final int? validity;
   final String? validityDisplay;
   final String? icon;
-  final String? planType;
-  final String? activityPolicy;
 
   final ToOne<EsimBundleCategoryEntity> bundleCategory =
       ToOne<EsimBundleCategoryEntity>();
@@ -103,8 +97,6 @@ class EsimBundleEntity {
       validityDisplay: validityDisplay,
       bundleCategory: bundleCategory.target?.toModel(),
       countries: countries.map((EsimCountryEntity c) => c.toModel()).toList(),
-      activityPolicy: activityPolicy,
-      planType: planType,
     );
   }
 }

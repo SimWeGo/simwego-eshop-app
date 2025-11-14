@@ -342,10 +342,10 @@ class MainInputField extends StatefulWidget {
     properties..add(
       DiagnosticsProperty<TextEditingController>("controller", controller),
     )..add(DiagnosticsProperty<TextInputType?>(
-        "textInputType", textInputType))..add(
-        DiagnosticsProperty<bool>("password", password))..add(
-        DiagnosticsProperty<bool?>("isObscure", isObscure))..add(
-        DiagnosticsProperty<bool>("isReadOnly", isReadOnly))..add(
+        "textInputType", textInputType,),)..add(
+        DiagnosticsProperty<bool>("password", password),)..add(
+        DiagnosticsProperty<bool?>("isObscure", isObscure),)..add(
+        DiagnosticsProperty<bool>("isReadOnly", isReadOnly),)..add(
       DiagnosticsProperty<bool>(
         "hideInternalObfuscator",
         hideInternalObfuscator,
@@ -356,10 +356,10 @@ class MainInputField extends StatefulWidget {
         enterPressed,
       ),
     )..add(
-        DiagnosticsProperty<FocusNode?>("fieldFocusNode", fieldFocusNode))..add(
-        DiagnosticsProperty<FocusNode?>("nextFocusNode", nextFocusNode))..add(
+        DiagnosticsProperty<FocusNode?>("fieldFocusNode", fieldFocusNode),)..add(
+        DiagnosticsProperty<FocusNode?>("nextFocusNode", nextFocusNode),)..add(
         EnumProperty<TextInputAction?>(
-            "textInputAction", textInputAction))..add(
+            "textInputAction", textInputAction,),)..add(
       ObjectFlagProperty<void Function({required String text})?>.has(
         "onChanged",
         onChanged,
@@ -370,47 +370,47 @@ class MainInputField extends StatefulWidget {
         onObscureChange,
       ),
     )..add(
-        DiagnosticsProperty<TextInputFormatter?>("formatter", formatter))..add(
-        ColorProperty("themeColor", themeColor))..add(
-        ColorProperty("backgroundColor", backgroundColor))..add(
-        ColorProperty("cursorColor", cursorColor))..add(
-        ColorProperty("focusColor", focusColor))..add(
-        DoubleProperty("borderRadius", borderRadius))..add(
-        StringProperty("initialValue", initialValue))..add(
-        IntProperty("maxLength", maxLength))..add(
-        DiagnosticsProperty<InputBorder?>("inputBorder", inputBorder))..add(
-        DiagnosticsProperty<InputBorder?>("enabledBorder", enabledBorder))..add(
+        DiagnosticsProperty<TextInputFormatter?>("formatter", formatter),)..add(
+        ColorProperty("themeColor", themeColor),)..add(
+        ColorProperty("backgroundColor", backgroundColor),)..add(
+        ColorProperty("cursorColor", cursorColor),)..add(
+        ColorProperty("focusColor", focusColor),)..add(
+        DoubleProperty("borderRadius", borderRadius),)..add(
+        StringProperty("initialValue", initialValue),)..add(
+        IntProperty("maxLength", maxLength),)..add(
+        DiagnosticsProperty<InputBorder?>("inputBorder", inputBorder),)..add(
+        DiagnosticsProperty<InputBorder?>("enabledBorder", enabledBorder),)..add(
         DiagnosticsProperty<InputBorder?>(
-            "disabledBorder", disabledBorder))..add(
-        DiagnosticsProperty<InputBorder?>("errorBorder", errorBorder))..add(
-        DiagnosticsProperty<InputBorder?>("focusedBorder", focusedBorder))..add(
+            "disabledBorder", disabledBorder,),)..add(
+        DiagnosticsProperty<InputBorder?>("errorBorder", errorBorder),)..add(
+        DiagnosticsProperty<InputBorder?>("focusedBorder", focusedBorder),)..add(
       DiagnosticsProperty<InputBorder?>(
         "focusedErrorBorder",
         focusedErrorBorder,
       ),
     )..add(StringProperty("hintText", hintText))..add(
-        StringProperty("labelText", labelText))..add(
-        StringProperty("helperText", helperText))..add(
-        StringProperty("prefixText", prefixText))..add(
-        DiagnosticsProperty<TextStyle?>("labelStyle", labelStyle))..add(
-        DiagnosticsProperty<TextStyle?>("prefixStyle", prefixStyle))..add(
+        StringProperty("labelText", labelText),)..add(
+        StringProperty("helperText", helperText),)..add(
+        StringProperty("prefixText", prefixText),)..add(
+        DiagnosticsProperty<TextStyle?>("labelStyle", labelStyle),)..add(
+        DiagnosticsProperty<TextStyle?>("prefixStyle", prefixStyle),)..add(
       DiagnosticsProperty<bool>(
         "forceSuffixDirection",
         forceSuffixDirection,
       ),
     )..add(IterableProperty<String>("autofillHints", autofillHints))..add(
-        DiagnosticsProperty<bool>("autofocus", autofocus))..add(
-        DiagnosticsProperty<bool>("removeBorder", removeBorder))..add(
-        DiagnosticsProperty<TextStyle?>("inputTextStyle", inputTextStyle))..add(
-        EnumProperty<TextAlign?>("textAlign", textAlign))..add(
-        IntProperty("maxLines", maxLines))..add(
-        StringProperty("placeHolderText", labelTitleText))..add(
-        StringProperty("errorMessage", errorMessage))..add(
-        DoubleProperty("textFieldHeight", textFieldHeight))..add(
-        DiagnosticsProperty<TextStyle?>("hintTextStyle", hintTextStyle))..add(
-        ObjectFlagProperty<VoidCallback?>.has("onTap", onTap))..add(
-        ColorProperty("errorBorderColor", errorBorderColor))..add(
-        DiagnosticsProperty<IconData?>("errorIcon", errorIcon))..add(
+        DiagnosticsProperty<bool>("autofocus", autofocus),)..add(
+        DiagnosticsProperty<bool>("removeBorder", removeBorder),)..add(
+        DiagnosticsProperty<TextStyle?>("inputTextStyle", inputTextStyle),)..add(
+        EnumProperty<TextAlign?>("textAlign", textAlign),)..add(
+        IntProperty("maxLines", maxLines),)..add(
+        StringProperty("placeHolderText", labelTitleText),)..add(
+        StringProperty("errorMessage", errorMessage),)..add(
+        DoubleProperty("textFieldHeight", textFieldHeight),)..add(
+        DiagnosticsProperty<TextStyle?>("hintTextStyle", hintTextStyle),)..add(
+        ObjectFlagProperty<VoidCallback?>.has("onTap", onTap),)..add(
+        ColorProperty("errorBorderColor", errorBorderColor),)..add(
+        DiagnosticsProperty<IconData?>("errorIcon", errorIcon),)..add(
       DiagnosticsProperty<bool>("clearSearchEnabled", clearSearchEnabled),);
   }
 }
@@ -692,6 +692,6 @@ class _MainInputFieldState extends State<MainInputField> {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties..add(DiagnosticsProperty<bool>("isPassword", isPassword))..add(
-        DiagnosticsProperty<bool>("hasText", hasText));
+        DiagnosticsProperty<bool>("hasText", hasText),);
   }
 }

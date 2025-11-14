@@ -25,8 +25,6 @@ class BundleEntity {
     required this.validityDisplay,
     required this.bundleTypeValue,
     required this.icon,
-    required this.planType,
-    required this.activityPolicy,
   });
 
   factory BundleEntity.fromModel(BundleResponseModel model, BundleType type) {
@@ -46,8 +44,6 @@ class BundleEntity {
       validity: model.validity,
       validityDisplay: model.validityDisplay,
       bundleTypeValue: type.index,
-      planType: model.planType,
-      activityPolicy: model.activityPolicy,
     );
   }
 
@@ -68,8 +64,6 @@ class BundleEntity {
   final int? validity;
   final String? validityDisplay;
   final String? icon;
-  final String? planType;
-  final String? activityPolicy;
 
   final ToOne<BundleCategoryEntity> bundleCategory =
       ToOne<BundleCategoryEntity>();
@@ -104,8 +98,6 @@ class BundleEntity {
       validityDisplay: validityDisplay,
       bundleCategory: bundleCategory.target?.toModel(),
       countries: countries.map((CountryEntity c) => c.toModel()).toList(),
-      activityPolicy: activityPolicy,
-      planType: planType,
     );
   }
 }

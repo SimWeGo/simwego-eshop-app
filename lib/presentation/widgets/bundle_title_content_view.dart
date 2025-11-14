@@ -1,3 +1,5 @@
+import "package:easy_localization/easy_localization.dart" as localization;
+import "package:esim_open_source/presentation/enums/language_enum.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -12,6 +14,7 @@ class BundleTitleContentView extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.start,
     super.key,
   });
+
   final String titleText;
   final String contentText;
   final bool showShimmer;
@@ -19,8 +22,13 @@ class BundleTitleContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String langCode =
+        localization.EasyLocalization.of(context)?.locale.languageCode ?? "en";
+
+    final bool isRTL = LanguageEnum.fromCode(langCode).isRTL;
+
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: isRTL ? Alignment.centerRight : Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: crossAxisAlignment,
         children: <Widget>[

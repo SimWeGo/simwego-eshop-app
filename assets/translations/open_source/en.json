@@ -369,5 +369,7 @@
   "summary_of_payment": "Summary of Payment",
   "subtotal": "Subtotal",
   "estimated_tax": "Estimated Tax",
-  "total": "Total"
+  "total": "Total",
+  "bundleDetails_planTypeText_dataOnly": "Data only",
+  "bundleDetails_activationPolicy_Value": "The validity period starts when the eSIM connects to any supported networks."
 }

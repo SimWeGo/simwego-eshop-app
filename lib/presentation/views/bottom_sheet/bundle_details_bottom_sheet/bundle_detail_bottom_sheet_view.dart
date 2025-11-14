@@ -46,8 +46,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
         ..bundle = requestBase.data?.bundleResponseModel
         ..tempBundle = requestBase.data?.bundleResponseModel
         ..region = requestBase.data?.region
-        ..countriesList = requestBase.data?.countries
-      ,
+        ..countriesList = requestBase.data?.countries,
       builder: (
         BuildContext context,
         BundleDetailBottomSheetViewModel viewModel,
@@ -147,7 +146,9 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                           BundleTitleContentView(
                             titleText:
                                 LocaleKeys.bundleDetails_planTypeText.tr(),
-                            contentText: bundle?.planType ?? "",
+                            contentText: LocaleKeys
+                                .bundleDetails_planTypeText_dataOnly
+                                .tr(),
                           ),
                           const DividerLine(
                             verticalPadding: 0,
@@ -156,7 +157,9 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                             titleText: LocaleKeys
                                 .bundleDetails_activationPolicyText
                                 .tr(),
-                            contentText: bundle?.activityPolicy ?? "",
+                            contentText: LocaleKeys
+                                .bundleDetails_activationPolicy_Value
+                                .tr(),
                           ),
                           if (!viewModel.isUserLoggedIn)
                             PaddingWidget.applySymmetricPadding(

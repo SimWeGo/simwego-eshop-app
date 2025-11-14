@@ -194,10 +194,6 @@ void main() {
       try {
         await apiImpl.updateUserInfo(
           email: "test@example.com",
-          msisdn: null,
-          firstName: null,
-          lastName: null,
-          isNewsletterSubscribed: null,
         );
       } on Object catch (e) {
         expect(e.toString(), contains("No internet connection"));

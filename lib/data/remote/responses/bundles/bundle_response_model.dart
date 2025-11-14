@@ -4,8 +4,6 @@ import "package:esim_open_source/utils/parsing_helper.dart";
 
 class BundleResponseModel {
   BundleResponseModel({
-    this.planType,
-    this.activityPolicy,
     this.displayTitle,
     this.displaySubtitle,
     this.bundleCode,
@@ -50,8 +48,6 @@ class BundleResponseModel {
                   .map((dynamic item) => CountryResponseModel.fromJson(item)),
             )
           : null,
-      planType: json["plan_type"],
-      activityPolicy: json["activity_policy"],
     );
   }
 
@@ -71,8 +67,6 @@ class BundleResponseModel {
   final String? validityDisplay;
   final String? icon;
   final List<CountryResponseModel>? countries;
-  final String? planType;
-  final String? activityPolicy;
 
   // Method to convert instance to JSON
   Map<String, dynamic> toJson() {
@@ -94,8 +88,6 @@ class BundleResponseModel {
       "validity_display": validityDisplay,
       "countries":
           countries?.map((CountryResponseModel item) => item.toJson()).toList(),
-      "plan_type": planType,
-      "activity_policy": activityPolicy,
     };
   }
 
@@ -135,9 +127,6 @@ class BundleResponseModel {
             alternativeCountry: "Albania",
           ),
         ],
-        planType: "Data Only",
-        activityPolicy:
-            "The validity period starts when the eSIM connects to any supported networks.",
       ),
       BundleResponseModel(
         icon: "https://placehold.co/600x400?bundle=None",
@@ -160,9 +149,6 @@ class BundleResponseModel {
         validity: 1,
         validityDisplay: "1 Day",
         countries: <CountryResponseModel>[],
-        planType: "Data Only",
-        activityPolicy:
-            "The validity period starts when the eSIM connects to any supported networks.",
       ),
       BundleResponseModel(
         icon: "https://placehold.co/600x400?bundle=None",
@@ -185,9 +171,6 @@ class BundleResponseModel {
         validity: 1,
         validityDisplay: "1 Day",
         countries: <CountryResponseModel>[],
-        planType: "Data Only",
-        activityPolicy:
-            "The validity period starts when the eSIM connects to any supported networks.",
       ),
       BundleResponseModel(
         icon: "https://placehold.co/600x400?bundle=None",
@@ -227,9 +210,6 @@ class BundleResponseModel {
             alternativeCountry: "Türkiye",
           ),
         ],
-        planType: "Data Only",
-        activityPolicy:
-            "The validity period starts when the eSIM connects to any supported networks.",
       ),
       BundleResponseModel(
         icon: "https://placehold.co/600x400?bundle=None",
@@ -252,9 +232,6 @@ class BundleResponseModel {
         validity: 1,
         validityDisplay: "1 Day",
         countries: <CountryResponseModel>[],
-        planType: "Data Only",
-        activityPolicy:
-            "The validity period starts when the eSIM connects to any supported networks.",
       ),
     ];
 

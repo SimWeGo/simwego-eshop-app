@@ -44,7 +44,7 @@ void main() {
         // Act
         await service.setInt(LocalStorageKeys.hasPreviouslyStarted, 123);
         final int? result = service.getInt(
-            LocalStorageKeys.hasPreviouslyStarted);
+            LocalStorageKeys.hasPreviouslyStarted,);
 
         // Assert
         expect(result, 123);
@@ -91,7 +91,7 @@ void main() {
         // Act
         await service.setDouble(LocalStorageKeys.hasPreviouslyStarted, 1.5);
         final double? result = service.getDouble(
-            LocalStorageKeys.hasPreviouslyStarted);
+            LocalStorageKeys.hasPreviouslyStarted,);
 
         // Assert
         expect(result, 1.5);
