@@ -138,12 +138,13 @@ class LanguagesDataSource implements DynamicSelectionViewDataSource {
   }
 
   @override
-  Future<void> setNewSelection(String code) async {
+  Future<void> setNewSelection(String languageName) async {
+    LanguageEnum lang = LanguageEnum.fromString(languageName);
     if (viewModel?.isUserLoggedIn ?? false) {
-      await viewModel?.updateLanguageAndCurrencyCode(languageCode: code);
+      await viewModel?.updateLanguageAndCurrencyCode(languageCode: lang.code);
     } else {
       await syncLanguageAndCurrencyCode(
-        languageCode: code,
+        languageCode: lang.code,
       );
     }
   }
@@ -151,7 +152,7 @@ class LanguagesDataSource implements DynamicSelectionViewDataSource {
   @override
   bool isSelected(int index) {
     String value = LanguageEnum.fromString(_data[index]).code;
-    return value == selectedData;
+    return value.toLowerCase() == selectedData.toLowerCase();
   }
 
   @override

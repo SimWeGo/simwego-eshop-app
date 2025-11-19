@@ -96,10 +96,10 @@ class AppClipSelectionViewModel extends BaseModel {
       selectedLanguage = LanguageEnum.values[index].languageText;
       String selectedLanguageCode =
           LanguageEnum.fromString(selectedLanguage).code;
-      await context.setLocale(Locale(selectedLanguageCode));
+      await context.setLocale(Locale(selectedLanguageCode.toLowerCase()));
       await localStorageService.setString(
         LocalStorageKeys.appLanguage,
-        selectedLanguageCode,
+        selectedLanguageCode.toLowerCase(),
       );
     } else {
       selectedCurrency = currencies[index];

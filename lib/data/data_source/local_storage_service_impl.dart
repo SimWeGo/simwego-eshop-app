@@ -122,7 +122,7 @@ class LocalStorageServiceImpl implements LocalStorageService {
 
     if (defaultLanguage == null) {
       //user has not set a language
-      unawaited(setString(LocalStorageKeys.appLanguage, language));
+      unawaited(setString(LocalStorageKeys.appLanguage, language.toLowerCase()));
     } else {
       language = defaultLanguage;
     }
