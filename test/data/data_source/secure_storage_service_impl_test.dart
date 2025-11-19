@@ -2,14 +2,21 @@
 
 import "package:esim_open_source/data/data_source/secure_storage_service_impl.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
 
+import "secure_storage_service_impl_test.mocks.dart";
+
+@GenerateMocks(<Type>[FlutterSecureStorage])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late MockFlutterSecureStorage mockSecureStorage;
   late SecureStorageServiceImpl service;
 
   setUp(() {
+    mockSecureStorage = MockFlutterSecureStorage();
     service = SecureStorageServiceImpl.instance;
   });
 

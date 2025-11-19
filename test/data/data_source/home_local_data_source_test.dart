@@ -4,12 +4,39 @@ import "package:esim_open_source/data/data_source/home_data_entities/bundle_cate
 import "package:esim_open_source/data/data_source/home_data_entities/country_entity.dart";
 import "package:esim_open_source/data/data_source/home_data_entities/home_data_entity.dart";
 import "package:esim_open_source/data/data_source/home_local_data_source.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_category_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/home_data_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
 import "package:esim_open_source/objectbox.g.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/annotations.dart";
 import "package:mockito/mockito.dart";
 
 import "home_local_data_source_test.mocks.dart";
+
+// Fake Store implementation for testing
+class FakeStore extends Fake implements Store {
+  final Map<Type, Box<dynamic>> _boxes = <Type, Box<dynamic>>{};
+
+  void registerBox<T>(Box<T> box) {
+    _boxes[T] = box;
+  }
+
+  @override
+  Box<T> box<T>() {
+    if (!_boxes.containsKey(T)) {
+      throw StateError("No box registered for type $T");
+    }
+    return _boxes[T]! as Box<T>;
+  }
+
+  @override
+  R runInTransaction<R>(TxMode mode, R Function() fn) {
+    return fn();
+  }
+}
 
 @GenerateMocks(<Type>[Store])
 @GenerateNiceMocks(<MockSpec<dynamic>>[
@@ -28,33 +55,27 @@ import "home_local_data_source_test.mocks.dart";
   ),
 ])
 void main() {
-  late MockStore mockStore;
+  late FakeStore fakeStore;
   late MockHomeDataBox mockHomeDataBox;
   late MockCountryBox mockCountryBox;
   late MockBundleCategoryBox mockBundleCategoryBox;
   late HomeLocalDataSource dataSource;
 
   setUp(() {
-    mockStore = MockStore();
+    fakeStore = FakeStore();
     mockHomeDataBox = MockHomeDataBox();
     mockCountryBox = MockCountryBox();
     mockBundleCategoryBox = MockBundleCategoryBox();
 
-    // Setup store to return mocked boxes
-    when(mockStore.box<HomeDataEntity>()).thenReturn(mockHomeDataBox);
-    when(mockStore.box<CountryEntity>()).thenReturn(mockCountryBox);
-    when(mockStore.box<BundleCategoryEntity>())
-        .thenReturn(mockBundleCategoryBox);
+    // Register boxes with the fake store
+    fakeStore..registerBox<HomeDataEntity>(mockHomeDataBox)
+    ..registerBox<CountryEntity>(mockCountryBox)
+    ..registerBox<BundleCategoryEntity>(mockBundleCategoryBox);
 
-    dataSource = HomeLocalDataSource(mockStore);
+    dataSource = HomeLocalDataSource(fakeStore);
   });
 
-  group("HomeLocalDataSource", () {}, skip: "ObjectBox mocking requires additional setup - tests are structurally correct but need mock refinement");
-}
-
-// NOTE: The following test code is commented out due to ObjectBox mocking complexity
-// The test structure is correct but requires advanced mocking setup to work properly
-/*
+  group("HomeLocalDataSource", () {
     group("saveHomeData", () {
       test("should save home data with version", () async {
         // Arrange
@@ -62,20 +83,12 @@ void main() {
           version: "1.0.0",
         );
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
 
         // Act
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
       });
 
@@ -97,20 +110,12 @@ void main() {
           regions: regions,
         );
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
 
         // Act
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
       });
 
@@ -132,20 +137,12 @@ void main() {
           countries: countries,
         );
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
 
         // Act
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
       });
 
@@ -171,13 +168,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
 
@@ -185,7 +175,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
       });
 
@@ -217,13 +206,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockBundleCategoryBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
@@ -232,7 +214,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
         verify(mockBundleCategoryBox.put(any)).called(1);
       });
@@ -268,13 +249,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
 
@@ -282,7 +256,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
         verify(mockCountryBox.put(any)).called(1);
       });
@@ -309,13 +282,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
 
@@ -323,7 +289,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
       });
 
@@ -355,13 +320,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockBundleCategoryBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
@@ -370,7 +328,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
         verify(mockBundleCategoryBox.put(any)).called(1);
       });
@@ -406,13 +363,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
 
@@ -420,7 +370,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
         verify(mockCountryBox.put(any)).called(1);
       });
@@ -467,20 +416,12 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(existingCountry);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
 
         // Act
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
         verifyNever(mockCountryBox.put(any));
       });
@@ -516,13 +457,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
 
@@ -530,7 +464,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
         verify(mockCountryBox.put(any)).called(1);
       });
@@ -582,13 +515,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.put(any)).thenReturn(1);
         when(mockBundleCategoryBox.put(any)).thenReturn(1);
         when(mockCountryBox.put(any)).thenReturn(1);
@@ -597,7 +523,6 @@ void main() {
         await dataSource.saveHomeData(homeData);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.put(any)).called(1);
       });
     });
@@ -648,7 +573,7 @@ void main() {
         verify(mockQueryBuilder.order(
           HomeDataEntity_.lastUpdated,
           flags: Order.descending,
-        )).called(1);
+        ),).called(1);
       });
 
       test("should convert home data entity to response model", () {
@@ -679,13 +604,6 @@ void main() {
     group("clearCache", () {
       test("should remove all data from all boxes", () async {
         // Arrange
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.removeAll()).thenReturn(1);
         when(mockCountryBox.removeAll()).thenReturn(10);
         when(mockBundleCategoryBox.removeAll()).thenReturn(5);
@@ -694,7 +612,6 @@ void main() {
         await dataSource.clearCache();
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.removeAll()).called(1);
         verify(mockCountryBox.removeAll()).called(1);
         verify(mockBundleCategoryBox.removeAll()).called(1);
@@ -702,13 +619,6 @@ void main() {
 
       test("should handle empty database gracefully", () async {
         // Arrange
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockHomeDataBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
         when(mockBundleCategoryBox.removeAll()).thenReturn(0);
@@ -717,7 +627,6 @@ void main() {
         await dataSource.clearCache();
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockHomeDataBox.removeAll()).called(1);
         verify(mockCountryBox.removeAll()).called(1);
         verify(mockBundleCategoryBox.removeAll()).called(1);
@@ -725,4 +634,3 @@ void main() {
     });
   });
 }
-*/

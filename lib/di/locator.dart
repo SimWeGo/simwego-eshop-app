@@ -62,6 +62,8 @@ import "package:esim_open_source/presentation/view_models/main_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/bundle_details_bottom_sheet/bundle_detail_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/cashback_reward_bottom_sheet/cashback_reward_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/delete_account_bottom_sheet/delete_account_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle/my_e_sim_bundle_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_consumption/consumption_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view_model.dart";
@@ -81,6 +83,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/faq_view/faq_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/android_user_guide_view/android_user_guide_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view_model.dart";
@@ -320,8 +323,17 @@ Future<void> viewModelInjectionModules() async {
     ..registerFactory<DeleteAccountBottomSheetViewModel>(
       DeleteAccountBottomSheetViewModel.new,
     )
+    ..registerFactory<MyESimBundleBottomSheetViewModel>(
+      MyESimBundleBottomSheetViewModel.new,
+    )
     ..registerFactory<CashbackRewardBottomSheetViewModel>(
       CashbackRewardBottomSheetViewModel.new,
+    )
+    ..registerFactory<AndroidUserGuideViewModel>(
+      AndroidUserGuideViewModel.new,
+    )
+    ..registerFactory<ConsumptionBottomSheetViewModel>(
+      ConsumptionBottomSheetViewModel.new,
     )
     ..registerFactory<OrderBottomSheetViewModel>(
       OrderBottomSheetViewModel.new,

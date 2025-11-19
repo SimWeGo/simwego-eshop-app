@@ -4,12 +4,39 @@ import "package:esim_open_source/data/data_source/esims_local_data_source.dart";
 import "package:esim_open_source/data/data_source/my_esim_entities/esim_bundle_category_entity.dart";
 import "package:esim_open_source/data/data_source/my_esim_entities/esim_country_entity.dart";
 import "package:esim_open_source/data/data_source/my_esim_entities/esim_entity.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_category_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/transaction_history_response_model.dart";
 import "package:esim_open_source/objectbox.g.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/annotations.dart";
 import "package:mockito/mockito.dart";
 
 import "esims_local_data_source_test.mocks.dart";
+
+// Fake Store implementation for testing
+class FakeStore extends Fake implements Store {
+  final Map<Type, Box<dynamic>> _boxes = <Type, Box<dynamic>>{};
+
+  void registerBox<T>(Box<T> box) {
+    _boxes[T] = box;
+  }
+
+  @override
+  Box<T> box<T>() {
+    if (!_boxes.containsKey(T)) {
+      throw StateError("No box registered for type $T");
+    }
+    return _boxes[T]! as Box<T>;
+  }
+
+  @override
+  R runInTransaction<R>(TxMode mode, R Function() fn) {
+    return fn();
+  }
+}
 
 @GenerateMocks(<Type>[Store])
 @GenerateNiceMocks(<MockSpec<dynamic>>[
@@ -70,40 +97,35 @@ EsimEntity createTestEsimEntity({
 }
 
 void main() {
-  late MockStore mockStore;
+  late FakeStore fakeStore;
   late MockEsimBox mockEsimBox;
   late MockEsimCountryBox mockCountryBox;
   late MockEsimBundleCategoryBox mockBundleCategoryBox;
   late EsimsLocalDataSource dataSource;
 
   setUp(() {
-    mockStore = MockStore();
+    fakeStore = FakeStore();
     mockEsimBox = MockEsimBox();
     mockCountryBox = MockEsimCountryBox();
     mockBundleCategoryBox = MockEsimBundleCategoryBox();
 
-    // Setup store to return mocked boxes
-    when(mockStore.box<EsimEntity>()).thenReturn(mockEsimBox);
-    when(mockStore.box<EsimCountryEntity>()).thenReturn(mockCountryBox);
-    when(mockStore.box<EsimBundleCategoryEntity>())
-        .thenReturn(mockBundleCategoryBox);
+    // Register boxes with the fake store
+    fakeStore..registerBox<EsimEntity>(mockEsimBox)
+    ..registerBox<EsimCountryEntity>(mockCountryBox)
+    ..registerBox<EsimBundleCategoryEntity>(mockBundleCategoryBox);
 
-    dataSource = EsimsLocalDataSource(mockStore);
+    dataSource = EsimsLocalDataSource(fakeStore);
   });
 
-  group("EsimsLocalDataSource", () {}, skip: "ObjectBox mocking requires additional setup - tests are structurally correct but need mock refinement");
-}
-
-// NOTE: The following test code is commented out due to ObjectBox mocking complexity
-// The test structure is correct but requires advanced mocking setup to work properly
-/*
+  group("EsimsLocalDataSource", () {
     group("replacePurchasedEsims", () {
       test("should handle null data list gracefully", () async {
         // Act
         await dataSource.replacePurchasedEsims(null);
 
-        // Assert
-        verifyNever(mockStore.runInTransaction(any, any));
+        // Assert - no exception should be thrown
+        // When null is passed, no boxes should be modified
+        verifyNever(mockEsimBox.put(any));
       });
 
       test("should clear cache before saving new data", () async {
@@ -117,14 +139,7 @@ void main() {
           ),
         ];
 
-        // Mock transaction behavior
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
+        // Mock box behaviors
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
         when(mockBundleCategoryBox.removeAll()).thenReturn(0);
@@ -134,7 +149,6 @@ void main() {
         await dataSource.replacePurchasedEsims(dataList);
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(2);
         verify(mockEsimBox.removeAll()).called(1);
         verify(mockCountryBox.removeAll()).called(1);
         verify(mockBundleCategoryBox.removeAll()).called(1);
@@ -153,13 +167,6 @@ void main() {
           ),
         ];
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
         when(mockBundleCategoryBox.removeAll()).thenReturn(0);
@@ -170,7 +177,6 @@ void main() {
 
         // Assert
         verify(mockEsimBox.put(any)).called(1);
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(2);
       });
 
       test("should save esim data with bundle category", () async {
@@ -188,13 +194,6 @@ void main() {
             bundleCategory: category,
           ),
         ];
-
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
 
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
@@ -231,13 +230,6 @@ void main() {
           ),
         ];
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
         when(mockBundleCategoryBox.removeAll()).thenReturn(0);
@@ -268,13 +260,6 @@ void main() {
             transactionHistory: transactions,
           ),
         ];
-
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
 
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
@@ -329,13 +314,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
         when(mockBundleCategoryBox.removeAll()).thenReturn(0);
@@ -371,13 +349,6 @@ void main() {
             displayTitle: "Test Bundle 3",
           ),
         ];
-
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
 
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
@@ -442,13 +413,6 @@ void main() {
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(existingCountry);
 
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
         when(mockBundleCategoryBox.removeAll()).thenReturn(0);
@@ -502,13 +466,6 @@ void main() {
         when(mockCountryBox.query(any)).thenReturn(mockQueryBuilder);
         when(mockQueryBuilder.build()).thenReturn(mockQuery);
         when(mockQuery.findFirst()).thenReturn(null);
-
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
 
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
@@ -614,13 +571,6 @@ void main() {
     group("clearCache", () {
       test("should remove all data from all boxes", () async {
         // Arrange
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockEsimBox.removeAll()).thenReturn(5);
         when(mockCountryBox.removeAll()).thenReturn(10);
         when(mockBundleCategoryBox.removeAll()).thenReturn(3);
@@ -629,7 +579,6 @@ void main() {
         await dataSource.clearCache();
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockEsimBox.removeAll()).called(1);
         verify(mockCountryBox.removeAll()).called(1);
         verify(mockBundleCategoryBox.removeAll()).called(1);
@@ -637,13 +586,6 @@ void main() {
 
       test("should handle empty database gracefully", () async {
         // Arrange
-        when(mockStore.runInTransaction(TxMode.write, any))
-            .thenAnswer((Invocation invocation) {
-          final Function callback = invocation.positionalArguments[1] as Function;
-          callback();
-          return null;
-        });
-
         when(mockEsimBox.removeAll()).thenReturn(0);
         when(mockCountryBox.removeAll()).thenReturn(0);
         when(mockBundleCategoryBox.removeAll()).thenReturn(0);
@@ -652,7 +594,6 @@ void main() {
         await dataSource.clearCache();
 
         // Assert
-        verify(mockStore.runInTransaction(TxMode.write, any)).called(1);
         verify(mockEsimBox.removeAll()).called(1);
         verify(mockCountryBox.removeAll()).called(1);
         verify(mockBundleCategoryBox.removeAll()).called(1);
@@ -660,4 +601,3 @@ void main() {
     });
   });
 }
-*/
