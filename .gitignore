@@ -49,3 +49,4 @@ android/app/montyMobileKeystore_playstore
 ios/flutterfire_logs.txt
 *.orig
 /ios/build
+/android/build

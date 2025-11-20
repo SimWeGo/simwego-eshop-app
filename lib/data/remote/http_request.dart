@@ -14,7 +14,7 @@ import "package:esim_open_source/utils/log_helper.dart";
 import "package:http/http.dart" as http;
 
 class HttpRequest {
-  static int _defaultTimeoutSeconds = 30;
+  static int _defaultTimeoutSeconds = 120;
 
   static final List<WeakReference<UnauthorizedAccessListener>>
       _unauthorizedAccessCallBackListeners =

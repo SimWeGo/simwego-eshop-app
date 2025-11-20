@@ -170,21 +170,24 @@ Widget _androidNativeDialog({
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: buttons
               .map(
-                (NativeButtonParams button) => TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: const RoundedRectangleBorder(),
-                  ),
-                  onPressed: () {
-                    button.buttonAction();
-                  },
-                  child: Text(
-                    button.buttonTitle,
-                    style: buttonTitleTextStyle ??
-                        bodyMediumTextStyle(
-                          context: context,
-                          fontColor: Colors.blue,
-                        ),
+                (NativeButtonParams button) => Flexible(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: const RoundedRectangleBorder(),
+                    ),
+                    onPressed: () {
+                      button.buttonAction();
+                    },
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      button.buttonTitle,
+                      style: buttonTitleTextStyle ??
+                          bodyMediumTextStyle(
+                              context: context, fontColor: Colors.blue),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               )

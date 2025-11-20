@@ -101,7 +101,7 @@
   "notificationView_title": "Notifications",
   "notificationView_emptyTitle": "Vous n'avez pas encore de notifications",
   "accountInformation_titleText": "Informations du compte",
-  "accountInformation_namePlaceHolderText": "Nom",
+  "accountInformation_namePlaceHolderText": "Prénom",
   "accountInformation_familyNamePlaceHolderText": "Nom de famille",
   "accountInformation_contentText": "Recevez des mises à jour sur nos services, actualités et offres par email.",
   "accountInformation_saveText": "Enregistrer",
