@@ -2,6 +2,7 @@
 
 import "dart:async";
 
+import "package:diacritic/diacritic.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
@@ -34,13 +35,27 @@ class BundlesListViewModel extends EsimBaseModel {
       if (query.isEmpty) {
         return filteredCount;
       } else {
+        // Normalize search query (remove accents)
+        final String normalizedQuery = removeDiacritics(query);
+
         return filteredCount
             .where(
-              (CountryResponseModel country) =>
-                  country.country?.toLowerCase().contains(query) ??
-                  false ||
-                      (country.iso3Code?.toLowerCase().contains(query) ??
-                          false),
+              (CountryResponseModel country) {
+                // Search in: country name, alternative name, ISO3 code, country code
+                final List<String?> searchFields = <String?>[
+                  country.country,
+                  country.alternativeCountry,
+                  country.iso3Code,
+                  country.countryCode,
+                ];
+
+                return searchFields.any(
+                  (String? field) =>
+                      field != null &&
+                      removeDiacritics(field.toLowerCase())
+                          .contains(normalizedQuery),
+                );
+              },
             )
             .toList();
       }

@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:diacritic/diacritic.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/app/banner_response_model.dart";
@@ -181,29 +182,50 @@ class DataPlansViewModel extends BaseModel {
         cruiseBundles ?? <BundleResponseModel>[],
       );
     } else {
+      // Normalize search query (remove accents, lowercase)
+      final String normalizedQuery = removeDiacritics(searchQuery);
+
+      // Search countries by multiple fields (like web implementation)
       _filteredCountries = countries
               ?.where(
-                (CountryResponseModel country) =>
-                    country.country?.toLowerCase().contains(searchQuery) ??
-                    false,
+                (CountryResponseModel country) {
+                  // Search in: country name, alternative name, ISO3 code, country code
+                  final List<String?> searchFields = <String?>[
+                    country.country,
+                    country.alternativeCountry,
+                    country.iso3Code,
+                    country.countryCode,
+                  ];
+
+                  return searchFields.any(
+                    (String? field) =>
+                        field != null &&
+                        removeDiacritics(field.toLowerCase())
+                            .contains(normalizedQuery),
+                  );
+                },
               )
               .toList() ??
           <CountryResponseModel>[];
 
+      // Search regions with accent normalization
       _filteredRegions = regions
               ?.where(
                 (RegionsResponseModel region) =>
-                    region.regionName?.toLowerCase().contains(searchQuery) ??
-                    false,
+                    region.regionName != null &&
+                    removeDiacritics(region.regionName!.toLowerCase())
+                        .contains(normalizedQuery),
               )
               .toList() ??
           <RegionsResponseModel>[];
 
+      // Search bundles with accent normalization
       _filteredBundles = globalBundles
               ?.where(
                 (BundleResponseModel bundle) =>
-                    bundle.bundleName?.toLowerCase().contains(searchQuery) ??
-                    false,
+                    bundle.bundleName != null &&
+                    removeDiacritics(bundle.bundleName!.toLowerCase())
+                        .contains(normalizedQuery),
               )
               .toList() ??
           <BundleResponseModel>[];
@@ -211,8 +233,9 @@ class DataPlansViewModel extends BaseModel {
       _filteredCruiseBundles = cruiseBundles
               ?.where(
                 (BundleResponseModel bundle) =>
-                    bundle.bundleName?.toLowerCase().contains(searchQuery) ??
-                    false,
+                    bundle.bundleName != null &&
+                    removeDiacritics(bundle.bundleName!.toLowerCase())
+                        .contains(normalizedQuery),
               )
               .toList() ??
           <BundleResponseModel>[];

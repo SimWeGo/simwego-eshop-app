@@ -117,6 +117,7 @@ dependencies:
   app_tracking_transparency: ^2.0.6+1
   firebase_crashlytics: ^5.0.2
   phone_numbers_parser: ^9.0.15
+  diacritic: ^0.1.5
 dev_dependencies:
   objectbox_generator: ^4.3.1
   # depends on objectbox_generator

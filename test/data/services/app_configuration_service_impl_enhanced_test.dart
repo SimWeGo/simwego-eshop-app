@@ -245,29 +245,6 @@ Future<void> main() async {
         // Skip: Singleton retains state from previous tests
       }, skip: "Singleton pattern - state persists across tests without reset mechanism",);
 
-      test("getWhatsAppNumber returns phone number", () async {
-        // Arrange
-        final List<ConfigurationResponseModel> configs =
-            <ConfigurationResponseModel>[
-          ConfigurationResponseModel(
-            key: "whatsapp_number",
-            value: "+447123456789",
-          ),
-        ];
-
-        when(mockApiAppRepository.getConfigurations()).thenAnswer(
-          (_) async => Resource<List<ConfigurationResponseModel>>.success(configs, message: null),
-        );
-
-        service = AppConfigurationServiceImpl.instance;
-        await service.getAppConfigurations();
-
-        // Act
-        final String phone = await service.getWhatsAppNumber;
-
-        // Assert
-        expect(phone, "+447123456789");
-      });
     });
 
     group("LoginType Configuration", () {

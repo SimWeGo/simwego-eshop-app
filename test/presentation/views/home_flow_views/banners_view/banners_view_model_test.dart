@@ -1,5 +1,4 @@
 import "package:esim_open_source/data/remote/responses/app/banner_response_model.dart";
-import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banners_view_model.dart";
@@ -19,10 +18,6 @@ void main() async {
   setUp(() async {
     await setupTest();
     onViewModelReadyMock();
-
-    // Mock WhatsApp number
-    when(locator<AppConfigurationService>().getWhatsAppNumber)
-        .thenAnswer((_) async => "+1234567890");
   });
 
   tearDown(() async {

@@ -4,7 +4,6 @@ import "package:esim_open_source/utils/parsing_helper.dart";
 
 enum ConfigurationResponseKeys {
   catalogBundleCashVersion,
-  whatsAppNumber,
   supabaseBaseUrl,
   supabaseAnonKey,
   defaultCurrency,
@@ -16,8 +15,6 @@ enum ConfigurationResponseKeys {
     switch (this) {
       case ConfigurationResponseKeys.catalogBundleCashVersion:
         return "CATALOG.BUNDLES_CACHE_VERSION";
-      case ConfigurationResponseKeys.whatsAppNumber:
-        return "WHATSAPP_NUMBER";
       case ConfigurationResponseKeys.supabaseBaseUrl:
         return "SUPABASE_BASE_URL";
       case ConfigurationResponseKeys.supabaseAnonKey:

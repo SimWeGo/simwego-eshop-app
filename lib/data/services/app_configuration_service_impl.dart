@@ -104,16 +104,6 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
   }
 
   @override
-  Future<String> get getWhatsAppNumber async {
-    String temp = _getConfigData(key: ConfigurationResponseKeys.whatsAppNumber);
-    if (temp.isEmpty) {
-      await _appConfigCompleter?.future;
-      return _getConfigData(key: ConfigurationResponseKeys.whatsAppNumber);
-    }
-    return temp;
-  }
-
-  @override
   LoginType? get getLoginType {
     String loginTypeString = _getConfigData(
       key: ConfigurationResponseKeys.loginType,
