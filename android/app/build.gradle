@@ -39,8 +39,8 @@ android {
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     signingConfigs {
@@ -53,7 +53,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 
     sourceSets {
@@ -107,7 +107,7 @@ android {
         }
         OpenSourceStaging {
             dimension "environment"
-            applicationId "com.simwego.esim"
+            applicationId "com.simwego.esim.staging"
             versionNameSuffix "-staging"
             resValue "string", "app_name", "SimWeGo Stg"
             resValue "string", "facebook_app_id", "1724588091576653"

@@ -24,11 +24,11 @@ case $1 in
     ;;
   openSourceStaging)
     flutterfire config \
-      --project="${FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID}" \
+      --project="${FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID}" \
       --out=lib/firebase_options_open_source_stg.dart \
-      --ios-bundle-id="${OPEN_SOURCE_APP_BUNDLE_ID}" \
+      --ios-bundle-id="${OPEN_SOURCE_APP_BUNDLE_ID}.staging" \
       --ios-out=ios/flavors/OpenSourceStg/GoogleService-Info.plist \
-      --android-package-name="${OPEN_SOURCE_APP_BUNDLE_ID}" \
+      --android-package-name="${OPEN_SOURCE_APP_BUNDLE_ID}.staging" \
       --android-out=android/app/src/OpenSourceStaging/google-services.json
     ;;
   openSourceProd)
