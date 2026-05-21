@@ -12,18 +12,15 @@ import "package:flutter/material.dart";
 class PurchaseLoadingView extends StatelessWidget {
   const PurchaseLoadingView({
     required this.orderID,
-    this.bearerToken,
     super.key,
   });
 
   final String? orderID;
-  final String? bearerToken;
   static const String routeName = "PurchaseLoadingView";
 
   @override
   Widget build(BuildContext context) {
     locator<PurchaseLoadingViewModel>().orderID = orderID;
-    locator<PurchaseLoadingViewModel>().bearerToken = bearerToken;
     return BaseView<PurchaseLoadingViewModel>(
       hideAppBar: true,
       routeName: routeName,
@@ -75,14 +72,12 @@ class PurchaseLoadingView extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(StringProperty("orderID", orderID))
-      ..add(StringProperty("bearerToken", bearerToken));
+      ..add(StringProperty("orderID", orderID));
   }
 }
 
 class PurchaseLoadingViewData {
-  PurchaseLoadingViewData({required this.orderID, this.bearerToken});
+  PurchaseLoadingViewData({required this.orderID});
 
   final String orderID;
-  final String? bearerToken;
 }

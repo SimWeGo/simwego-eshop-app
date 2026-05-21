@@ -19,7 +19,6 @@ class GetUserPurchasedEsimByOrderIdUseCase
   ) async {
     return await repository.getMyEsimByOrder(
       orderID: params.orderID,
-      bearerToken: params.bearerToken,
     );
   }
 }
@@ -27,9 +26,7 @@ class GetUserPurchasedEsimByOrderIdUseCase
 class GetUserPurchasedEsimByOrderIdParam {
   GetUserPurchasedEsimByOrderIdParam({
     required this.orderID,
-    this.bearerToken,
   });
 
   final String orderID;
-  final String? bearerToken;
 }

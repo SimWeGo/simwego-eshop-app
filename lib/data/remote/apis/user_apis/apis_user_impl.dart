@@ -50,7 +50,6 @@ class APIUserImpl extends APIService implements ApiUser {
     required String affiliateCode,
     required String paymentType,
     required RelatedSearchRequestModel relatedSearch,
-    String? bearerToken,
   }) async {
     Map<String, dynamic> params = <String, dynamic>{
       "bundle_code": bundleCode,
@@ -61,16 +60,10 @@ class APIUserImpl extends APIService implements ApiUser {
       "related_search": relatedSearch.toJson(),
     };
 
-    Map<String, String> headers = <String, String>{
-      "Authorization": "Bearer $bearerToken",
-    };
-
     ResponseMain<BundleAssignResponseModel?> response = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: UserApis.assignBundle,
         parameters: params,
-        additionalHeaders:
-            (bearerToken?.isNotEmpty ?? false) ? headers : <String, String>{},
       ),
       fromJson: BundleAssignResponseModel.fromJson,
     );
@@ -179,18 +172,11 @@ class APIUserImpl extends APIService implements ApiUser {
   @override
   Future<ResponseMain<PurchaseEsimBundleResponseModel?>> getMyEsimByOrder({
     required String orderID,
-    String? bearerToken,
   }) async {
-    Map<String, String> headers = <String, String>{
-      "Authorization": "Bearer $bearerToken",
-    };
-
     ResponseMain<PurchaseEsimBundleResponseModel?> response = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: UserApis.getMyEsimByOrder,
         paramIDs: <String>[orderID],
-        additionalHeaders:
-            (bearerToken?.isNotEmpty ?? false) ? headers : <String, String>{},
       ),
       fromJson: PurchaseEsimBundleResponseModel.fromJson,
     );

@@ -12,7 +12,6 @@ abstract interface class ApiUser {
     required String affiliateCode,
     required String paymentType,
     required RelatedSearchRequestModel relatedSearch,
-    String? bearerToken,
   });
 
   FutureOr<dynamic> topUpBundle({
@@ -45,7 +44,6 @@ abstract interface class ApiUser {
 
   FutureOr<dynamic> getMyEsimByOrder({
     required String orderID,
-    String? bearerToken,
   });
 
   FutureOr<dynamic> getRelatedTopUp({

@@ -3,7 +3,6 @@ import "package:esim_open_source/data/remote/http_methods.dart";
 
 enum AuthApis implements URlRequestBuilder {
   login,
-  tmpLogin,
   logout,
   resendOtp,
   verifyOtp,
@@ -34,8 +33,6 @@ enum AuthApis implements URlRequestBuilder {
         return "/api/v1/auth/user-info";
       case AuthApis.userInfo:
         return "/api/v1/auth/user-info";
-      case AuthApis.tmpLogin:
-        return "/api/v1/auth/tmp-login";
     }
   }
 

@@ -10,7 +10,6 @@ import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view
 
 class PurchaseLoadingViewModel extends BaseModel {
   String? orderID;
-  String? bearerToken;
 
   bool isApiFetched = false;
 
@@ -34,7 +33,6 @@ class PurchaseLoadingViewModel extends BaseModel {
         await GetUserPurchasedEsimByOrderIdUseCase(locator()).execute(
       GetUserPurchasedEsimByOrderIdParam(
         orderID: orderID ?? "",
-        bearerToken: bearerToken,
       ),
     );
     handleResponse(

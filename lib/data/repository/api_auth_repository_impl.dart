@@ -127,16 +127,4 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
     apiAuth.removeAuthReloadListenerCallBack(authReloadListener);
   }
 
-  @override
-  FutureOr<Resource<AuthResponseModel?>> tmpLogin({
-    required String? email,
-    required String? phone,
-  }) async {
-    return responseToResource(
-      apiAuth.tmpLogin(
-        email: email,
-        phone: phone,
-      ),
-    );
-  }
 }
