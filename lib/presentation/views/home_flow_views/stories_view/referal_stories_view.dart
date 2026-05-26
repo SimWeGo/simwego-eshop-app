@@ -3,6 +3,7 @@ import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
+import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
@@ -48,10 +49,12 @@ class ReferalStoriesView {
             title: LocaleKeys.storiesView_notNow.tr(),
             hideShadows: true,
             height: 55,
-            enabledTextColor: enabledMainButtonColor(
+            // borderRadius: 1,
+            borderColor: context.appColors.primary_900,
+            enabledTextColor: titleTextColor(
               context: context,
             ),
-            enabledBackgroundColor: enabledMainButtonTextColor(
+            enabledBackgroundColor: mainWhiteTextColor(
               context: context,
             ),
           ),
@@ -149,7 +152,8 @@ class ReferalStoriesView {
                           LocaleKeys.storiesView_referralContent2.tr(
                             namedArgs: <String, String>{
                               "referAndEarnAmount":
-                              locator<ReferralInfoService>().getReferralAmountAndCurrency,
+                                  locator<ReferralInfoService>()
+                                      .getReferralAmountAndCurrency,
                             },
                           ),
                           style: headerFourNormalTextStyle(
@@ -206,7 +210,8 @@ class ReferalStoriesView {
                           LocaleKeys.storiesView_referralContent3.tr(
                             namedArgs: <String, String>{
                               "referAndEarnAmount":
-                              locator<ReferralInfoService>().getReferralAmountAndCurrency,
+                                  locator<ReferralInfoService>()
+                                      .getReferralAmountAndCurrency,
                             },
                           ),
                           style: headerFourNormalTextStyle(

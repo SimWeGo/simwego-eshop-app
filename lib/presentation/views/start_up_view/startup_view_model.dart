@@ -66,10 +66,8 @@ class StartUpViewModel extends BaseModel {
   //Tested
   Future<bool> checkIfDeviceCompatible(BuildContext context) async {
     DeviceInfoService deviceInfo = locator<DeviceInfoService>();
-    if (await deviceInfo.isRooted ||
-        await deviceInfo.isDevelopmentModeEnable ||
-        !await deviceInfo.isPhysicalDevice) {
-      log("Device compromised");
+    if (await deviceInfo.isRooted) {
+      log("Device rooted — blocking");
       if (context.mounted) {
         showDeviceCompromisedDialog(context);
         return true;
