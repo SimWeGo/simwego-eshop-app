@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCtvHcXIR8Atjtpv-4dr28bLeUQr4uDMyk',
-    appId: '1:763933589891:android:7424fd3155f898307076b6',
-    messagingSenderId: '763933589891',
-    projectId: 'simwego-live',
-    storageBucket: 'simwego-live.firebasestorage.app',
+    apiKey: 'AIzaSyA54XQi8HxVHO3lIHgjVY16YsNH0qx7qn8',
+    appId: '1:1011794263105:android:c2953eca6fd3c562051ac0',
+    messagingSenderId: '1011794263105',
+    projectId: 'simwego',
+    storageBucket: 'simwego.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCFwLeu8CLNbIZZqGtPn8L-V1eTnFFPNpM',
-    appId: '1:763933589891:ios:f98ce8761291ff817076b6',
-    messagingSenderId: '763933589891',
-    projectId: 'simwego-live',
-    storageBucket: 'simwego-live.firebasestorage.app',
-    androidClientId: '763933589891-jnh6qckmumvaqbu39cc12dgf2rj93gn2.apps.googleusercontent.com',
-    iosClientId: '763933589891-ch17f44qu1cga5s2j4fntv3034dr4250.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDgS0uxSd-NlvYidB-CetqgORVr5F1rR-w',
+    appId: '1:1011794263105:ios:6953b4127250dcc8051ac0',
+    messagingSenderId: '1011794263105',
+    projectId: 'simwego',
+    storageBucket: 'simwego.firebasestorage.app',
+    iosClientId: '1011794263105-9jdo7cg0j61ev9hjnnan84p8eiahbomr.apps.googleusercontent.com',
     iosBundleId: 'com.simwego.esim',
   );
 

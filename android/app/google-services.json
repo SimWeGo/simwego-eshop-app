@@ -1,26 +1,115 @@
 {
   "project_info": {
-    "project_number": "437878741797",
-    "project_id": "sim-we-go-live",
-    "storage_bucket": "sim-we-go-live.firebasestorage.app"
+    "project_number": "1011794263105",
+    "project_id": "simwego",
+    "storage_bucket": "simwego.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:437878741797:android:7ac94f4c1d66c7f74718cc",
+        "mobilesdk_app_id": "1:1011794263105:android:0d993489242b672d051ac0",
         "android_client_info": {
           "package_name": "com.luxe.esim"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDpM6y0uoEuuirDixCqxeJyx6bRwms8viw"
+          "current_key": "AIzaSyA54XQi8HxVHO3lIHgjVY16YsNH0qx7qn8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1011794263105-9jdo7cg0j61ev9hjnnan84p8eiahbomr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.simwego.esim"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011794263105:android:c2953eca6fd3c562051ac0",
+        "android_client_info": {
+          "package_name": "com.simwego.esim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA54XQi8HxVHO3lIHgjVY16YsNH0qx7qn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1011794263105-9jdo7cg0j61ev9hjnnan84p8eiahbomr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.simwego.esim"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011794263105:android:d6f5262dc53ffc83051ac0",
+        "android_client_info": {
+          "package_name": "com.simwego.esim.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA54XQi8HxVHO3lIHgjVY16YsNH0qx7qn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1011794263105-9jdo7cg0j61ev9hjnnan84p8eiahbomr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.simwego.esim"
+              }
+            }
+          ]
         }
       }
     }

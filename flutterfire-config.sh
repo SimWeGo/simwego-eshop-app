@@ -7,14 +7,21 @@ if [[ $# -eq 0 ]]; then
   exit 1
 fi
 
+# Use flutterfire.bat on Windows (Git Bash), flutterfire elsewhere
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+  FLUTTERFIRE="flutterfire.bat"
+else
+  FLUTTERFIRE="flutterfire"
+fi
 
 OPEN_SOURCE_APP_BUNDLE_ID="com.simwego.esim"
-FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID="simwego-test"
-FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID="simwego-live"
+# Single Firebase project for Dev + Staging + Prod (Auth via Supabase, analytics via PostHog)
+FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID="simwego"
+FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID="simwego"
 
 case $1 in
   openSourceDev)
-    flutterfire config \
+    "${FLUTTERFIRE}" config \
       --project="${FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID}" \
       --out=lib/firebase_options_open_source_dev.dart \
       --ios-bundle-id="${OPEN_SOURCE_APP_BUNDLE_ID}.test" \
@@ -23,7 +30,7 @@ case $1 in
       --android-out=android/app/src/OpenSourceDev/google-services.json
     ;;
   openSourceStaging)
-    flutterfire config \
+    "${FLUTTERFIRE}" config \
       --project="${FIREBASE_OPEN_SOURCE_DEV_PROJECT_ID}" \
       --out=lib/firebase_options_open_source_stg.dart \
       --ios-bundle-id="${OPEN_SOURCE_APP_BUNDLE_ID}.staging" \
@@ -32,7 +39,7 @@ case $1 in
       --android-out=android/app/src/OpenSourceStaging/google-services.json
     ;;
   openSourceProd)
-    flutterfire config \
+    "${FLUTTERFIRE}" config \
       --project="${FIREBASE_OPEN_SOURCE_PROD_PROJECT_ID}" \
       --out=lib/firebase_options_open_source_prod.dart \
       --ios-bundle-id="${OPEN_SOURCE_APP_BUNDLE_ID}" \
