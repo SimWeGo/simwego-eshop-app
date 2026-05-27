@@ -190,8 +190,8 @@ void setDefaultStatusBarColor() {
   // }
   // check in xcode info.plist (View controller-based status bar appearance) should be YES
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: templateAppColors.defPrimary_900,
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent /*templateAppColors.defPrimary_900*/,
       statusBarIconBrightness: Brightness.light, // for Android
       statusBarBrightness: Brightness.light, // for iOS (this is the inverse)
     ),

@@ -216,24 +216,4 @@ class APIAuthImpl extends APIService implements APIAuth {
     );
   }
 
-  @override
-  FutureOr<ResponseMain<AuthResponseModel?>> tmpLogin({
-    required String? email,
-    required String? phone,
-  }) async {
-    Map<String, String> params = <String, String>{
-      if (email != null) "email": email,
-      if (phone != null) "phone": phone,
-    };
-
-    ResponseMain<AuthResponseModel?> tmpLoginResponse = await sendRequest(
-      endPoint: createAPIEndpoint(
-        endPoint: AuthApis.tmpLogin,
-        parameters: params,
-      ),
-      fromJson: AuthResponseModel.fromAPIJson,
-    );
-
-    return tmpLoginResponse;
-  }
 }

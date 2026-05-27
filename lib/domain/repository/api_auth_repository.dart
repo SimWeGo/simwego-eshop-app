@@ -60,8 +60,4 @@ abstract interface class ApiAuthRepository {
     AuthReloadListener authReloadListener,
   );
 
-  FutureOr<dynamic> tmpLogin({
-    required String? email,
-    required String? phone,
-  });
 }

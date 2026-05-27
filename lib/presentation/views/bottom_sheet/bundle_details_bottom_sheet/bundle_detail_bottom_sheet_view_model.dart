@@ -11,7 +11,6 @@ import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
-import "package:esim_open_source/domain/use_case/auth/tmp_login_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/validate_promo_code_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/assign_user_bundle_use_case.dart";
@@ -28,6 +27,7 @@ import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
@@ -42,7 +42,6 @@ import "package:stacked_services/stacked_services.dart";
 class BundleDetailBottomSheetViewModel extends BaseModel {
 
   //#region UseCases
-  final TmpLoginUseCase tmpLoginUseCase = TmpLoginUseCase(locator());
   final GetBundleExistsUseCase getBundleExistsUseCase =
       GetBundleExistsUseCase(locator());
   final ValidatePromoCodeUseCase validatePromoCodeUseCase =
@@ -331,12 +330,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   Future<void> _triggerAssignFlow({
     required PaymentType paymentType,
   }) async {
-    String? bearerToken;
     if (!isUserLoggedIn) {
-      bearerToken = await _getTemporaryToken();
-      if (bearerToken == null) {
-        return;
-      }
+      navigationService.navigateTo(LoginView.routeName);
+      return;
     }
 
     setViewState(ViewState.busy);
@@ -351,7 +347,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
             ? paymentType.type
             : AppEnvironment
                 .appEnvironmentHelper.defaultPaymentTypeList.first.type,
-        bearerToken: bearerToken,
         relatedSearch: RelatedSearchRequestModel(
           region: region,
           countries: countriesList,
@@ -368,7 +363,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         if (paymentStatus == PaymentStatus.completed) {
           _navigateToLoading(
             result.data?.orderId ?? "",
-            bearerToken,
           );
           return;
         }
@@ -380,7 +374,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           },
           onSuccess: () => _initiatePaymentRequest(
             paymentType: paymentType,
-            bearerToken: bearerToken,
             orderID: result.data?.orderId ?? "",
             publishableKey: result.data?.publishableKey ?? "",
             merchantIdentifier: result.data?.merchantIdentifier ?? "",
@@ -406,7 +399,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     required String customerId,
     required String customerEphemeralKeySecret,
     required String billingCountryCode,
-    String? bearerToken,
     bool test = false,
   }) async {
     try {
@@ -434,7 +426,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         case PaymentResult.completed:
           _navigateToLoading(
             orderID,
-            bearerToken,
           );
 
         case PaymentResult.canceled:
@@ -454,7 +445,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           if (result) {
             _navigateToLoading(
               orderID,
-              bearerToken,
             );
           } else {
             cancelOrder(orderID: orderID);
@@ -483,7 +473,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     }
   }
 
-  Future<void> _navigateToLoading(String orderID, String? bearerToken) async {
+  Future<void> _navigateToLoading(String orderID) async {
     // remove the promo code after payment successfully completed
     _removePromoCodeFromLocalStorage();
 
@@ -503,7 +493,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       PurchaseLoadingView.routeName,
       arguments: PurchaseLoadingViewData(
         orderID: orderID,
-        bearerToken: bearerToken,
       ),
     );
   }
@@ -511,37 +500,6 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   //#endregion
 
   //#region Apis
-  Future<String?> _getTemporaryToken() async {
-    setViewState(ViewState.busy);
-    Resource<AuthResponseModel?> response = await tmpLoginUseCase.execute(
-      TmpLoginParams(
-        email:
-            (emailErrorMessage == "" && _emailController.text.trim().isNotEmpty)
-                ? _emailController.text.trim()
-                : null,
-        phone: _isValidPhoneNumber
-            ? "+${phoneController.value?.countryCode}${phoneController.value?.nsn}"
-            : null,
-      ),
-    );
-    setViewState(ViewState.idle);
-    String? token;
-
-    switch (response.resourceType) {
-      case ResourceType.success:
-        if (response.data == null) {
-          handleError(response);
-        } else {
-          token = response.data?.accessToken;
-        }
-      case ResourceType.error:
-        handleError(response);
-      case ResourceType.loading:
-    }
-
-    return token;
-  }
-
   Future<bool> _checkIfBundleExists() async {
     setViewState(ViewState.busy);
     bool bundleExists = false;

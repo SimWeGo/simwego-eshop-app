@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
 import flutter_local_notifications
-import BranchSDK
+//import BranchSDK
 import FBSDKCoreKit
 
 @main
@@ -17,7 +17,7 @@ import FBSDKCoreKit
         // ✅ Optional: Enable debug logging
         Settings.shared.enableLoggingBehavior(.appEvents)
         
-        configureBranchTestMode()
+//        configureBranchTestMode()
         
         let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
         let simProfilesChannel = FlutterMethodChannel(
@@ -107,21 +107,21 @@ import FBSDKCoreKit
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
-    private func configureBranchTestMode() {
-            // First, try to read from Info.plist (set by build script)
-            if let useTestModeFromPlist = Bundle.main.object(forInfoDictionaryKey: "branch_use_test_instance") as? Bool {
-                if useTestModeFromPlist {
-                    print("🧪 Info.plist: branch_use_test_instance = true - Using TEST key")
-                    Branch.setUseTestBranchKey(true)
-                } else {
-                    print("🚀 Info.plist: branch_use_test_instance = false - Using LIVE key")
-                    Branch.setUseTestBranchKey(false)
-                }
-                return
-            }
-            
-                print("🚀 Fallback: RELEASE build detected - Using LIVE key")
-                Branch.setUseTestBranchKey(false)
-        }
+//    private func configureBranchTestMode() {
+//            // First, try to read from Info.plist (set by build script)
+//            if let useTestModeFromPlist = Bundle.main.object(forInfoDictionaryKey: "branch_use_test_instance") as? Bool {
+//                if useTestModeFromPlist {
+//                    print("🧪 Info.plist: branch_use_test_instance = true - Using TEST key")
+//                    Branch.setUseTestBranchKey(true)
+//                } else {
+//                    print("🚀 Info.plist: branch_use_test_instance = false - Using LIVE key")
+//                    Branch.setUseTestBranchKey(false)
+//                }
+//                return
+//            }
+//            
+//                print("🚀 Fallback: RELEASE build detected - Using LIVE key")
+//                Branch.setUseTestBranchKey(false)
+//        }
     
 }

@@ -23,7 +23,6 @@ class AssignUserBundleUseCase
       referralCode: params.referralCode,
       affiliateCode: params.affiliateCode,
       paymentType: params.paymentType,
-      bearerToken: params.bearerToken,
       relatedSearch: params.relatedSearch,
     );
   }
@@ -37,7 +36,6 @@ class AssignUserBundleParam {
     required this.affiliateCode,
     required this.paymentType,
     required this.relatedSearch,
-    this.bearerToken,
   });
 
   final String bundleCode;
@@ -46,5 +44,4 @@ class AssignUserBundleParam {
   final String affiliateCode;
   final String paymentType;
   final RelatedSearchRequestModel relatedSearch;
-  String? bearerToken;
 }

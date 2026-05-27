@@ -562,69 +562,6 @@ Future<void> main() async {
       });
     });
 
-    group("openWhatsApp", () {
-      test("openWhatsApp formats phone number correctly", () {
-        const String phoneNumber = "+1 (234) 567-8900";
-
-        // Test the formatting logic
-        final String formattedNumber =
-            phoneNumber.replaceAll(RegExp(r"[^\d+]"), "");
-
-        expect(formattedNumber, equals("+12345678900"));
-      });
-
-      test("openWhatsApp removes non-numeric characters except plus", () {
-        const String phoneNumber = "abc+123def456";
-
-        final String formattedNumber =
-            phoneNumber.replaceAll(RegExp(r"[^\d+]"), "");
-
-        expect(formattedNumber, equals("+123456"));
-      });
-
-      test("openWhatsApp encodes message correctly", () {
-        const String message = "Hello World! How are you?";
-
-        final String encodedMessage = Uri.encodeComponent(message);
-
-        expect(encodedMessage, equals("Hello%20World!%20How%20are%20you%3F"));
-      });
-
-      test("openWhatsApp creates correct URL format", () {
-        const String phoneNumber = "+1234567890";
-        const String message = "Test message";
-        const String formattedNumber = "+1234567890";
-        final String encodedMessage = Uri.encodeComponent(message);
-
-        final String whatsappUrl =
-            "https://wa.me/$formattedNumber?text=$encodedMessage";
-
-        expect(whatsappUrl, contains("wa.me"));
-        expect(whatsappUrl, contains(formattedNumber));
-        expect(whatsappUrl, contains("text="));
-      });
-
-      test("openWhatsApp with empty message", () {
-        const String phoneNumber = "+1234567890";
-        const String message = "";
-        final String encodedMessage = Uri.encodeComponent(message);
-
-        final String whatsappUrl =
-            "https://wa.me/$phoneNumber?text=$encodedMessage";
-
-        expect(whatsappUrl, equals("https://wa.me/$phoneNumber?text="));
-      });
-
-      test("openWhatsApp with special characters in message", () {
-        const String message = r"Hello! @#$% &*()";
-
-        final String encodedMessage = Uri.encodeComponent(message);
-
-        expect(encodedMessage, isNotEmpty);
-        expect(encodedMessage, isNot(equals(message)));
-      });
-    });
-
     group("shareUrl", () {
       test("shareUrl text parameter is set correctly", () {
         const String textToShare = "Check out this link: https://example.com";

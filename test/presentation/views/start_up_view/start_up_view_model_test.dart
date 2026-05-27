@@ -236,35 +236,28 @@ void main() async {
   });
 
   group("checkIfDeviceCompatible additional scenarios", () {
-    test("returns true when development mode is enabled", () async {
+    test("returns false when development mode is enabled (no longer blocks)",
+        () async {
       when(deviceInfoService.isRooted).thenAnswer((_) async => false);
-      when(deviceInfoService.isDevelopmentModeEnable)
-          .thenAnswer((_) async => true);
-      when(deviceInfoService.isPhysicalDevice).thenAnswer((_) async => true);
 
       final bool result =
           await viewModel.checkIfDeviceCompatible(FakeContext());
 
-      expect(result, true);
+      expect(result, false);
     });
 
-    test("returns true when device is not physical", () async {
+    test("returns false when device is not physical (emulator allowed)",
+        () async {
       when(deviceInfoService.isRooted).thenAnswer((_) async => false);
-      when(deviceInfoService.isDevelopmentModeEnable)
-          .thenAnswer((_) async => false);
-      when(deviceInfoService.isPhysicalDevice).thenAnswer((_) async => false);
 
       final bool result =
           await viewModel.checkIfDeviceCompatible(FakeContext());
 
-      expect(result, true);
+      expect(result, false);
     });
 
-    test("returns false when all checks pass", () async {
+    test("returns false when not rooted", () async {
       when(deviceInfoService.isRooted).thenAnswer((_) async => false);
-      when(deviceInfoService.isDevelopmentModeEnable)
-          .thenAnswer((_) async => false);
-      when(deviceInfoService.isPhysicalDevice).thenAnswer((_) async => true);
 
       final bool result =
           await viewModel.checkIfDeviceCompatible(FakeContext());

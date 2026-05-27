@@ -170,21 +170,24 @@ Widget _androidNativeDialog({
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: buttons
               .map(
-                (NativeButtonParams button) => TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: const RoundedRectangleBorder(),
-                  ),
-                  onPressed: () {
-                    button.buttonAction();
-                  },
-                  child: Text(
-                    button.buttonTitle,
-                    style: buttonTitleTextStyle ??
-                        bodyMediumTextStyle(
-                          context: context,
-                          fontColor: Colors.blue,
-                        ),
+                (NativeButtonParams button) => Flexible(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: const RoundedRectangleBorder(),
+                    ),
+                    onPressed: () {
+                      button.buttonAction();
+                    },
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      button.buttonTitle,
+                      style: buttonTitleTextStyle ??
+                          bodyMediumTextStyle(
+                              context: context, fontColor: Colors.blue),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               )
@@ -307,47 +310,6 @@ Future<ShareResult> shareStoreLink({
   // } finally {
   //   launch("https://play.google.com/store/apps/details?id=" + appPackageName);
   // }
-}
-
-Future<void> openWhatsApp({
-  required String phoneNumber,
-  required String message,
-}) async {
-  // Format the phone number (remove any non-numeric characters except the + sign)
-  final String formattedNumber = phoneNumber.replaceAll(RegExp(r"[^\d+]"), "");
-
-  // Encode the message for URL
-  final String encodedMessage = Uri.encodeComponent(message);
-
-  // Create the WhatsApp URL
-  final String whatsappUrl =
-      "https://wa.me/$formattedNumber?text=$encodedMessage";
-  final Uri uri = Uri.parse(whatsappUrl);
-
-  try {
-    // First try to launch the WhatsApp app
-    final bool appLaunched = await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    );
-
-    // If app launch fails, open in browser
-    if (!appLaunched) {
-      await launchUrl(
-        uri,
-      );
-    }
-  } on Error {
-    // If any error occurs, try opening in browser as fallback
-    try {
-      await launchUrl(
-        uri,
-      );
-    } on Error catch (e) {
-      log("Failed to open WhatsApp: $e");
-      // Show an error message to the user
-    }
-  }
 }
 
 Future<void>? registerDevice({

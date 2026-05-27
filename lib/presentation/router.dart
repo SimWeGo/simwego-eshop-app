@@ -171,7 +171,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         routeName: settingsName,
         viewToShow: PurchaseLoadingView(
           orderID: purchaseLoadingViewData.orderID,
-          bearerToken: purchaseLoadingViewData.bearerToken,
         ),
         transitionsBuilder: TransitionsBuilders.slideBottom,
       );

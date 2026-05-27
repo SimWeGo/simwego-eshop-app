@@ -1846,15 +1846,6 @@ class MockAppConfigurationService extends _i1.Mock
       ) as _i21.Future<String>);
 
   @override
-  _i21.Future<String> get getWhatsAppNumber => (super.noSuchMethod(
-        Invocation.getter(#getWhatsAppNumber),
-        returnValue: _i21.Future<String>.value(_i47.dummyValue<String>(
-          this,
-          Invocation.getter(#getWhatsAppNumber),
-        )),
-      ) as _i21.Future<String>);
-
-  @override
   _i21.Future<String> get getCatalogVersion => (super.noSuchMethod(
         Invocation.getter(#getCatalogVersion),
         returnValue: _i21.Future<String>.value(_i47.dummyValue<String>(

@@ -1,12 +1,7 @@
-import "dart:io";
-
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
-import "package:esim_open_source/di/locator.dart";
-import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/presentation/helpers/view_state_utils.dart";
-import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/haptic_feedback.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view.dart";
@@ -19,7 +14,6 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
-import "package:lottie/lottie.dart";
 
 class MainTabPage extends StatefulWidget {
   const MainTabPage({
@@ -104,31 +98,6 @@ class _MainTabPageState extends State<MainTabPage>
     final bool isKeyboardVisible =
         KeyboardVisibilityProvider.isKeyboardVisible(context);
     return Scaffold(
-      floatingActionButton: tabController.index > 1
-          ? null
-          : GestureDetector(
-              onTap: () async {
-                openWhatsApp(
-                  phoneNumber: await locator<AppConfigurationService>()
-                      .getWhatsAppNumber,
-                  message: "",
-                );
-              },
-              child: Container(
-                padding: EdgeInsets.only(
-                  bottom: Platform.isIOS
-                      ? AppEnvironment.isFromAppClip
-                          ? 20
-                          : 60
-                      : 80,
-                ),
-                child: Lottie.asset(
-                  "assets/lottie/whatsappLottie.json",
-                  width: 90,
-                  height: 90,
-                ),
-              ),
-            ),
       backgroundColor: whiteBackGroundColor(context: context),
       body: wrapBodyWithState(
         context: context,

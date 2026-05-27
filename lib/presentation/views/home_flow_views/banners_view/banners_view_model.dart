@@ -2,14 +2,12 @@ import "dart:async";
 
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/app/banner_response_model.dart";
-import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/use_case/app/get_banner_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
-import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banners_view_types.dart";
@@ -121,11 +119,7 @@ class BannersViewModel extends BaseModel {
   Future<void> onViewTap(BannerState bannerView) async {
     switch (bannerView.bannersViewType) {
       case BannersViewTypes.liveChat:
-        openWhatsApp(
-          phoneNumber:
-              await locator<AppConfigurationService>().getWhatsAppNumber,
-          message: "",
-        );
+        break;
       case BannersViewTypes.referAndEarn:
         if (locator<UserAuthenticationService>().isUserLoggedIn) {
           locator<NavigationService>().navigateTo(

@@ -42,7 +42,6 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
     required String affiliateCode,
     required String paymentType,
     required RelatedSearchRequestModel relatedSearch,
-    String? bearerToken,
   }) {
     return responseToResource(
       apiUserBundles.assignBundle(
@@ -51,7 +50,6 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
         referralCode: referralCode,
         affiliateCode: affiliateCode,
         paymentType: paymentType,
-        bearerToken: bearerToken,
         relatedSearch: relatedSearch,
       ),
     );
@@ -125,12 +123,10 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
   @override
   FutureOr<Resource<PurchaseEsimBundleResponseModel?>> getMyEsimByOrder({
     required String orderID,
-    String? bearerToken,
   }) {
     return responseToResource(
       apiUserBundles.getMyEsimByOrder(
         orderID: orderID,
-        bearerToken: bearerToken,
       ),
     );
   }

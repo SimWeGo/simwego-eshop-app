@@ -50,19 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBUvPwPV70qUa08c4vYw1AqJ8CdfUnvA1k',
-    appId: '1:221368510791:android:c51df057507248a84cc462',
-    messagingSenderId: '221368510791',
-    projectId: 'esim-opensource---test',
-    storageBucket: 'esim-opensource---test.firebasestorage.app',
+    apiKey: 'AIzaSyA54XQi8HxVHO3lIHgjVY16YsNH0qx7qn8',
+    appId: '1:1011794263105:android:d6f5262dc53ffc83051ac0',
+    messagingSenderId: '1011794263105',
+    projectId: 'simwego',
+    storageBucket: 'simwego.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBcuxZAcNFZH-uhbiyyrTpRp9tAeVskajw',
-    appId: '1:221368510791:ios:06b67807e2ee54c84cc462',
-    messagingSenderId: '221368510791',
-    projectId: 'esim-opensource---test',
-    storageBucket: 'esim-opensource---test.firebasestorage.app',
-    iosBundleId: 'monty.esim.opensource.test',
+    apiKey: 'AIzaSyDgS0uxSd-NlvYidB-CetqgORVr5F1rR-w',
+    appId: '1:1011794263105:ios:555523db06de6005051ac0',
+    messagingSenderId: '1011794263105',
+    projectId: 'simwego',
+    storageBucket: 'simwego.firebasestorage.app',
+    iosClientId: '1011794263105-o5t1npao87earssqrssg32tm0b7oetak.apps.googleusercontent.com',
+    iosBundleId: 'com.simwego.esim.test',
   );
+
 }
