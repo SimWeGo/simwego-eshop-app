@@ -1,5 +1,6 @@
 import "package:esim_open_source/data/remote/responses/bundles/bundle_category_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
 import "package:esim_open_source/utils/parsing_helper.dart";
 
 class BundleResponseModel {
@@ -20,6 +21,15 @@ class BundleResponseModel {
     this.validityDisplay,
     this.countries,
     this.icon,
+    this.priceTtc,
+    this.taxAmount,
+    this.taxRate,
+    this.bundleRegion,
+    this.label,
+    this.isStockable,
+    this.bundleInfoCode,
+    this.isActive,
+    this.originalPrice,
   });
 
   // Factory method to create an instance from JSON
@@ -48,6 +58,20 @@ class BundleResponseModel {
                   .map((dynamic item) => CountryResponseModel.fromJson(item)),
             )
           : null,
+      priceTtc: (json["price_ttc"] as num?)?.toDouble(),
+      taxAmount: (json["tax_amount"] as num?)?.toDouble(),
+      taxRate: (json["tax_rate"] as num?)?.toDouble(),
+      bundleRegion: json["bundle_region"] != null
+          ? List<RegionsResponseModel>.from(
+              json["bundle_region"]
+                  .map((dynamic item) => RegionsResponseModel.fromJson(item)),
+            )
+          : null,
+      label: json["label"],
+      isStockable: json["is_stockable"],
+      bundleInfoCode: json["bundle_info_code"],
+      isActive: json["is_active"],
+      originalPrice: (json["original_price"] as num?)?.toDouble(),
     );
   }
 
@@ -67,6 +91,15 @@ class BundleResponseModel {
   final String? validityDisplay;
   final String? icon;
   final List<CountryResponseModel>? countries;
+  final double? priceTtc;
+  final double? taxAmount;
+  final double? taxRate;
+  final List<RegionsResponseModel>? bundleRegion;
+  final String? label;
+  final bool? isStockable;
+  final String? bundleInfoCode;
+  final bool? isActive;
+  final double? originalPrice;
 
   // Method to convert instance to JSON
   Map<String, dynamic> toJson() {
@@ -88,6 +121,17 @@ class BundleResponseModel {
       "validity_display": validityDisplay,
       "countries":
           countries?.map((CountryResponseModel item) => item.toJson()).toList(),
+      "price_ttc": priceTtc,
+      "tax_amount": taxAmount,
+      "tax_rate": taxRate,
+      "bundle_region": bundleRegion
+          ?.map((RegionsResponseModel item) => item.toJson())
+          .toList(),
+      "label": label,
+      "is_stockable": isStockable,
+      "bundle_info_code": bundleInfoCode,
+      "is_active": isActive,
+      "original_price": originalPrice,
     };
   }
 
