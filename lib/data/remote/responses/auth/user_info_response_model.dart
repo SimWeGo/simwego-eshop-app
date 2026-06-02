@@ -15,6 +15,8 @@ class UserInfoResponseModel {
     this.country,
     this.countryCode,
     this.email,
+    this.emailEditable,
+    this.phoneEditable,
   });
 
   // Factory constructor for JSON decoding
@@ -35,6 +37,8 @@ class UserInfoResponseModel {
       country: json["country"],
       countryCode: json["country_code"],
       email: json["email"],
+      emailEditable: json["email_editable"],
+      phoneEditable: json["phone_editable"],
     );
   }
   final bool? isVerified;
@@ -52,6 +56,8 @@ class UserInfoResponseModel {
   final String? country;
   final String? countryCode;
   final String? email;
+  final bool? emailEditable;
+  final bool? phoneEditable;
 
   // Method for JSON encoding
   Map<String, dynamic> toJson() {
@@ -71,6 +77,8 @@ class UserInfoResponseModel {
       "country": country,
       "country_code": countryCode,
       "email": email,
+      "email_editable": emailEditable,
+      "phone_editable": phoneEditable,
     };
   }
 }
