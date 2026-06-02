@@ -19,6 +19,7 @@ class OrderHistoryResponseModel {
     this.orderDisplayPrice,
     this.paymentDetails,
     this.bundleDetails,
+    this.paymentType,
   });
 
   factory OrderHistoryResponseModel.fromJson({dynamic json}) {
@@ -42,6 +43,7 @@ class OrderHistoryResponseModel {
       bundleDetails: json["bundle_details"] != null
           ? BundleResponseModel.fromJson(json: json["bundle_details"])
           : null,
+      paymentType: json["payment_type"],
     );
   }
 
@@ -60,6 +62,7 @@ class OrderHistoryResponseModel {
   final String? orderDisplayPrice;
   final PaymentDetailsResponseModel? paymentDetails;
   final BundleResponseModel? bundleDetails;
+  final String? paymentType;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -78,6 +81,7 @@ class OrderHistoryResponseModel {
       "order_display_price": orderDisplayPrice,
       "payment_details": paymentDetails?.toJson(),
       "bundle_details": bundleDetails?.toJson(),
+      "payment_type": paymentType,
     };
   }
 
