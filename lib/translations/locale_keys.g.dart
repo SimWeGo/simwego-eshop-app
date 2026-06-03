@@ -376,6 +376,7 @@ abstract class  LocaleKeys {
   static const String wallet_topped_up_success = "wallet_topped_up_success";
   static const String notifications_bundleValidityExpired =
       "notifications_bundleValidityExpired";
+  static const String affiliate_partnerWith = "affiliate_partnerWith";
   static const String total = "total";
   static const String bundleDetails_planTypeText_dataOnly = "bundleDetails_planTypeText_dataOnly";
   static const String bundleDetails_activationPolicy_Value = "bundleDetails_activationPolicy_Value";
