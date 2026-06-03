@@ -24,6 +24,14 @@ class EsimBundleEntity {
     required this.validityDisplay,
     required this.bundleTypeValue,
     required this.icon,
+    this.priceTtc,
+    this.taxAmount,
+    this.taxRate,
+    this.label,
+    this.isStockable,
+    this.bundleInfoCode,
+    this.isActive,
+    this.originalPrice,
   });
 
   factory EsimBundleEntity.fromModel(
@@ -46,6 +54,14 @@ class EsimBundleEntity {
       validity: model.validity,
       validityDisplay: model.validityDisplay,
       bundleTypeValue: type.index,
+      priceTtc: model.priceTtc,
+      taxAmount: model.taxAmount,
+      taxRate: model.taxRate,
+      label: model.label,
+      isStockable: model.isStockable,
+      bundleInfoCode: model.bundleInfoCode,
+      isActive: model.isActive,
+      originalPrice: model.originalPrice,
     );
   }
 
@@ -66,6 +82,19 @@ class EsimBundleEntity {
   final int? validity;
   final String? validityDisplay;
   final String? icon;
+  final double? priceTtc;
+  final double? taxAmount;
+  final double? taxRate;
+  final String? label;
+  final bool? isStockable;
+  final String? bundleInfoCode;
+  final bool? isActive;
+  final double? originalPrice;
+
+  // TODO(v1.1): cache bundleRegion via a new EsimRegionEntity + ToMany
+  // relation, on the same pattern as countries / EsimCountryEntity. Skipped
+  // for V1 because regions aren't displayed offline and live re-fetch is
+  // cheap.
 
   final ToOne<EsimBundleCategoryEntity> bundleCategory =
       ToOne<EsimBundleCategoryEntity>();
@@ -97,6 +126,14 @@ class EsimBundleEntity {
       validityDisplay: validityDisplay,
       bundleCategory: bundleCategory.target?.toModel(),
       countries: countries.map((EsimCountryEntity c) => c.toModel()).toList(),
+      priceTtc: priceTtc,
+      taxAmount: taxAmount,
+      taxRate: taxRate,
+      label: label,
+      isStockable: isStockable,
+      bundleInfoCode: bundleInfoCode,
+      isActive: isActive,
+      originalPrice: originalPrice,
     );
   }
 }
