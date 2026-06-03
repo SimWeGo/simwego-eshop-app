@@ -16,6 +16,8 @@ class AppEnvironmentHelper {
     this.enableBranchIO = false,
     this.enablePromoCode = true,
     this.enableWalletView = true,
+    this.enableReferralRewards = false,
+    this.enableCashbackRewards = false,
     this.enableBannersView = true,
     this.enableCurrencySelection = true,
     this.environmentTheme = EnvironmentTheme.openSource,
@@ -52,6 +54,8 @@ class AppEnvironmentHelper {
   bool enableBranchIO;
   bool enablePromoCode;
   bool enableWalletView;
+  bool enableReferralRewards;
+  bool enableCashbackRewards;
   bool enableBannersView;
   bool enableCurrencySelection;
   bool enableLanguageSelection;

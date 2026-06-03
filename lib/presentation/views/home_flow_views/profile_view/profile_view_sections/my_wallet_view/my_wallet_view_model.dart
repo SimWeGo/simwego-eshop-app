@@ -8,7 +8,9 @@ import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view_sections.dart";
 
 class MyWalletViewModel extends BaseModel {
-  List<MyWalletViewSections> walletSections = MyWalletViewSections.values;
+  List<MyWalletViewSections> walletSections = MyWalletViewSections.values
+      .where((MyWalletViewSections s) => !s.isSectionHidden)
+      .toList();
 
   GetUserInfoUseCase getUserInfoUseCase =
       GetUserInfoUseCase(locator<ApiAuthRepository>());
