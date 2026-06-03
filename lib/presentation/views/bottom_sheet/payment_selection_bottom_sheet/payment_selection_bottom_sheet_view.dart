@@ -130,11 +130,27 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                   height: 50,
                 ),
                 horizontalSpaceSmall,
-                Text(
-                  paymentType.titleText,
-                  style: bodyNormalTextStyle(
-                    context: context,
-                    fontColor: titleTextColor(context: context),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        paymentType.titleText,
+                        style: bodyNormalTextStyle(
+                          context: context,
+                          fontColor: titleTextColor(context: context),
+                        ),
+                      ),
+                      if (paymentType == PaymentType.wallet &&
+                          viewModel.walletBalanceDisplay.isNotEmpty)
+                        Text(
+                          "${LocaleKeys.myWallet_availableBalanceText.tr()} : ${viewModel.walletBalanceDisplay}",
+                          style: bodyNormalTextStyle(
+                            context: context,
+                            fontColor: secondaryTextColor(context: context),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ],
