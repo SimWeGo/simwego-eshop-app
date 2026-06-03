@@ -14,7 +14,8 @@ enum LocalStorageKeys {
   utm("utm"),
   promoAffiliateCode("promoAffiliateCode"),
   promoAffiliateExpiry("promoAffiliateExpiry"),
-  closedAffiliateBanners("closedAffiliateBanners");
+  closedAffiliateBanners("closedAffiliateBanners"),
+  detectedCountryCode("detectedCountryCode");
 
   const LocalStorageKeys(this.value);
 

@@ -9,6 +9,7 @@ class HomeDataResponseModel {
     this.globalBundles,
     this.cruiseBundles,
     this.version,
+    this.detectedCountryCode,
   });
 
   // Factory method to create an instance from JSON
@@ -38,6 +39,7 @@ class HomeDataResponseModel {
                   .map((dynamic item) => BundleResponseModel.fromJson(json: item)),
             )
           : null,
+      detectedCountryCode: json["detected_country_code"] as String?,
     );
   }
 
@@ -69,6 +71,7 @@ class HomeDataResponseModel {
               ),
             )
           : null,
+      detectedCountryCode: json["detected_country_code"] as String?,
     );
   }
 
@@ -77,6 +80,11 @@ class HomeDataResponseModel {
   final List<BundleResponseModel>? globalBundles;
   final List<BundleResponseModel>? cruiseBundles;
   String? version;
+
+  /// ISO country code (e.g. "FR") detected by the backend from CF-IPCountry /
+  /// x-country headers. Used by the bundles cache key to invalidate when the
+  /// user travels to a country with a different VAT rate.
+  String? detectedCountryCode;
 
   // Method to convert instance to JSON
   Map<String, dynamic> toJson() {
@@ -92,6 +100,7 @@ class HomeDataResponseModel {
       "cruise_bundles": cruiseBundles
           ?.map((BundleResponseModel item) => item.toJson())
           .toList(),
+      "detected_country_code": detectedCountryCode,
     };
   }
 }

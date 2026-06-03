@@ -186,7 +186,8 @@ class BundlesDataService with ListenableServiceMixin {
     await locator<AppConfigurationService>().getAppConfigurations();
     final HomeDataVersionResult version = await _fetchHomeDataVersion();
     String cachedVersion = _homeData.value?.version ?? "";
-    String versionToCheck = version.version.appendAppCurrency.appendAppLanguage;
+    String versionToCheck = version
+        .version.appendAppCurrency.appendAppLanguage.appendAppCountry;
 
     if (cachedVersion == versionToCheck && version.version.isNotEmpty) {
       return;

@@ -7,4 +7,14 @@ extension StringExtensions on String {
 
   String get appendAppLanguage =>
       "${this}_${locator<LocalStorageService>().languageCode}";
+
+  /// Appends the last backend-detected ISO country code so the bundles cache
+  /// is invalidated when the user travels to a country with a different VAT
+  /// rate. Falls back to an empty segment when nothing has been stored yet
+  /// (first launch or pre-backend-deploy), keeping the legacy key shape.
+  String get appendAppCountry {
+    final String? country = locator<LocalStorageService>()
+        .getString(LocalStorageKeys.detectedCountryCode);
+    return "${this}_${country ?? ''}";
+  }
 }

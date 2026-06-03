@@ -6,8 +6,10 @@ import "package:esim_open_source/data/remote/responses/base_response_model.dart"
 import "package:esim_open_source/data/remote/responses/bundles/bundle_consumption_response.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/home_data_response_model.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/data/api_bundles.dart";
 import "package:esim_open_source/domain/repository/api_bundles_repository.dart";
+import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/extensions/string_extensions.dart";
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
@@ -78,8 +80,11 @@ class ApiBundlesRepositoryImpl implements ApiBundlesRepository {
       strVersion = versionResult.version;
     }
 
-    // If cache is valid and not forcing refresh, don't fetch new data
-    String versionToCheck = strVersion.appendAppCurrency.appendAppLanguage;
+    // If cache is valid and not forcing refresh, don't fetch new data.
+    // Country code is included so the cache invalidates when the user
+    // travels (Sprint 1.2 of the mobile migration CDC).
+    String versionToCheck =
+        strVersion.appendAppCurrency.appendAppLanguage.appendAppCountry;
 
     if ((cachedData != null &&
             cachedData.version == versionToCheck &&
@@ -100,7 +105,8 @@ class ApiBundlesRepositoryImpl implements ApiBundlesRepository {
               ),
       ),
     );
-    String newVersion = strVersion.appendAppCurrency.appendAppLanguage;
+    String newVersion =
+        strVersion.appendAppCurrency.appendAppLanguage.appendAppCountry;
     _fetchAndUpdateHomeData(_homeDataController, newVersion);
 
     return _homeDataController.stream;
@@ -114,6 +120,18 @@ class ApiBundlesRepositoryImpl implements ApiBundlesRepository {
       final ResponseMain<HomeDataResponseModel> response =
           await _apiBundles.getAllData();
       final HomeDataResponseModel newData = response.data..version = version;
+
+      // Persist the backend-detected country code so the cache key picks up
+      // the new value on the next call and invalidates when the user travels
+      // (Sprint 1.2). Older backends without Sprint 4.4 deployed return null
+      // here, in which case we leave the stored value untouched.
+      final String? detected = newData.detectedCountryCode;
+      if (detected != null && detected.isNotEmpty) {
+        await locator<LocalStorageService>().setString(
+          LocalStorageKeys.detectedCountryCode,
+          detected,
+        );
+      }
 
       // Save new data
       // final HomeDataResponseModel newData = HomeDataResponseModel(regions: [
