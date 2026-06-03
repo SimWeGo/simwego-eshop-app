@@ -40,6 +40,9 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
 
   bool get upgradeButtonEnabled => _upgradeButtonEnabled;
 
+  String get walletCurrencyCode =>
+      userAuthenticationService.walletCurrencyCode;
+
   final Function(SheetResponse<EmptyBottomSheetResponse>) completer;
 
   @override
