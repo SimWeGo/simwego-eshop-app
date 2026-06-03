@@ -101,7 +101,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                                       ),
                                     ),
                               Text(
-                                bundle?.priceDisplay ?? "",
+                                bundle?.formattedPrice() ?? "",
                                 style: headerTwoMediumTextStyle(
                                   context: context,
                                   fontColor: bundleDataPriceTextColor(
@@ -275,7 +275,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                     isEnabled: viewModel.isPurchaseButtonEnabled,
                     title: LocaleKeys.bundleInfo_priceText.tr(
                       namedArgs: <String, String>{
-                        "price": viewModel.bundle?.priceDisplay ?? "",
+                        "price": viewModel.bundle?.formattedPrice() ?? "",
                       },
                     ),
                     enabledTextColor:
