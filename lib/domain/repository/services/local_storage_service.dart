@@ -11,7 +11,10 @@ enum LocalStorageKeys {
   appCurrency("appCurrency"),
   referralCode("referralCode"),
   appLanguage("appLanguage"),
-  utm("utm");
+  utm("utm"),
+  promoAffiliateCode("promoAffiliateCode"),
+  promoAffiliateExpiry("promoAffiliateExpiry"),
+  closedAffiliateBanners("closedAffiliateBanners");
 
   const LocalStorageKeys(this.value);
 
