@@ -63,7 +63,7 @@ class BundlesByCountriesView extends StatelessWidget {
                         bundle.countries ?? <CountryResponseModel>[],
                     priceButtonText: LocaleKeys.bundleInfo_priceText.tr(
                       namedArgs: <String, String>{
-                        "price": "${bundle.priceDisplay}",
+                        "price": bundle.formattedPrice(),
                       },
                     ),
                     icon: bundle.icon ?? "",
