@@ -44,7 +44,7 @@ enum BundlesApis implements URlRequestBuilder {
   }
 
   @override
-  bool get hasAuthorization => true;
+  bool get hasAuthorization => false;
 
   @override
   bool get isRefreshToken => false;

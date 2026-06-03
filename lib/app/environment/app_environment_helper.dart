@@ -23,7 +23,7 @@ class AppEnvironmentHelper {
     this.enableAppleSignIn = true,
     this.enableGoogleSignIn = true,
     this.enableFacebookSignIn = true,
-    this.enableGuestFlowPurchase = true,
+    this.enableGuestFlowPurchase = false,
     this.environmentCornerRadius = 25,
     this.environmentFamilyName = "Poppins",
     this.isCruiseEnabled = false,
