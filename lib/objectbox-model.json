@@ -546,7 +546,7 @@
     },
     {
       "id": "9:6979901880230801504",
-      "lastPropertyId": "19:3177782989631971089",
+      "lastPropertyId": "27:8860643433957698526",
       "name": "EsimBundleEntity",
       "properties": [
         {
@@ -637,6 +637,46 @@
           "id": "19:3177782989631971089",
           "name": "bundleTypeValue",
           "type": 2
+        },
+        {
+          "id": "20:2117923450922560129",
+          "name": "priceTtc",
+          "type": 8
+        },
+        {
+          "id": "21:6607574286717682067",
+          "name": "taxAmount",
+          "type": 8
+        },
+        {
+          "id": "22:8895468133966437429",
+          "name": "taxRate",
+          "type": 8
+        },
+        {
+          "id": "23:5953699012057388278",
+          "name": "label",
+          "type": 9
+        },
+        {
+          "id": "24:1744813784004633186",
+          "name": "isStockable",
+          "type": 1
+        },
+        {
+          "id": "25:6781120605791858425",
+          "name": "bundleInfoCode",
+          "type": 9
+        },
+        {
+          "id": "26:2081418517842759122",
+          "name": "isActive",
+          "type": 1
+        },
+        {
+          "id": "27:8860643433957698526",
+          "name": "originalPrice",
+          "type": 8
         }
       ],
       "relations": [

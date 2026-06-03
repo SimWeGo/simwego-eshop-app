@@ -17,4 +17,8 @@ abstract interface class ApiPromotionRepository {
   FutureOr<dynamic> getRewardsHistory();
 
   FutureOr<dynamic> getReferralInfo();
+
+  FutureOr<dynamic> getPromoInfo({
+    required String promoCode,
+  });
 }

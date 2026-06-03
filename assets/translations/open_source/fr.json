@@ -368,6 +368,10 @@
   "summary_of_payment": "Résumé du paiement",
   "subtotal": "Sous-total",
   "estimated_tax": "Taxe estimée",
+  "tax_included": "TTC",
+  "wallet_topped_up_success": "Portefeuille rechargé avec succès",
+  "notifications_bundleValidityExpired": "La validité de votre forfait a expiré.",
+  "affiliate_partnerWith": "En partenariat avec",
   "total": "Total",
   "bundleDetails_planTypeText_dataOnly": "Données uniquement",
   "bundleDetails_activationPolicy_Value": "La période de validité commence lorsque l'eSIM se connecte à l'un des réseaux pris en charge."

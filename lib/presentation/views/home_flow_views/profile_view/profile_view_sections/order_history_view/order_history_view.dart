@@ -117,7 +117,7 @@ class OrderHistoryView extends StatelessWidget {
                 title: bundleOrder.bundleDetails?.displayTitle ?? "",
                 subTitle: bundleOrder.bundleDetails?.displaySubtitle ?? "",
                 dataValue: bundleOrder.bundleDetails?.gprsLimitDisplay ?? "",
-                countryPrice: bundleOrder.bundleDetails?.priceDisplay ?? "",
+                countryPrice: bundleOrder.bundleDetails?.formattedPrice() ?? "",
                 imagePath: bundleOrder.bundleDetails?.icon ?? "",
                 isLoading: false,
                 showUnlimitedData:

@@ -15,6 +15,12 @@ class BundleAssignResponseModel {
     this.taxPriceDisplay,
     this.subtotalPriceDisplay,
     this.totalPriceDisplay,
+    this.otpExpiration,
+    this.originalPriceDisplay,
+    this.discountAmountDisplay,
+    this.promoCodeApplied,
+    this.promoCodeRejected,
+    this.promoCodeRejectionReason,
   });
 
   factory BundleAssignResponseModel.fromJson({dynamic json}) {
@@ -34,6 +40,12 @@ class BundleAssignResponseModel {
       taxPriceDisplay: json["tax_price_display"],
       totalPriceDisplay: json["total_price_display"],
       subtotalPriceDisplay: json["subtotal_price_display"],
+      otpExpiration: json["otp_expiration"],
+      originalPriceDisplay: json["original_price_display"],
+      discountAmountDisplay: json["discount_amount_display"],
+      promoCodeApplied: json["promo_code_applied"],
+      promoCodeRejected: json["promo_code_rejected"],
+      promoCodeRejectionReason: json["promo_code_rejection_reason"],
     );
   }
 
@@ -52,6 +64,12 @@ class BundleAssignResponseModel {
   final String? subtotalPriceDisplay;
   final String? taxPriceDisplay;
   final String? totalPriceDisplay;
+  final int? otpExpiration;
+  final String? originalPriceDisplay;
+  final String? discountAmountDisplay;
+  final String? promoCodeApplied;
+  final bool? promoCodeRejected;
+  final String? promoCodeRejectionReason;
 
   bool isTaxExist() {
     return hasTax ?? false;
@@ -74,6 +92,12 @@ class BundleAssignResponseModel {
       "tax_price_display": taxPriceDisplay,
       "total_price_display": totalPriceDisplay,
       "subtotal_price_display": subtotalPriceDisplay,
+      "otp_expiration": otpExpiration,
+      "original_price_display": originalPriceDisplay,
+      "discount_amount_display": discountAmountDisplay,
+      "promo_code_applied": promoCodeApplied,
+      "promo_code_rejected": promoCodeRejected,
+      "promo_code_rejection_reason": promoCodeRejectionReason,
     };
   }
 }

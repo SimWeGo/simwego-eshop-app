@@ -10,6 +10,7 @@ import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/bundle_details_bottom_sheet/bundle_detail_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/widgets/affiliate_banner/affiliate_banner.dart";
 import "package:esim_open_source/presentation/widgets/apply_promo_code_view.dart";
 import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
 import "package:esim_open_source/presentation/widgets/bundle_header_view.dart";
@@ -86,6 +87,13 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                             showUnlimitedData: false,
                           ),
                           const DividerLine(),
+                          if (viewModel.affiliateInfo != null) ...<Widget>[
+                            AffiliateBannerWidget(
+                              affiliate: viewModel.affiliateInfo!,
+                              locale: context.locale.languageCode,
+                            ),
+                            verticalSpaceSmall,
+                          ],
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -101,7 +109,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                                       ),
                                     ),
                               Text(
-                                bundle?.priceDisplay ?? "",
+                                bundle?.formattedPrice() ?? "",
                                 style: headerTwoMediumTextStyle(
                                   context: context,
                                   fontColor: bundleDataPriceTextColor(
@@ -275,7 +283,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                     isEnabled: viewModel.isPurchaseButtonEnabled,
                     title: LocaleKeys.bundleInfo_priceText.tr(
                       namedArgs: <String, String>{
-                        "price": viewModel.bundle?.priceDisplay ?? "",
+                        "price": viewModel.bundle?.formattedPrice() ?? "",
                       },
                     ),
                     enabledTextColor:

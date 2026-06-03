@@ -2,6 +2,7 @@ import "dart:async";
 import "dart:developer";
 
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
@@ -211,6 +212,12 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
           LocaleKeys.topUpWallet_error.tr(),
         );
 
+      case BundleValidityExpired():
+        unawaited(refreshMyEsims());
+        await showToast(
+          LocaleKeys.notifications_bundleValidityExpired.tr(),
+        );
+
       case CountriesTap():
         if (!locator<NavigationRouter>().isPageVisible(HomePager.routeName)) {
           log("Page not visible");
@@ -389,6 +396,9 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
   }
 
   void showCashbackBottomSheet({required String cashbackPercent}) {
+    if (!AppEnvironment.appEnvironmentHelper.enableCashbackRewards) {
+      return;
+    }
     unawaited(
       bottomSheetService.showCustomSheet(
         isScrollControlled: true,

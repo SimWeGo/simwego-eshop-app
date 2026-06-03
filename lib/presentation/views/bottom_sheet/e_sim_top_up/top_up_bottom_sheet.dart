@@ -120,7 +120,7 @@ class TopUpBottomSheet extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         BundleResponseModel item = viewModel.bundleItems[index];
         return EsimBundleTopUpWidget(
-          priceButtonText: "${item.priceDisplay} - Buy Now",
+          priceButtonText: "${item.formattedPrice()} - Buy Now",
           title: item.bundleName ?? "",
           data: item.gprsLimitDisplay ?? "",
           showUnlimitedData: item.unlimited ?? false,

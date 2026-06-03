@@ -49,6 +49,7 @@ import "package:esim_open_source/domain/repository/services/dynamic_linking_serv
 import "package:esim_open_source/domain/repository/services/environment_service.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/presentation/reactive_service/promo_affiliate_service.dart";
 import "package:esim_open_source/domain/repository/services/payment_service.dart";
 import "package:esim_open_source/domain/repository/services/push_notification_service.dart";
 import "package:esim_open_source/domain/repository/services/redirections_handler_service.dart";
@@ -171,6 +172,9 @@ Future<void> appServicesModule() async {
     )
     ..registerLazySingleton(
       () => EnvironmentServiceImpl.instance as EnvironmentService,
+    )
+    ..registerLazySingleton(
+      () => PromoAffiliateService(locator<LocalStorageService>()),
     );
 }
 

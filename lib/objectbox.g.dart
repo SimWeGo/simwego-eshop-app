@@ -3,7 +3,7 @@
 // with `dart run build_runner build`.
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
-// ignore_for_file: type=lint
+// ignore_for_file: camel_case_types, depend_on_referenced_packages
 // coverage:ignore-file
 
 import 'dart:typed_data';
@@ -672,7 +672,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(9, 6979901880230801504),
     name: 'EsimBundleEntity',
-    lastPropertyId: const obx_int.IdUid(19, 3177782989631971089),
+    lastPropertyId: const obx_int.IdUid(27, 8860643433957698526),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -777,6 +777,54 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(19, 3177782989631971089),
         name: 'bundleTypeValue',
         type: 2,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(20, 2117923450922560129),
+        name: 'priceTtc',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(21, 6607574286717682067),
+        name: 'taxAmount',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(22, 8895468133966437429),
+        name: 'taxRate',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(23, 5953699012057388278),
+        name: 'label',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(24, 1744813784004633186),
+        name: 'isStockable',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(25, 6781120605791858425),
+        name: 'bundleInfoCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(26, 2081418517842759122),
+        name: 'isActive',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(27, 8860643433957698526),
+        name: 'originalPrice',
+        type: 8,
         flags: 0,
       ),
     ],
@@ -1840,7 +1888,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final iconOffset = object.icon == null
             ? null
             : fbb.writeString(object.icon!);
-        fbb.startTable(20);
+        final labelOffset = object.label == null
+            ? null
+            : fbb.writeString(object.label!);
+        final bundleInfoCodeOffset = object.bundleInfoCode == null
+            ? null
+            : fbb.writeString(object.bundleInfoCode!);
+        fbb.startTable(28);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, displayTitleOffset);
         fbb.addOffset(2, displaySubtitleOffset);
@@ -1858,6 +1912,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(14, iconOffset);
         fbb.addInt64(17, object.bundleCategory.targetId);
         fbb.addInt8(18, object.bundleTypeValue);
+        fbb.addFloat64(19, object.priceTtc);
+        fbb.addFloat64(20, object.taxAmount);
+        fbb.addFloat64(21, object.taxRate);
+        fbb.addOffset(22, labelOffset);
+        fbb.addBool(23, object.isStockable);
+        fbb.addOffset(24, bundleInfoCodeOffset);
+        fbb.addBool(25, object.isActive);
+        fbb.addFloat64(26, object.originalPrice);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1920,6 +1982,42 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final iconParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 32);
+        final priceTtcParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          42,
+        );
+        final taxAmountParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          44,
+        );
+        final taxRateParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          46,
+        );
+        final labelParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 48);
+        final isStockableParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          50,
+        );
+        final bundleInfoCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 52);
+        final isActiveParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          54,
+        );
+        final originalPriceParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          56,
+        );
         final object = EsimBundleEntity(
           displayTitle: displayTitleParam,
           displaySubtitle: displaySubtitleParam,
@@ -1936,6 +2034,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
           validityDisplay: validityDisplayParam,
           bundleTypeValue: bundleTypeValueParam,
           icon: iconParam,
+          priceTtc: priceTtcParam,
+          taxAmount: taxAmountParam,
+          taxRate: taxRateParam,
+          label: labelParam,
+          isStockable: isStockableParam,
+          bundleInfoCode: bundleInfoCodeParam,
+          isActive: isActiveParam,
+          originalPrice: originalPriceParam,
         )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         object.bundleCategory.targetId = const fb.Int64Reader().vTableGet(
           buffer,
@@ -2627,6 +2733,46 @@ class EsimBundleEntity_ {
   /// See [EsimBundleEntity.bundleTypeValue].
   static final bundleTypeValue = obx.QueryIntegerProperty<EsimBundleEntity>(
     _entities[8].properties[16],
+  );
+
+  /// See [EsimBundleEntity.priceTtc].
+  static final priceTtc = obx.QueryDoubleProperty<EsimBundleEntity>(
+    _entities[8].properties[17],
+  );
+
+  /// See [EsimBundleEntity.taxAmount].
+  static final taxAmount = obx.QueryDoubleProperty<EsimBundleEntity>(
+    _entities[8].properties[18],
+  );
+
+  /// See [EsimBundleEntity.taxRate].
+  static final taxRate = obx.QueryDoubleProperty<EsimBundleEntity>(
+    _entities[8].properties[19],
+  );
+
+  /// See [EsimBundleEntity.label].
+  static final label = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[20],
+  );
+
+  /// See [EsimBundleEntity.isStockable].
+  static final isStockable = obx.QueryBooleanProperty<EsimBundleEntity>(
+    _entities[8].properties[21],
+  );
+
+  /// See [EsimBundleEntity.bundleInfoCode].
+  static final bundleInfoCode = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[22],
+  );
+
+  /// See [EsimBundleEntity.isActive].
+  static final isActive = obx.QueryBooleanProperty<EsimBundleEntity>(
+    _entities[8].properties[23],
+  );
+
+  /// See [EsimBundleEntity.originalPrice].
+  static final originalPrice = obx.QueryDoubleProperty<EsimBundleEntity>(
+    _entities[8].properties[24],
   );
 
   /// see [EsimBundleEntity.countries]

@@ -182,7 +182,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   }) async {
     String bundleCode = item.bundleCode ?? "";
     // double bundlePrice = item.price ?? 0.0;
-    String bundlePriceDisplay = item.priceDisplay ?? "";
+    String bundlePriceDisplay = item.formattedPrice();
     String bundleCurrency = item.currencyCode ?? "";
 
     setViewState(ViewState.busy);

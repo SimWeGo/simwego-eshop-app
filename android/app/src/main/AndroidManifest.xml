@@ -19,6 +19,10 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false">
+        <!-- Enable Google Pay support via Google Wallet API (Sprint 1.6 of CDC) -->
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -4,11 +4,14 @@ import "dart:io";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
+import "package:esim_open_source/data/remote/responses/affiliate/affiliate_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/promotion/promotion_info_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
@@ -21,6 +24,7 @@ import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
+import "package:esim_open_source/presentation/reactive_service/promo_affiliate_service.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
@@ -66,6 +70,12 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 
   String? _promoCode;
   String? _emailErrorMessage;
+  AffiliateInfoResponseModel? _affiliateInfo;
+
+  /// Resolved affiliate metadata for the currently applied promo code, when
+  /// the backend returns one via /promotion/info. Used by the checkout view
+  /// to render the co-branded AffiliateBannerWidget above the price area.
+  AffiliateInfoResponseModel? get affiliateInfo => _affiliateInfo;
 
   String get emailErrorMessage => _emailErrorMessage ?? "";
 
@@ -134,6 +144,16 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 
     if (_referralCode.isNotEmpty) {
       unawaited(validatePromoCode(_referralCode, isReferral: true));
+    } else {
+      // No referral in flight: re-apply a previously stored affiliate code if
+      // it is still within the 30-day TTL (Sprint 2.6.6 auto-replay).
+      final String? storedAffiliateCode =
+          locator<PromoAffiliateService>().getValid();
+      if (storedAffiliateCode != null && storedAffiliateCode.isNotEmpty) {
+        _promoCodeController.text = storedAffiliateCode;
+        isPromoCodeExpanded = true;
+        unawaited(validatePromoCode(storedAffiliateCode));
+      }
     }
   }
 
@@ -521,6 +541,25 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     return bundleExists;
   }
 
+  /// Fetches affiliate metadata for the validated promo code via the public
+  /// `/promotion/info/{code}` endpoint and stores the code for the 30-day TTL
+  /// when an affiliate is attached, so the next checkout pre-fills it.
+  Future<void> _fetchAffiliateInfoAndPersist(String promoCode) async {
+    try {
+      final Resource<PromotionInfoResponseModel?> res =
+          await locator<ApiPromotionRepository>().getPromoInfo(
+        promoCode: promoCode,
+      ) as Resource<PromotionInfoResponseModel?>;
+      _affiliateInfo = res.data?.affiliate;
+      if (_affiliateInfo != null) {
+        unawaited(locator<PromoAffiliateService>().store(promoCode));
+      }
+    } on Object catch (_) {
+      _affiliateInfo = null;
+    }
+    notifyListeners();
+  }
+
   Future<void> validatePromoCode(
     String promoCode, {
     bool isReferral = false,
@@ -558,10 +597,13 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           isEnabled: false,
           fieldColor: Colors.green,
         );
+        unawaited(_fetchAffiliateInfoAndPersist(promoCode.trim()));
       },
       onFailure: (Resource<BundleResponseModel?> result) async {
         bundle = tempBundle;
         _promoCode = null;
+        _affiliateInfo = null;
+        unawaited(locator<PromoAffiliateService>().clear());
 
         if (isReferral) {
           isPromoCodeExpanded = false;

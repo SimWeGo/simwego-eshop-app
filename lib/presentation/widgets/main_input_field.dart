@@ -247,6 +247,7 @@ class MainInputField extends StatefulWidget {
     TextInputType? textInputType,
     int? maxLines,
     double textFieldHeight = 55,
+    Widget? suffixIcon,
   }) =>
       MainInputField(
         themeColor: themeColor,
@@ -263,6 +264,7 @@ class MainInputField extends StatefulWidget {
         hintTextStyle: hintLabelStyle,
         maxLines: maxLines ?? 1,
         textFieldHeight: textFieldHeight,
+        suffixIcon: suffixIcon,
       );
 
   static MainInputField promoCode({

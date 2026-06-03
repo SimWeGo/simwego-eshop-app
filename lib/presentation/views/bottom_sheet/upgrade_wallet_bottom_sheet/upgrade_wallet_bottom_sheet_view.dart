@@ -98,6 +98,21 @@ class UpgradeWalletBottomSheetView extends StatelessWidget {
                             context: context,
                             fontColor: mainDarkTextColor(context: context),
                           ),
+                          suffixIcon: viewModel.walletCurrencyCode.isEmpty
+                              ? null
+                              : Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                  ),
+                                  child: Text(
+                                    viewModel.walletCurrencyCode,
+                                    style: bodyNormalTextStyle(
+                                      context: context,
+                                      fontColor:
+                                          secondaryTextColor(context: context),
+                                    ),
+                                  ),
+                                ),
                         ),
                         verticalSpaceMediumLarge,
                         MainButton(

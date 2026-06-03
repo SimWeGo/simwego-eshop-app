@@ -465,7 +465,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        transaction?.bundle?.priceDisplay ?? "",
+                        transaction?.bundle?.formattedPrice() ?? "",
                         style: headerOneMediumTextStyle(
                           context: context,
                           fontColor: mainDarkTextColor(context: context),
