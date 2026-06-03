@@ -6,7 +6,8 @@ enum PromotionApis implements URlRequestBuilder {
   applyReferralCode,
   validatePromoCode,
   getRewardsHistory,
-  getReferralInfo;
+  getReferralInfo,
+  promoInfo;
 
   @override
   String get baseURL => "";
@@ -24,6 +25,8 @@ enum PromotionApis implements URlRequestBuilder {
         return "/api/v1/promotion/history";
       case PromotionApis.getReferralInfo:
         return "/api/v1/promotion/referral-info";
+      case PromotionApis.promoInfo:
+        return "/api/v1/promotion/info";
     }
   }
 
@@ -36,12 +39,26 @@ enum PromotionApis implements URlRequestBuilder {
         return HttpMethod.POST;
       case PromotionApis.getRewardsHistory:
       case PromotionApis.getReferralInfo:
+      case PromotionApis.promoInfo:
         return HttpMethod.GET;
     }
   }
 
   @override
-  bool get hasAuthorization => true;
+  bool get hasAuthorization {
+    switch (this) {
+      case PromotionApis.promoInfo:
+        // Public endpoint: returns affiliate info for a promo code so the
+        // checkout can show the affiliate banner without forcing login.
+        return false;
+      case PromotionApis.redeemVoucher:
+      case PromotionApis.applyReferralCode:
+      case PromotionApis.validatePromoCode:
+      case PromotionApis.getRewardsHistory:
+      case PromotionApis.getReferralInfo:
+        return true;
+    }
+  }
 
   @override
   bool get isRefreshToken => false;

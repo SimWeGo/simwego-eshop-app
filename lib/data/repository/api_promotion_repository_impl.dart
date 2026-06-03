@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
+import "package:esim_open_source/data/remote/responses/promotion/promotion_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/promotion/referral_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/promotion/reward_history_response_model.dart";
 import "package:esim_open_source/domain/data/api_promotion.dart";
@@ -58,6 +59,15 @@ class ApiPromotionRepositoryImpl implements ApiPromotionRepository {
   FutureOr<Resource<ReferralInfoResponseModel?>> getReferralInfo() {
     return responseToResource(
       _apiPromotion.getReferralInfo(),
+    );
+  }
+
+  @override
+  FutureOr<Resource<PromotionInfoResponseModel?>> getPromoInfo({
+    required String promoCode,
+  }) {
+    return responseToResource(
+      _apiPromotion.getPromoInfo(promoCode: promoCode),
     );
   }
 }
