@@ -371,6 +371,7 @@
   "estimated_tax": "Estimated Tax",
   "tax_included": "incl. tax",
   "wallet_topped_up_success": "Wallet topped up successfully",
+  "notifications_bundleValidityExpired": "Your bundle's validity has expired.",
   "total": "Total",
   "bundleDetails_planTypeText_dataOnly": "Data only",
   "bundleDetails_activationPolicy_Value": "The validity period starts when the eSIM connects to any supported networks."

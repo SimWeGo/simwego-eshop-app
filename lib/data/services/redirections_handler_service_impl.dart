@@ -212,6 +212,12 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
           LocaleKeys.topUpWallet_error.tr(),
         );
 
+      case BundleValidityExpired():
+        unawaited(refreshMyEsims());
+        await showToast(
+          LocaleKeys.notifications_bundleValidityExpired.tr(),
+        );
+
       case CountriesTap():
         if (!locator<NavigationRouter>().isPageVisible(HomePager.routeName)) {
           log("Page not visible");

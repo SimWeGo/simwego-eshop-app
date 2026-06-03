@@ -22,10 +22,14 @@ class RedirectionsHelper {
         return PlanStarted(); // reload my eSIM
       case "7":
         return ShareBundleNotification(); // not now
+      case "8":
+        return ConsumptionBundleDetail(iccID ?? ""); // 100% data used
       case "9":
         return WalletTopUpSuccess();
       case "10":
         return WalletTopUpFailed();
+      case "11":
+        return BundleValidityExpired(); // bundle validity period ended
       default:
         return Empty();
     }
