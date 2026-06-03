@@ -64,7 +64,7 @@ class OrderBottomSheetView extends StatelessWidget {
                         ?.gprsLimitDisplay ??
                     "",
                 countryPrice: viewModel
-                        .initBundleOrderModel?.bundleDetails?.priceDisplay ??
+                        .initBundleOrderModel?.bundleDetails?.formattedPrice() ??
                     "",
                 imagePath:
                     viewModel.initBundleOrderModel?.bundleDetails?.icon ?? "",
