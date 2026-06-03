@@ -218,6 +218,8 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
     await getUserInfoUseCase.execute(NoParams());
     setViewState(ViewState.idle);
 
+    showToast(LocaleKeys.wallet_topped_up_success.tr());
+
     completer(
       SheetResponse<EmptyBottomSheetResponse>(
         confirmed: true,
