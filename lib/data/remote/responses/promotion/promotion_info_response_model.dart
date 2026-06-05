@@ -8,7 +8,7 @@ class PromotionInfoResponseModel {
     this.affiliate,
   });
 
-  factory PromotionInfoResponseModel.fromJson(Map<String, dynamic> json) {
+  factory PromotionInfoResponseModel.fromJson({dynamic json}) {
     return PromotionInfoResponseModel(
       code: json["code"] as String?,
       type: json["type"] as String?,
