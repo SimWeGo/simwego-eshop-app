@@ -45,10 +45,17 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keyAliasStr
-            keyPassword keyPasswordStr
-            storeFile file(storeFilePathStr)
-            storePassword storePasswordStr
+            // Skip signing config when keystore credentials are absent from
+            // android/local.properties so dev/debug builds (which use the
+            // built-in debug keystore) do not crash with
+            // "Cannot convert 'null' to File". Release builds still require
+            // the 4 keystore entries to be set.
+            if (storeFilePathStr != null) {
+                keyAlias keyAliasStr
+                keyPassword keyPasswordStr
+                storeFile file(storeFilePathStr)
+                storePassword storePasswordStr
+            }
         }
     }
 
