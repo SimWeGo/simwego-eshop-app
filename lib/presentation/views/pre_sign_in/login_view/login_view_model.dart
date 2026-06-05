@@ -68,9 +68,13 @@ class LoginViewModel extends BaseModel {
   }
 
   Future<void> navigateToSignInPage() async {
+    // Wrap the redirection in ContinueWithEmailViewArgs because the router
+    // for ContinueWithEmailView only reads from that wrapper type; passing a
+    // raw InAppRedirection silently drops it and the pending purchase context
+    // is lost after the OTP login completes.
     navigationService.navigateTo(
       ContinueWithEmailView.routeName,
-      arguments: redirection,
+      arguments: ContinueWithEmailViewArgs(redirection: redirection),
     );
   }
 
