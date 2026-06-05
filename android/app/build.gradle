@@ -79,7 +79,13 @@ android {
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.release
+            // Use the release signing config only when keystore creds are
+            // present in android/local.properties. Otherwise fall back to
+            // the default debug keystore so dev builds run on emulator
+            // without requiring the release keystore.
+            if (storeFilePathStr != null) {
+                signingConfig signingConfigs.release
+            }
         }
         release {
             signingConfig signingConfigs.release
