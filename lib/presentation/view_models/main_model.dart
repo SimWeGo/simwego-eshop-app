@@ -22,6 +22,7 @@ import "package:esim_open_source/presentation/reactive_service/user_authenticati
 import "package:esim_open_source/utils/language_currency_helper.dart";
 import "package:flutter/material.dart";
 import "package:http/http.dart";
+import "package:intl/intl.dart";
 import "package:stacked/stacked.dart";
 
 class MainViewModel extends ReactiveViewModel
@@ -49,6 +50,11 @@ class MainViewModel extends ReactiveViewModel
 
   Locale getDefaultLocale() {
     String languageCode = locator<LocalStorageService>().languageCode;
+    // Drive intl number formatting (e.g. price decimal separator) from the
+    // active app locale so prices show "1,50" in fr/es and "1.50" in en.
+    if (languageCode.isNotEmpty) {
+      Intl.defaultLocale = languageCode;
+    }
     return Locale(languageCode);
   }
 

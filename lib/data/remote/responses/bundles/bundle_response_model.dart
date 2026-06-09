@@ -4,6 +4,7 @@ import "package:esim_open_source/data/remote/responses/bundles/country_response_
 import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/parsing_helper.dart";
+import "package:intl/intl.dart";
 
 class BundleResponseModel {
   BundleResponseModel({
@@ -107,14 +108,33 @@ class BundleResponseModel {
   /// otherwise falls back to the legacy priceDisplay string. When tax_rate is
   /// > 0, appends the localized "incl. tax / TTC" badge so the user sees the
   /// VAT-inclusive nature of the amount (mirrors the web BundleCard pattern).
-  String formattedPrice() {
+  String formattedPrice([String? localeCode]) {
     final String base = priceTtc != null
-        ? "${priceTtc!.toStringAsFixed(2)} ${currencyCode ?? ''}".trim()
+        ? "${_formatAmount(priceTtc!, localeCode)} ${currencyCode ?? ''}".trim()
         : (priceDisplay ?? '');
     if ((taxRate ?? 0) > 0) {
       return "$base ${LocaleKeys.tax_included.tr()}";
     }
     return base;
+  }
+
+  /// Formats [amount] with 2 decimals using the locale's decimal separator
+  /// (comma for fr/es, dot for en/nl) while keeping Latin digits. Falls back to
+  /// a plain dot-separated string when no locale is provided (zero regression).
+  String _formatAmount(double amount, String? localeCode) {
+    final String fixed = amount.toStringAsFixed(2);
+    final String? code = (localeCode != null && localeCode.isNotEmpty)
+        ? localeCode
+        : Intl.defaultLocale;
+    if (code == null || code.isEmpty) {
+      return fixed;
+    }
+    try {
+      final String separator = NumberFormat("0.00", code).symbols.DECIMAL_SEP;
+      return fixed.replaceFirst(".", separator);
+    } on Object catch (_) {
+      return fixed;
+    }
   }
 
   // Method to convert instance to JSON

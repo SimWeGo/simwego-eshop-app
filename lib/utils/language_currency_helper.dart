@@ -8,6 +8,7 @@ import "package:esim_open_source/domain/repository/services/referral_info_servic
 import "package:esim_open_source/domain/use_case/app/get_banner_use_case.dart";
 import "package:esim_open_source/presentation/enums/language_enum.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
+import "package:intl/intl.dart";
 import "package:stacked_services/stacked_services.dart";
 
 Future<void> syncLanguageAndCurrencyCode({
@@ -31,6 +32,9 @@ Future<void> syncLanguageAndCurrencyCode({
       String value = languageCode ?? "en";
       await StackedService.navigatorKey?.currentContext!
           .setLocale(Locale(value.toLowerCase()));
+      // Keep intl number formatting (price decimal separator) in sync with the
+      // newly selected language.
+      Intl.defaultLocale = value.toLowerCase();
       await locator<LocalStorageService>()
           .setString(LocalStorageKeys.appLanguage, value.toLowerCase());
     }
