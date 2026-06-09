@@ -9,6 +9,7 @@ import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/api_device_repository.dart";
+import "package:esim_open_source/domain/repository/api_user_repository.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
 import "package:esim_open_source/domain/use_case/app/add_device_use_case.dart";
@@ -16,6 +17,7 @@ import "package:esim_open_source/domain/use_case/auth/set_auth_reload_call_back_
 import "package:esim_open_source/domain/use_case/auth/set_unauthorized_access_call_back_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/presentation/enums/language_enum.dart";
+import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/utils/language_currency_helper.dart";
 import "package:flutter/material.dart";
@@ -78,7 +80,13 @@ class MainViewModel extends ReactiveViewModel
   }
 
   Future<void> logoutUser() async {
+    // Purge auth/session storage (language & currency are preserved by
+    // LocalStorageService.clear via its exception list).
     await locator<UserAuthenticationService>().clearUserInfo();
+    // Purge the locally cached data (ObjectBox) so the previous account's
+    // bundles and eSIMs never leak into the next session.
+    await locator<BundlesDataService>().clearData();
+    await locator<ApiUserRepository>().clearLocalEsimsCache();
     locator<SocialLoginService>().logOut();
     AddDeviceUseCase(
       locator<ApiAppRepository>(),

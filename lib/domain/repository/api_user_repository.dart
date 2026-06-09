@@ -81,4 +81,8 @@ abstract interface class ApiUserRepository {
     required String iccid,
     required String orderID,
   });
+
+  /// Purges the locally cached eSIMs (ObjectBox). Called on logout so the
+  /// previous account's eSIMs never leak into the next session.
+  Future<void> clearLocalEsimsCache();
 }

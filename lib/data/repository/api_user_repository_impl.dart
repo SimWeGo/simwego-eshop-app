@@ -266,4 +266,9 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
       ),
     );
   }
+
+  @override
+  Future<void> clearLocalEsimsCache() async {
+    await repository.clearCache();
+  }
 }

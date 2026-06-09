@@ -7,6 +7,7 @@ import "package:esim_open_source/data/remote/responses/bundles/regions_response_
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_device_repository.dart";
+import "package:esim_open_source/domain/repository/api_user_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -109,7 +110,13 @@ class BaseModel extends ReactiveViewModel
       ];
 
   Future<void> logoutUser() async {
+    // Purge auth/session storage (language & currency are preserved by
+    // LocalStorageService.clear via its exception list).
     await userAuthenticationService.clearUserInfo();
+    // Purge the locally cached data (ObjectBox) so the previous account's
+    // bundles and eSIMs never leak into the next session.
+    await _bundlesService.clearData();
+    await locator<ApiUserRepository>().clearLocalEsimsCache();
     locator<SocialLoginService>().logOut();
     addDeviceUseCase.execute(NoParams());
   }
