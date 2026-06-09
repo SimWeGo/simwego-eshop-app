@@ -25,6 +25,12 @@ class UserAuthenticationService with ListenableServiceMixin {
   bool get isNewsletterSubscribed =>
       _authModel.value?.userInfo?.shouldNotify ?? false;
   String get referralCode => _authModel.value?.userInfo?.referralCode ?? "";
+
+  /// Backend-driven editability flags for the email/phone fields. Null when the
+  /// backend does not provide them, in which case callers fall back to the
+  /// login-type heuristic.
+  bool? get emailEditable => _authModel.value?.userInfo?.emailEditable;
+  bool? get phoneEditable => _authModel.value?.userInfo?.phoneEditable;
   String get walletCurrencyCode =>
       _authModel.value?.userInfo?.currencyCode ?? "";
   double get walletAvailableBalance => _authModel.value?.userInfo?.balance ?? 0;

@@ -47,6 +47,12 @@ class AccountInformationViewModel extends BaseModel {
       PhoneController(const PhoneNumber(isoCode: IsoCode.LB, nsn: ""));
 
   bool get isPhoneInputEnabled {
+    // Backend per-user flag is the source of truth; fall back to the
+    // login-type heuristic when it is not provided.
+    final bool? flag = userAuthenticationService.phoneEditable;
+    if (flag != null) {
+      return flag;
+    }
     switch (AppEnvironment.appEnvironmentHelper.loginType) {
       case LoginType.email:
         return true;
@@ -57,6 +63,12 @@ class AccountInformationViewModel extends BaseModel {
   }
 
   bool get isEmailFieldEditable {
+    // Backend per-user flag is the source of truth; fall back to the
+    // login-type heuristic when it is not provided.
+    final bool? flag = userAuthenticationService.emailEditable;
+    if (flag != null) {
+      return flag;
+    }
     switch (AppEnvironment.appEnvironmentHelper.loginType) {
       case LoginType.email:
         return false;
