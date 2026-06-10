@@ -50,6 +50,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1011794263105-5pb6r5iuki3fvbp4ibe3oup7tgk2k6e0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simwego.esim.test",
+            "certificate_hash": "dceff4cd3b4a3e8ee589afb01c8a91d4c9df933c"
+          }
+        },
+        {
           "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
           "client_type": 3
         }
