@@ -2,40 +2,46 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    //
+    // NOTE: the "--flavor" value MUST exactly match a productFlavor name in
+    // android/app/build.gradle (OpenSourceDev / OpenSourceStaging / OpenSourceProd).
+    // It is also compared (lower-cased) against the Environment enum in
+    // lib/app/environment/app_environment.dart to pick the backend URL.
+    // Any other value silently falls back to Production (EU, api.simwego.com).
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Development",
+            "name": "Development (OpenSourceDev / Oregon-qa)",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
             "args": [
                 "--flavor",
-                "Dev",
+                "OpenSourceDev",
                 "--target",
                 "lib/main.dart"
             ]
         },
         {
-            "name": "Staging",
+            "name": "Staging (OpenSourceStaging / Oregon-qa)",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
             "args": [
                 "--flavor",
-                "Stg",
+                "OpenSourceStaging",
                 "--target",
                 "lib/main.dart"
             ]
         },
         {
-            "name": "Production",
+            "name": "Production (OpenSourceProd / EU)",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
             "args": [
                 "--flavor",
-                "PROD",
+                "OpenSourceProd",
                 "--target",
                 "lib/main.dart"
             ]
