@@ -248,6 +248,16 @@ class APIService {
       () => locator<LocalStorageService>().languageCode,
     );
 
+    // App build number (versionCode / iOS build) so the backend purchase
+    // version-gate can tell the fixed app from old installs. Reuses the cached
+    // device data; no extra PackageInfo call.
+    Map<String, dynamic> deviceData =
+        await locator<DeviceInfoService>().deviceData;
+    String appBuild = "${deviceData["app.buildNumber"] ?? ""}";
+    if (appBuild.isNotEmpty) {
+      request.headers.putIfAbsent("x-app-build", () => appBuild);
+    }
+
     return request;
   }
 
