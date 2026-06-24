@@ -38,12 +38,10 @@ class StartUpViewModel extends BaseModel {
 
     await Future<void>.delayed(const Duration(seconds: 2));
 
-    if (Environment.isProdEnv) {
-      log("Running on prod env checking device compatible");
-      if (context.mounted && await checkIfDeviceCompatible(context)) {
-        return;
-      }
-    }
+    // Device root/compromise check DISABLED (2026-06-24): SafeDevice.isJailBroken
+    // false-positives on stock release builds (observed on a non-rooted Samsung
+    // Galaxy A04) and hard-blocked legitimate users at startup. To be replaced by
+    // the Play Integrity API. checkIfDeviceCompatible() is kept for that future use.
 
     if (isUserLoggedIn) {
       unawaited(refreshTokenTrigger());
