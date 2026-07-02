@@ -1,0 +1,78 @@
+# Codemagic CI/CD — build iOS + publication TestFlight (flavor OpenSourceProd)
+# Doc: https://docs.codemagic.io/yaml-quick-start/building-a-flutter-app/
+#
+# PRÉREQUIS (à faire UNE FOIS dans l'interface Codemagic, pas dans ce fichier) :
+#   1. Team settings > Integrations > App Store Connect > connecter la clé API (.p8 + Key ID + Issuer ID).
+#      -> Nommer l'intégration EXACTEMENT "SimWeGo ASC Key" (ou changer la valeur ci-dessous).
+#   2. Renseigner la variable APP_STORE_APP_ID (Apple ID numérique de l'app :
+#      App Store Connect > l'app > Informations sur l'app > "Apple ID", ex. 6478912345).
+#      -> soit en dur ci-dessous, soit en variable Codemagic chiffrée.
+
+workflows:
+  ios-testflight:
+    name: iOS TestFlight – OpenSourceProd
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+
+    # La clé App Store Connect API ajoutée dans Codemagic (nom EXACT de l'intégration).
+    integrations:
+      app_store_connect: SimWeGo ASC Key
+
+    environment:
+      flutter: stable          # à épingler (ex. 3.29.2) si un build échoue sur une version stable trop récente
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        # Préfixe : couvre com.simwego.esim + com.simwego.esim.NotificationService (extension push).
+        bundle_identifier: com.simwego.esim
+      vars:
+        BUNDLE_ID: "com.simwego.esim"
+        XCODE_SCHEME: "OpenSourceProd"
+        # Apple ID NUMÉRIQUE de l'app (voir prérequis #2). Indispensable pour l'auto-incrément du build number.
+        APP_STORE_APP_ID: "6753806035"
+
+    scripts:
+      - name: Flutter pub get
+        script: flutter pub get
+
+      - name: Installer les profils de provisioning (signature auto)
+        script: xcode-project use-profiles
+
+      - name: Calculer le prochain build number (dernier TestFlight + 1)
+        script: |
+          #!/usr/bin/env sh
+          set -e
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APP_ID")
+          echo "Dernier build TestFlight : $LATEST"
+          echo "NEW_BUILD_NUMBER=$((LATEST + 1))" >> "$CM_ENV"
+
+      - name: Build IPA (release, flavor OpenSourceProd)
+        script: |
+          #!/usr/bin/env sh
+          set -e
+          flutter build ipa --release \
+            --flavor "$XCODE_SCHEME" \
+            -t lib/main.dart \
+            --build-number="$NEW_BUILD_NUMBER" \
+            --export-options-plist=/Users/builder/export_options.plist
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+
+    publishing:
+      email:
+        recipients:
+          - contact@simwego.com
+        notify:
+          success: true
+          failure: true
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        # Groupes de test INTERNES (pas de review Apple). Noms EXACTS tels qu'affichés dans TestFlight.
+        beta_groups:
+          - Internat Testing
+          - simwegoteam
