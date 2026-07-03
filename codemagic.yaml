@@ -22,6 +22,8 @@ workflows:
       flutter: stable          # à épingler (ex. 3.29.2) si un build échoue sur une version stable trop récente
       xcode: latest
       cocoapods: default
+      groups:
+        - ios_signing          # contient CERT_PRIVATE_KEY (clé privée PEM persistante, secure) — à créer dans Codemagic
       vars:
         BUNDLE_ID: "com.simwego.esim"
         XCODE_SCHEME: "OpenSourceProd"
@@ -46,22 +48,20 @@ workflows:
             echo "flutter_vibrate: rien à patcher (introuvable ou déjà patché)"
           fi
 
-      - name: Signature — certificat de distribution (nouvelle clé) + profils App Store
+      - name: Signature — certificat de distribution (clé persistante) + profils App Store
         script: |
           #!/usr/bin/env sh
           set -e
           keychain initialize
-          # Codemagic n'a PAS la clé privée du certif de l'ancien dev -> on génère NOTRE propre
-          # clé privée et un nouveau certificat de distribution basé dessus (--certificate-key
-          # cible cette clé, ce qui évite l'erreur "Cannot save ... without certificate private key").
-          CERT_KEY="$(mktemp)"
-          openssl genrsa -out "$CERT_KEY" 2048
-          # Un seul certificat, un profil App Store par bundle archivé (app + extension push).
+          # Clé privée PERSISTANTE fournie via la variable secure CERT_PRIVATE_KEY (groupe ios_signing).
+          # 1er build : crée le certificat de distribution à partir de cette clé.
+          # Builds suivants : le certificat existant matche la clé -> réutilisé, aucune re-création
+          # (évite la limite Apple de 2 certificats de distribution).
           for BID in com.simwego.esim com.simwego.esim.NotificationService; do
             app-store-connect fetch-signing-files "$BID" \
               --platform IOS \
               --type IOS_APP_STORE \
-              --certificate-key=@file:"$CERT_KEY" \
+              --certificate-key=@env:CERT_PRIVATE_KEY \
               --create
           done
           keychain add-certificates
