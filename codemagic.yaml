@@ -32,16 +32,24 @@ workflows:
       - name: Flutter pub get
         script: flutter pub get
 
-      - name: Signature — récupérer/créer certificat + profils App Store
+      - name: Signature — certificat de distribution (nouvelle clé) + profils App Store
         script: |
           #!/usr/bin/env sh
           set -e
           keychain initialize
-          # Crée (si absents) le certificat de distribution + les profils App Store pour les 2 bundles archivés.
-          app-store-connect fetch-signing-files "com.simwego.esim" \
-            --type IOS_APP_STORE --create
-          app-store-connect fetch-signing-files "com.simwego.esim.NotificationService" \
-            --type IOS_APP_STORE --create
+          # Codemagic n'a PAS la clé privée du certif de l'ancien dev -> on génère NOTRE propre
+          # clé privée et un nouveau certificat de distribution basé dessus (--certificate-key
+          # cible cette clé, ce qui évite l'erreur "Cannot save ... without certificate private key").
+          CERT_KEY="$(mktemp)"
+          openssl genrsa -out "$CERT_KEY" 2048
+          # Un seul certificat, un profil App Store par bundle archivé (app + extension push).
+          for BID in com.simwego.esim com.simwego.esim.NotificationService; do
+            app-store-connect fetch-signing-files "$BID" \
+              --platform IOS \
+              --type IOS_APP_STORE \
+              --certificate-key=@file:"$CERT_KEY" \
+              --create
+          done
           keychain add-certificates
           xcode-project use-profiles
 
