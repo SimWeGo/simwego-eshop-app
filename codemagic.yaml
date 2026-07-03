@@ -32,6 +32,20 @@ workflows:
       - name: Flutter pub get
         script: flutter pub get
 
+      - name: Patch flutter_vibrate (Xcode 16 — TARGET_OS_SIMULATOR hors scope)
+        script: |
+          #!/usr/bin/env sh
+          set -e
+          # Plugin non maintenu : sous Xcode 16, TARGET_OS_SIMULATOR n'est plus importé
+          # implicitement -> on ajoute `import TargetConditionals` en tête du fichier.
+          F=$(find "$HOME/.pub-cache" -path '*flutter_vibrate*/ios/Classes/SwiftVibratePlugin.swift' | head -1)
+          if [ -n "$F" ] && ! grep -q 'import TargetConditionals' "$F"; then
+            { echo 'import TargetConditionals'; cat "$F"; } > "$F.tmp" && mv "$F.tmp" "$F"
+            echo "Patched: $F"
+          else
+            echo "flutter_vibrate: rien à patcher (introuvable ou déjà patché)"
+          fi
+
       - name: Signature — certificat de distribution (nouvelle clé) + profils App Store
         script: |
           #!/usr/bin/env sh
