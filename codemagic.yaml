@@ -31,6 +31,9 @@ workflows:
         APP_STORE_APP_ID: "6753806035"
 
     scripts:
+      - name: Désactiver Swift Package Manager (projet CocoaPods — évite le conflit Firebase SPM/Pods)
+        script: flutter config --no-enable-swift-package-manager
+
       - name: Flutter pub get
         script: flutter pub get
 
