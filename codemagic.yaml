@@ -38,14 +38,15 @@ workflows:
         script: |
           #!/usr/bin/env sh
           set -e
-          # Plugin non maintenu : sous Xcode 16, TARGET_OS_SIMULATOR n'est plus importé
-          # implicitement -> on ajoute `import TargetConditionals` en tête du fichier.
+          # Plugin non maintenu : `TARGET_OS_SIMULATOR` est une macro C du préprocesseur, pas un
+          # symbole Swift -> sous Xcode 16 elle n'est plus visible ("Cannot find in scope").
+          # On archive pour APPAREIL (jamais simulateur) donc cette valeur vaut 0 -> on remplace.
           F=$(find "$HOME/.pub-cache" -path '*flutter_vibrate*/ios/Classes/SwiftVibratePlugin.swift' | head -1)
-          if [ -n "$F" ] && ! grep -q 'import TargetConditionals' "$F"; then
-            { echo 'import TargetConditionals'; cat "$F"; } > "$F.tmp" && mv "$F.tmp" "$F"
-            echo "Patched: $F"
+          if [ -n "$F" ]; then
+            sed -i '' 's/TARGET_OS_SIMULATOR/0/g' "$F"
+            echo "Patched flutter_vibrate: $F"
           else
-            echo "flutter_vibrate: rien à patcher (introuvable ou déjà patché)"
+            echo "flutter_vibrate: fichier introuvable (rien à patcher)"
           fi
 
       - name: Signature — certificat de distribution (clé persistante) + profils App Store
