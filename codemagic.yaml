@@ -37,6 +37,9 @@ workflows:
       - name: Flutter pub get
         script: flutter pub get
 
+      - name: Installer le CLI FlutterFire (phases Xcode bundle-service-file / crashlytics)
+        script: dart pub global activate flutterfire_cli
+
       - name: Patch flutter_vibrate (Xcode 16 — TARGET_OS_SIMULATOR hors scope)
         script: |
           #!/usr/bin/env sh
@@ -83,6 +86,9 @@ workflows:
         script: |
           #!/usr/bin/env sh
           set -e
+          # flutterfire est installé dans ~/.pub-cache/bin -> l'exposer pour que les phases
+          # de build Xcode (FlutterFire) le trouvent ("flutterfire: command not found").
+          export PATH="$PATH:$HOME/.pub-cache/bin"
           flutter build ipa --release \
             --flavor "$XCODE_SCHEME" \
             -t lib/main.dart \
