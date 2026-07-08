@@ -65,6 +65,7 @@ import "package:esim_open_source/presentation/views/bottom_sheet/cashback_reward
 import "package:esim_open_source/presentation/views/bottom_sheet/delete_account_bottom_sheet/delete_account_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle/my_e_sim_bundle_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_consumption/consumption_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/add_email/add_email_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view_model.dart";
@@ -323,6 +324,9 @@ Future<void> viewModelInjectionModules() async {
     )
     ..registerFactory<EditNameBottomSheetViewModel>(
       EditNameBottomSheetViewModel.new,
+    )
+    ..registerFactory<AddEmailBottomSheetViewModel>(
+      AddEmailBottomSheetViewModel.new,
     )
     ..registerFactory<DeleteAccountBottomSheetViewModel>(
       DeleteAccountBottomSheetViewModel.new,

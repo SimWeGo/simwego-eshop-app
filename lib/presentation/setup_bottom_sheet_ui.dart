@@ -14,6 +14,7 @@ import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle/my
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_consumption/consumption_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_qr_code/qr_code_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_top_up/top_up_bottom_sheet.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/add_email/add_email_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/logout_bottom_sheet/logout_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view.dart";
@@ -186,6 +187,15 @@ void setupBottomSheetUi() {
       Function(SheetResponse<MainBottomSheetResponse>) completer,
     ) =>
         _BundleEditNameBottomSheet(
+          request: sheetRequest,
+          completer: completer,
+        ),
+    BottomSheetType.addEmail: (
+      dynamic context,
+      dynamic sheetRequest,
+      Function(SheetResponse<MainBottomSheetResponse>) completer,
+    ) =>
+        _AddEmailBottomSheet(
           request: sheetRequest,
           completer: completer,
         ),
@@ -746,6 +756,49 @@ class BundleEditNameRequest {
   });
 
   final String? name;
+}
+//#endregion
+
+//#region Add Email
+class _AddEmailBottomSheet extends StatelessWidget {
+  const _AddEmailBottomSheet({
+    required this.request,
+    required this.completer,
+  });
+
+  final SheetRequest<AddEmailRequest> request;
+  final Function(SheetResponse<MainBottomSheetResponse>) completer;
+
+  @override
+  Widget build(BuildContext context) {
+    return AddEmailBottomSheetView(
+      request: request,
+      completer: completer,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+        DiagnosticsProperty<SheetRequest<AddEmailRequest>>(
+          "request",
+          request,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<
+            Function(SheetResponse<MainBottomSheetResponse> p1)>.has(
+          "completer",
+          completer,
+        ),
+      );
+  }
+}
+
+class AddEmailRequest {
+  AddEmailRequest();
 }
 //#endregion
 

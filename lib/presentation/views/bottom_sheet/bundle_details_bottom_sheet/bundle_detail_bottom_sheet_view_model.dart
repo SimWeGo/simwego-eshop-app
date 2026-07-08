@@ -14,6 +14,7 @@ import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/domain/use_case/auth/add_email_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/tmp_login_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/validate_promo_code_use_case.dart";
@@ -267,6 +268,18 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   }
 
   Future<void> _continueToPurchase() async {
+    // A logged-in account with no email (Sign in with Apple "Hide My Email")
+    // cannot receive its eSIM QR + receipt, and the backend blocks the
+    // purchase. Prompt for an email up front and save it; abort if the user
+    // does not provide one. Guests are excluded (isUserLoggedIn == false) —
+    // they enter their email via the guest field.
+    if (isUserLoggedIn && userEmailAddress.trim().isEmpty) {
+      final bool added = await _promptAndSaveEmail();
+      if (!added) {
+        return;
+      }
+    }
+
     List<PaymentType> paymentTypeList = AppEnvironment.appEnvironmentHelper
         .paymentTypeList(isUserLoggedIn: isUserLoggedIn);
     final double price = bundle?.price ?? 0;
@@ -346,6 +359,35 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         _triggerAssignFlow(paymentType: paymentType);
       }
     }
+  }
+
+  /// Prompts the logged-in user (with no email) to add one and saves it.
+  /// Returns true only once a valid email is persisted, so the purchase can
+  /// proceed; false if the user cancels or the save fails.
+  Future<bool> _promptAndSaveEmail() async {
+    final SheetResponse<MainBottomSheetResponse>? sheetResponse =
+        await bottomSheetService.showCustomSheet<MainBottomSheetResponse,
+            AddEmailRequest>(
+      isScrollControlled: true,
+      variant: BottomSheetType.addEmail,
+      data: AddEmailRequest(),
+    );
+    final String email = (sheetResponse?.data?.tag ?? "").trim();
+    if ((sheetResponse?.data?.canceled ?? true) || email.isEmpty) {
+      return false;
+    }
+
+    setViewState(ViewState.busy);
+    final Resource<AuthResponseModel> response =
+        await AddEmailUseCase(locator<ApiAuthRepository>()).execute(email);
+    setViewState(ViewState.idle);
+
+    if (response.resourceType == ResourceType.success) {
+      return true;
+    }
+    // Surfaces the backend message (e.g. Option A "email already in use").
+    handleError(response);
+    return false;
   }
 
   Future<void> _triggerAssignFlow({
