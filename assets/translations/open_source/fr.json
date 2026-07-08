@@ -374,5 +374,7 @@
   "affiliate_partnerWith": "En partenariat avec",
   "total": "Total",
   "bundleDetails_planTypeText_dataOnly": "Données uniquement",
-  "bundleDetails_activationPolicy_Value": "La période de validité commence lorsque l'eSIM se connecte à l'un des réseaux pris en charge."
+  "bundleDetails_activationPolicy_Value": "La période de validité commence lorsque l'eSIM se connecte à l'un des réseaux pris en charge.",
+  "addEmail_titleText": "Ajoutez votre email",
+  "addEmail_subtitleText": "Ajoutez une adresse email pour recevoir le QR code de votre eSIM et votre reçu."
 }

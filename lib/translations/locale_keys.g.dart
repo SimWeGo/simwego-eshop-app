@@ -380,5 +380,7 @@ abstract class  LocaleKeys {
   static const String total = "total";
   static const String bundleDetails_planTypeText_dataOnly = "bundleDetails_planTypeText_dataOnly";
   static const String bundleDetails_activationPolicy_Value = "bundleDetails_activationPolicy_Value";
+  static const String addEmail_titleText = "addEmail_titleText";
+  static const String addEmail_subtitleText = "addEmail_subtitleText";
 
 }
