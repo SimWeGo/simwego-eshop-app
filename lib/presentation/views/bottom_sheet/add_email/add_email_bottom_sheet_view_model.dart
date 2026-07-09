@@ -24,6 +24,7 @@ class AddEmailBottomSheetViewModel extends BaseModel {
   }
 
   void closeBottomSheet() {
+    hideKeyboard();
     completer(SheetResponse<MainBottomSheetResponse>());
   }
 
@@ -47,6 +48,7 @@ class AddEmailBottomSheetViewModel extends BaseModel {
     if (!text.isValidEmail()) {
       return;
     }
+    hideKeyboard();
     completer(
       SheetResponse<MainBottomSheetResponse>(
         data: MainBottomSheetResponse(tag: text, canceled: false),

@@ -156,7 +156,7 @@ void main() {
     });
 
     test("all enum values are defined", () {
-      expect(UserApis.values.length, 17);
+      expect(UserApis.values.length, 18);
       expect(UserApis.values, contains(UserApis.getUserConsumption));
       expect(UserApis.values, contains(UserApis.assignBundle));
       expect(UserApis.values, contains(UserApis.topUpBundle));
@@ -170,6 +170,7 @@ void main() {
       expect(UserApis.values, contains(UserApis.getRelatedTopUp));
       expect(UserApis.values, contains(UserApis.getOrderHistory));
       expect(UserApis.values, contains(UserApis.getOrderByID));
+      expect(UserApis.values, contains(UserApis.getOrderReceipt));
       expect(UserApis.values, contains(UserApis.topUpWallet));
       expect(UserApis.values, contains(UserApis.cancelOrder));
       expect(UserApis.values, contains(UserApis.resendOrderOtp));

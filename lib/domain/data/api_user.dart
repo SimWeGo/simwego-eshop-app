@@ -62,6 +62,10 @@ abstract interface class ApiUser {
     required String orderID,
   });
 
+  FutureOr<dynamic> getOrderReceipt({
+    required String orderID,
+  });
+
   FutureOr<dynamic> topUpWallet({
     required double amount,
     required String currency,

@@ -82,6 +82,20 @@ class ESimQrBottomSheet extends StatelessWidget {
                         isLoading: viewModel.isBusy,
                       ),
                       const SizedBox(height: 32),
+                      if (viewModel.showInstallButton) ...<Widget>[
+                        MainButton(
+                          isEnabled: !viewModel.isBusy,
+                          title: LocaleKeys.install.tr(),
+                          titleTextStyle: bodyBoldTextStyle(context: context),
+                          onPressed: viewModel.onInstallClick,
+                          themeColor: themeColor,
+                          height: 53,
+                          hideShadows: false,
+                          enabledTextColor:
+                              enabledMainButtonTextColor(context: context),
+                        ),
+                        verticalSpaceSmall,
+                      ],
                       MainButton(
                         isEnabled: !viewModel.isBusy,
                         title: LocaleKeys.goToSettings.tr(),

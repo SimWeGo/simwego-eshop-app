@@ -15,6 +15,7 @@ enum UserApis implements URlRequestBuilder {
   getRelatedTopUp,
   getOrderHistory,
   getOrderByID,
+  getOrderReceipt,
   topUpWallet,
   cancelOrder,
   resendOrderOtp,
@@ -52,6 +53,8 @@ enum UserApis implements URlRequestBuilder {
         return "/api/v1/user/order-history";
       case UserApis.getOrderByID:
         return "/api/v1/user/order-history";
+      case UserApis.getOrderReceipt:
+        return "/api/v1/user/order-history";
       case UserApis.topUpWallet:
         return "/api/v1/wallet/top-up";
       case UserApis.cancelOrder:
@@ -75,6 +78,7 @@ enum UserApis implements URlRequestBuilder {
       case UserApis.getBundleExists:
       case UserApis.getOrderHistory:
       case UserApis.getOrderByID:
+      case UserApis.getOrderReceipt:
         return HttpMethod.GET;
       case UserApis.assignBundle:
       case UserApis.setNotificationsRead:

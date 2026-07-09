@@ -98,6 +98,19 @@ class SocialLoginServiceImpl extends SocialLoginService {
       );
 
       //log("email ${credential.email}, name: ${credential.givenName} ${credential.familyName}, accessToken: ${credential.identityToken}");
+    } on SignInWithAppleAuthorizationException catch (error) {
+      // User canceled the Apple sign-in prompt — do not surface an error.
+      if (error.code == AuthorizationErrorCode.canceled) {
+        log("Apple sign-in canceled by user");
+        return socialLoginResultStream;
+      }
+      log(error.toString());
+      _socialLoginResultStream.add(
+        SocialLoginResult(
+          socialType: SocialMediaLoginType.apple,
+          errorMessage: error.toString(),
+        ),
+      );
     } on Object catch (error) {
       log(error.toString());
       _socialLoginResultStream.add(
@@ -161,13 +174,8 @@ class SocialLoginServiceImpl extends SocialLoginService {
     } on GoogleSignInException catch (error) {
       log("GoogleSignInException: ${error.code}");
       if (error.code == GoogleSignInExceptionCode.canceled) {
-        // User canceled the sign-in
-        _socialLoginResultStream.add(
-          SocialLoginResult(
-            socialType: SocialMediaLoginType.google,
-            errorMessage: "Sign in was canceled by user",
-          ),
-        );
+        // User canceled the sign-in — do not surface an error.
+        log("Google sign-in canceled by user");
         return socialLoginResultStream;
       }
       _socialLoginResultStream.add(

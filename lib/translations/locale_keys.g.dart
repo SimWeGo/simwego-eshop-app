@@ -152,6 +152,16 @@ abstract class  LocaleKeys {
   static const String orderReceiptBottomSheet_unitPrice = "orderReceiptBottomSheet_unitPrice";
   static const String orderReceiptBottomSheet_amount = "orderReceiptBottomSheet_amount";
   static const String orderReceiptBottomSheet_download = "orderReceiptBottomSheet_download";
+  static const String orderReceiptBottomSheet_siren = "orderReceiptBottomSheet_siren";
+  static const String orderReceiptBottomSheet_vatNumber = "orderReceiptBottomSheet_vatNumber";
+  static const String orderReceiptBottomSheet_billedTo = "orderReceiptBottomSheet_billedTo";
+  static const String orderReceiptBottomSheet_taxRate = "orderReceiptBottomSheet_taxRate";
+  static const String orderReceiptBottomSheet_subtotalHT = "orderReceiptBottomSheet_subtotalHT";
+  static const String orderReceiptBottomSheet_vat = "orderReceiptBottomSheet_vat";
+  static const String orderReceiptBottomSheet_totalTTC = "orderReceiptBottomSheet_totalTTC";
+  static const String orderReceiptBottomSheet_eurEquivalent = "orderReceiptBottomSheet_eurEquivalent";
+  static const String orderReceiptBottomSheet_ecbRate = "orderReceiptBottomSheet_ecbRate";
+  static const String orderReceiptBottomSheet_failedToLoad = "orderReceiptBottomSheet_failedToLoad";
   static const String voucherCode_titleText = "voucherCode_titleText";
   static const String voucherCode_contentText = "voucherCode_contentText";
   static const String voucherCode_placeHolderText = "voucherCode_placeHolderText";
