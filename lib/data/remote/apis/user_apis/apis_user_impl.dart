@@ -9,6 +9,7 @@ import "package:esim_open_source/data/remote/responses/bundles/bundle_response_m
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
+import "package:esim_open_source/data/remote/responses/user/receipt_snapshot_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
@@ -253,6 +254,20 @@ class APIUserImpl extends APIService implements ApiUser {
         paramIDs: <String>[orderID],
       ),
       fromJson: OrderHistoryResponseModel.fromJson,
+    );
+    return response;
+  }
+
+  @override
+  FutureOr<ResponseMain<ReceiptSnapshotResponseModel?>> getOrderReceipt({
+    required String orderID,
+  }) async {
+    ResponseMain<ReceiptSnapshotResponseModel?> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.getOrderReceipt,
+        paramIDs: <String>[orderID, "receipt"],
+      ),
+      fromJson: ReceiptSnapshotResponseModel.fromJson,
     );
     return response;
   }

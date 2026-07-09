@@ -9,6 +9,7 @@ import "package:esim_open_source/data/remote/responses/bundles/bundle_response_m
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
+import "package:esim_open_source/data/remote/responses/user/receipt_snapshot_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
@@ -212,6 +213,17 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
   }) {
     return responseToResource(
       apiUserBundles.getOrderByID(
+        orderID: orderID,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<Resource<ReceiptSnapshotResponseModel?>> getOrderReceipt({
+    required String orderID,
+  }) {
+    return responseToResource(
+      apiUserBundles.getOrderReceipt(
         orderID: orderID,
       ),
     );
