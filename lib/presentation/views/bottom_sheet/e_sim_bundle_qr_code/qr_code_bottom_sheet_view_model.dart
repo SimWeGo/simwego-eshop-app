@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
@@ -9,6 +10,7 @@ import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
+import "package:esim_open_source/presentation/shared/validation_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
@@ -30,6 +32,7 @@ class QrCodeBottomSheetViewModel extends BaseModel {
 
   String? smDpAddress = "";
   String? activationCode = "";
+  bool showInstallButton = false;
 
   String get qrCodeValue => "LPA:1\$$smDpAddress\$$activationCode";
 
@@ -38,7 +41,31 @@ class QrCodeBottomSheetViewModel extends BaseModel {
   //#region Functions
   @override
   void onViewModelReady() {
-    unawaited(_getBundleDetailsInfo());
+    unawaited(_initState());
+  }
+
+  Future<void> _initState() async {
+    showInstallButton = await isInstallButtonEnabled();
+    notifyListeners();
+    await _getBundleDetailsInfo();
+  }
+
+  Future<void> onInstallClick() async {
+    try {
+      if (Platform.isAndroid) {
+        await locator<FlutterChannelHandlerService>().openEsimSetupForAndroid(
+          smdpAddress: smDpAddress ?? "",
+          activationCode: activationCode ?? "",
+        );
+      } else {
+        await locator<FlutterChannelHandlerService>().openEsimSetupForIOS(
+          smdpAddress: smDpAddress ?? "",
+          activationCode: activationCode ?? "",
+        );
+      }
+    } on Object catch (ex) {
+      showNativeErrorMessage("", ex.toString().replaceAll("Exception:", ""));
+    }
   }
 
   Future<void> copyToClipboard(String text) async {

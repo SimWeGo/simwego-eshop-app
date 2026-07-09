@@ -261,7 +261,7 @@ class PurchaseOrderSuccessView extends StatelessWidget {
           icon: Icons.share_outlined,
           onPressed: viewModel.onShareClick,
           backgroundColor: myEsimIconButtonColor(context: context),
-          iconColor: enabledMainButtonTextColor(context: context),
+          iconColor: mainWhiteTextColor(context: context),
         ),
         horizontalSpaceSmall,
         AppEnvironment.isFromAppClip
@@ -270,7 +270,7 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                 icon: Icons.file_download_outlined,
                 onPressed: viewModel.onDownloadClick,
                 backgroundColor: myEsimIconButtonColor(context: context),
-                iconColor: enabledMainButtonTextColor(context: context),
+                iconColor: mainWhiteTextColor(context: context),
               ),
       ],
     );

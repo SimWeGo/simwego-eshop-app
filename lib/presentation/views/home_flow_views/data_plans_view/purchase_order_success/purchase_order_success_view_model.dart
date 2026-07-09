@@ -85,6 +85,7 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
   }
 
   Future<void> onGotoMyESimClick() async {
+    hideKeyboard();
     locator<HomePagerViewModel>().changeSelectedTabIndex(index: 1);
     navigationService.clearTillFirstAndShow(HomePager.routeName);
   }
