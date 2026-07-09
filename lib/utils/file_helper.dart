@@ -14,6 +14,17 @@ Future<dynamic> loadJsonFromAssets(String filePath) async {
   return rootBundle.loadString(filePath);
 }
 
+/// Make a string safe to use as a file name. eSIM/bundle designations can
+/// contain "/", accents or other characters that break the file path (which
+/// surfaces to the user as a generic "Something went wrong" on download).
+String safeFileName(String? name) {
+  final String sanitized =
+      (name ?? "").trim().replaceAll(RegExp(r"[^A-Za-z0-9-_ ]"), "_").trim();
+  return sanitized.isEmpty
+      ? "document_${DateTime.now().millisecondsSinceEpoch}"
+      : sanitized;
+}
+
 Future<String> captureImage({
   required GlobalKey globalKey,
   String? fileName,
@@ -23,8 +34,7 @@ Future<String> captureImage({
   ui.Image image = await boundary.toImage();
   ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
   if (byteData != null) {
-    String newFileName =
-        fileName ?? "image_${DateTime.now().millisecondsSinceEpoch}";
+    String newFileName = safeFileName(fileName);
     Directory directory = await getApplicationDocumentsDirectory();
     File imagePath = await File("${directory.path}/$newFileName.png").create();
     await imagePath.writeAsBytes(byteData.buffer.asUint8List());
@@ -61,8 +71,7 @@ Future<void> capturePdfAndShare({
     );
 
     // Save the PDF to a temporary file
-    String newPdfFileName =
-        pdfFileName ?? "document_${DateTime.now().millisecondsSinceEpoch}";
+    String newPdfFileName = safeFileName(pdfFileName);
     final Directory tempDir = await getTemporaryDirectory();
     final String tempPath = "${tempDir.path}/$newPdfFileName.pdf";
     final File file = File(tempPath);

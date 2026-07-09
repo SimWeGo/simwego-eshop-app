@@ -82,7 +82,10 @@ class ESimQrBottomSheet extends StatelessWidget {
                         isLoading: viewModel.isBusy,
                       ),
                       const SizedBox(height: 32),
-                      if (viewModel.showInstallButton) ...<Widget>[
+                      // One-tap install when the device supports it (iOS 17.4+/
+                      // Android). "Go to settings" (manual) is only kept as a
+                      // fallback for devices without one-tap install.
+                      if (viewModel.showInstallButton)
                         MainButton(
                           isEnabled: !viewModel.isBusy,
                           title: LocaleKeys.install.tr(),
@@ -93,20 +96,19 @@ class ESimQrBottomSheet extends StatelessWidget {
                           hideShadows: false,
                           enabledTextColor:
                               enabledMainButtonTextColor(context: context),
+                        )
+                      else
+                        MainButton(
+                          isEnabled: !viewModel.isBusy,
+                          title: LocaleKeys.goToSettings.tr(),
+                          titleTextStyle: bodyBoldTextStyle(context: context),
+                          onPressed: viewModel.onOpenSettingsClicked,
+                          themeColor: themeColor,
+                          height: 53,
+                          hideShadows: false,
+                          enabledTextColor:
+                              enabledMainButtonTextColor(context: context),
                         ),
-                        verticalSpaceSmall,
-                      ],
-                      MainButton(
-                        isEnabled: !viewModel.isBusy,
-                        title: LocaleKeys.goToSettings.tr(),
-                        titleTextStyle: bodyBoldTextStyle(context: context),
-                        onPressed: viewModel.onOpenSettingsClicked,
-                        themeColor: themeColor,
-                        height: 53,
-                        hideShadows: false,
-                        enabledTextColor:
-                            enabledMainButtonTextColor(context: context),
-                      ),
                     ],
                   ),
                 ),
