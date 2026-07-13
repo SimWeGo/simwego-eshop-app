@@ -28,8 +28,9 @@ class InvoiceRequestBottomSheetViewModel extends BaseModel {
   late OrderHistoryResponseModel order;
   late Function(SheetResponse<EmptyBottomSheetResponse>) completer;
 
-  final RequestInvoiceUseCase _requestInvoiceUseCase =
-      RequestInvoiceUseCase(locator<ApiUserRepository>());
+  final RequestInvoiceUseCase _requestInvoiceUseCase = RequestInvoiceUseCase(
+    locator<ApiUserRepository>(),
+  );
 
   // Per-field validation errors (null = no error). Mirrors backend CDC B.3.
   String? companyNameError;
@@ -63,20 +64,19 @@ class InvoiceRequestBottomSheetViewModel extends BaseModel {
   }
 
   bool _validate() {
-    companyNameError =
-        companyNameController.text.trim().isEmpty ? _requiredMsg : null;
+    companyNameError = companyNameController.text.trim().isEmpty
+        ? _requiredMsg
+        : null;
     streetError = streetController.text.trim().isEmpty ? _requiredMsg : null;
-    postalCodeError =
-        postalCodeController.text.trim().isEmpty ? _requiredMsg : null;
+    postalCodeError = postalCodeController.text.trim().isEmpty
+        ? _requiredMsg
+        : null;
     cityError = cityController.text.trim().isEmpty ? _requiredMsg : null;
     countryError = countryController.text.trim().isEmpty ? _requiredMsg : null;
 
     registrationError = _validateRegistration(registrationController.text);
     billingEmailError = _validateEmail(billingEmailController.text);
-    vatError = _validateVat(
-      vatController.text,
-      countryController.text,
-    );
+    vatError = _validateVat(vatController.text, countryController.text);
 
     notifyListeners();
     return companyNameError == null &&
@@ -97,7 +97,8 @@ class InvoiceRequestBottomSheetViewModel extends BaseModel {
       return _requiredMsg;
     }
     final bool valid =
-        RegExp(r"^\d+$").hasMatch(digits) && (digits.length == 9 || digits.length == 14);
+        RegExp(r"^\d+$").hasMatch(digits) &&
+        (digits.length == 9 || digits.length == 14);
     return valid ? null : LocaleKeys.invoiceRequest_invalidRegistration.tr();
   }
 
@@ -114,7 +115,8 @@ class InvoiceRequestBottomSheetViewModel extends BaseModel {
   String? _validateVat(String vatValue, String countryValue) {
     final String vat = vatValue.replaceAll(RegExp(r"\s"), "").toUpperCase();
     final String country = countryValue.trim().toLowerCase();
-    final bool outsideFrance = country.isNotEmpty && !_frCountry.contains(country);
+    final bool outsideFrance =
+        country.isNotEmpty && !_frCountry.contains(country);
 
     if (vat.isEmpty) {
       // Required for customers established outside France (CDC B.1/B.3).
@@ -152,7 +154,10 @@ class InvoiceRequestBottomSheetViewModel extends BaseModel {
       addressPostalCode: postalCodeController.text.trim(),
       addressCity: cityController.text.trim(),
       addressCountry: countryController.text.trim(),
-      registrationNumber: registrationController.text.replaceAll(RegExp(r"\s"), ""),
+      registrationNumber: registrationController.text.replaceAll(
+        RegExp(r"\s"),
+        "",
+      ),
       vatNumber: vat,
       billingEmail: billingEmailController.text.trim(),
       contactName: _orNull(contactNameController.text),
@@ -161,10 +166,8 @@ class InvoiceRequestBottomSheetViewModel extends BaseModel {
     isSubmitting = true;
     notifyListeners();
 
-    final Resource<EmptyResponse?> result =
-        await _requestInvoiceUseCase.execute(
-      RequestInvoiceParams(orderID: orderReference, body: body),
-    );
+    final Resource<EmptyResponse?> result = await _requestInvoiceUseCase
+        .execute(RequestInvoiceParams(orderID: orderReference, body: body));
 
     isSubmitting = false;
     await handleResponse(

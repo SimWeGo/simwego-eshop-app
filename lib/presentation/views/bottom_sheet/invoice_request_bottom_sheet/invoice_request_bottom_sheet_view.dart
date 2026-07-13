@@ -32,33 +32,33 @@ class InvoiceRequestBottomSheetView extends StatelessWidget {
       viewModel: locator<InvoiceRequestBottomSheetViewModel>()
         ..order = requestBase.data as OrderHistoryResponseModel
         ..completer = completer,
-      builder: (
-        BuildContext context,
-        InvoiceRequestBottomSheetViewModel viewModel,
-        Widget? childWidget,
-        double screenHeight,
-      ) =>
-          DecoratedBox(
-        decoration: const ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+      builder:
+          (
+            BuildContext context,
+            InvoiceRequestBottomSheetViewModel viewModel,
+            Widget? childWidget,
+            double screenHeight,
+          ) => DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+            ),
+            child: SizedBox(
+              width: screenWidth(context),
+              child: PaddingWidget.applySymmetricPadding(
+                vertical: 15,
+                horizontal: 15,
+                child: viewModel.submitted
+                    ? _buildSuccess(context, viewModel)
+                    : _buildForm(context, viewModel),
+              ),
             ),
           ),
-        ),
-        child: SizedBox(
-          width: screenWidth(context),
-          child: PaddingWidget.applySymmetricPadding(
-            vertical: 15,
-            horizontal: 15,
-            child: viewModel.submitted
-                ? _buildSuccess(context, viewModel)
-                : _buildForm(context, viewModel),
-          ),
-        ),
-      ),
     );
   }
 
@@ -70,9 +70,7 @@ class InvoiceRequestBottomSheetView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        BottomSheetCloseButton(
-          onTap: viewModel.closeBottomSheet,
-        ),
+        BottomSheetCloseButton(onTap: viewModel.closeBottomSheet),
         Center(
           child: Text(
             LocaleKeys.invoiceRequest_title.tr(),
@@ -188,16 +186,10 @@ class InvoiceRequestBottomSheetView extends StatelessWidget {
       children: <Widget>[
         Align(
           alignment: Alignment.centerRight,
-          child: BottomSheetCloseButton(
-            onTap: viewModel.closeBottomSheet,
-          ),
+          child: BottomSheetCloseButton(onTap: viewModel.closeBottomSheet),
         ),
         const SizedBox(height: 8),
-        Icon(
-          Icons.check_circle_outline,
-          size: 56,
-          color: themeColor,
-        ),
+        Icon(Icons.check_circle_outline, size: 56, color: themeColor),
         const SizedBox(height: 16),
         Text(
           LocaleKeys.invoiceRequest_successTitle.tr(),
@@ -289,10 +281,8 @@ class InvoiceRequestBottomSheetView extends StatelessWidget {
       )
       ..add(
         ObjectFlagProperty<
-            Function(SheetResponse<EmptyBottomSheetResponse> p1)>.has(
-          "completer",
-          completer,
-        ),
+          Function(SheetResponse<EmptyBottomSheetResponse> p1)
+        >.has("completer", completer),
       );
   }
 }

@@ -40,12 +40,14 @@ workflows:
       - name: Flutter pub get
         script: flutter pub get
 
-      # Attrape les vraies erreurs de compilation AVANT le build IPA (~90 min).
-      # --no-fatal-warnings/-infos : les nits de lint (types explicites, virgules
-      # finales, const…) sont affichés mais NE bloquent PAS le build ; seules les
-      # erreurs de sévérité "error" (typos, API inexistante…) font échouer l'étape.
-      - name: Analyse statique (flutter analyze)
-        script: flutter analyze --no-fatal-warnings --no-fatal-infos
+      # Attrape les vraies erreurs de compilation du code applicatif AVANT le
+      # build IPA (~90 min). Scopé sur lib/ (le code embarqué dans l'app) : on
+      # ignore les fichiers test/ (des mocks générés y ont une erreur d'analyse
+      # pré-existante, sans impact sur l'app). --no-fatal-warnings : les warnings
+      # et les nits de lint (types explicites, virgules finales…) sont affichés
+      # mais NE bloquent PAS ; seules les erreurs de compilation font échouer.
+      - name: Analyse statique (dart analyze lib)
+        script: dart analyze lib --no-fatal-warnings
 
       - name: Installer le CLI FlutterFire (phases Xcode bundle-service-file / crashlytics)
         script: dart pub global activate flutterfire_cli

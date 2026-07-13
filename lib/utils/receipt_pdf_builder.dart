@@ -40,31 +40,46 @@ Future<Uint8List> buildReceiptPdf(ReceiptSnapshotResponseModel receipt) async {
         pw.Divider(thickness: 0.5),
 
         // Seller (vendor) legal mentions — CDC Partie A.
-        _kv(LocaleKeys.orderReceiptBottomSheet_companyName.tr(),
-            receipt.vendor?.legalName),
-        _kv(LocaleKeys.orderReceiptBottomSheet_address.tr(),
-            receipt.vendor?.address),
-        _kv(LocaleKeys.orderReceiptBottomSheet_siren.tr(),
-            receipt.vendor?.siren),
-        _kv(LocaleKeys.orderReceiptBottomSheet_vatNumber.tr(),
-            receipt.vendor?.vatNumber),
-        _kv(LocaleKeys.orderReceiptBottomSheet_email.tr(),
-            receipt.vendor?.email),
+        _kv(
+          LocaleKeys.orderReceiptBottomSheet_companyName.tr(),
+          receipt.vendor?.legalName,
+        ),
+        _kv(
+          LocaleKeys.orderReceiptBottomSheet_address.tr(),
+          receipt.vendor?.address,
+        ),
+        _kv(
+          LocaleKeys.orderReceiptBottomSheet_siren.tr(),
+          receipt.vendor?.siren,
+        ),
+        _kv(
+          LocaleKeys.orderReceiptBottomSheet_vatNumber.tr(),
+          receipt.vendor?.vatNumber,
+        ),
+        _kv(
+          LocaleKeys.orderReceiptBottomSheet_email.tr(),
+          receipt.vendor?.email,
+        ),
 
         // Customer.
-        _kv(LocaleKeys.orderReceiptBottomSheet_billedTo.tr(),
-            receipt.customer?.name),
-        _kv(LocaleKeys.orderReceiptBottomSheet_email.tr(),
-            receipt.customer?.email),
+        _kv(
+          LocaleKeys.orderReceiptBottomSheet_billedTo.tr(),
+          receipt.customer?.name,
+        ),
+        _kv(
+          LocaleKeys.orderReceiptBottomSheet_email.tr(),
+          receipt.customer?.email,
+        ),
 
         // Order meta.
-        _kv(LocaleKeys.orderReceiptBottomSheet_orderID.tr(),
-            receipt.order?.id),
+        _kv(LocaleKeys.orderReceiptBottomSheet_orderID.tr(), receipt.order?.id),
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: <pw.Widget>[
-            _stacked(LocaleKeys.orderReceiptBottomSheet_datePaid.tr(),
-                _formatDate(receipt.order?.date)),
+            _stacked(
+              LocaleKeys.orderReceiptBottomSheet_datePaid.tr(),
+              _formatDate(receipt.order?.date),
+            ),
             _stacked(
               LocaleKeys.orderReceiptBottomSheet_paymentMethod.tr(),
               paymentMethod.isEmpty ? "N/A" : paymentMethod,
@@ -85,23 +100,35 @@ Future<Uint8List> buildReceiptPdf(ReceiptSnapshotResponseModel receipt) async {
         pw.Table(
           border: pw.TableBorder.all(color: PdfColors.grey400, width: 0.5),
           children: <pw.TableRow>[
-            _tableRow(LocaleKeys.orderReceiptBottomSheet_qty.tr(),
-                (receipt.quantity ?? 1).toString()),
-            _tableRow(LocaleKeys.orderReceiptBottomSheet_product.tr(),
-                receipt.product?.designation ?? ""),
-            _tableRow(LocaleKeys.orderReceiptBottomSheet_taxRate.tr(),
-                taxRatePercent.isEmpty ? "-" : taxRatePercent),
-            _tableRow(LocaleKeys.orderReceiptBottomSheet_unitPrice.tr(),
-                _money(receipt.unitPriceHt, currency)),
-            _tableRow(LocaleKeys.orderReceiptBottomSheet_amount.tr(),
-                _money(amounts?.totalHt, currency)),
+            _tableRow(
+              LocaleKeys.orderReceiptBottomSheet_qty.tr(),
+              (receipt.quantity ?? 1).toString(),
+            ),
+            _tableRow(
+              LocaleKeys.orderReceiptBottomSheet_product.tr(),
+              receipt.product?.designation ?? "",
+            ),
+            _tableRow(
+              LocaleKeys.orderReceiptBottomSheet_taxRate.tr(),
+              taxRatePercent.isEmpty ? "-" : taxRatePercent,
+            ),
+            _tableRow(
+              LocaleKeys.orderReceiptBottomSheet_unitPrice.tr(),
+              _money(receipt.unitPriceHt, currency),
+            ),
+            _tableRow(
+              LocaleKeys.orderReceiptBottomSheet_amount.tr(),
+              _money(amounts?.totalHt, currency),
+            ),
           ],
         ),
         pw.SizedBox(height: 12),
 
         // Totals: HT / VAT (rate) / TTC — CDC A.1.
-        _totalRow(LocaleKeys.orderReceiptBottomSheet_subtotalHT.tr(),
-            _money(amounts?.totalHt, currency)),
+        _totalRow(
+          LocaleKeys.orderReceiptBottomSheet_subtotalHT.tr(),
+          _money(amounts?.totalHt, currency),
+        ),
         _totalRow(
           taxRatePercent.isEmpty
               ? LocaleKeys.orderReceiptBottomSheet_vat.tr()
@@ -126,8 +153,9 @@ Future<Uint8List> buildReceiptPdf(ReceiptSnapshotResponseModel receipt) async {
 
 Future<pw.ImageProvider?> _loadLogo() async {
   try {
-    final ByteData data =
-        await rootBundle.load(EnvironmentImages.darkAppIcon.fullImagePath);
+    final ByteData data = await rootBundle.load(
+      EnvironmentImages.darkAppIcon.fullImagePath,
+    );
     return pw.MemoryImage(data.buffer.asUint8List());
   } on Object catch (e) {
     // Logo is decorative — never let a missing asset break the receipt.
@@ -149,9 +177,10 @@ pw.Widget _kv(String label, String? value) {
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: <pw.Widget>[
-            pw.Text(label,
-                style:
-                    const pw.TextStyle(fontSize: 9, color: PdfColors.grey700)),
+            pw.Text(
+              label,
+              style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700),
+            ),
             pw.SizedBox(width: 12),
             pw.Expanded(
               child: pw.Text(
@@ -170,11 +199,14 @@ pw.Widget _kv(String label, String? value) {
 
 pw.Widget _stacked(String label, String value, {bool alignEnd = false}) {
   return pw.Column(
-    crossAxisAlignment:
-        alignEnd ? pw.CrossAxisAlignment.end : pw.CrossAxisAlignment.start,
+    crossAxisAlignment: alignEnd
+        ? pw.CrossAxisAlignment.end
+        : pw.CrossAxisAlignment.start,
     children: <pw.Widget>[
-      pw.Text(label,
-          style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700)),
+      pw.Text(
+        label,
+        style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700),
+      ),
       pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
     ],
   );
@@ -188,9 +220,10 @@ pw.TableRow _tableRow(String label, String value) {
         child: pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: <pw.Widget>[
-            pw.Text(label,
-                style:
-                    const pw.TextStyle(fontSize: 9, color: PdfColors.grey700)),
+            pw.Text(
+              label,
+              style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700),
+            ),
             pw.SizedBox(width: 6),
             pw.Expanded(
               child: pw.Text(
@@ -207,8 +240,9 @@ pw.TableRow _tableRow(String label, String value) {
 }
 
 pw.Widget _totalRow(String label, String value, {bool emphasize = false}) {
+  // Not const: pdf's TextStyle can't be const-evaluated with a fontWeight.
   final pw.TextStyle style = emphasize
-      ? const pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)
+      ? pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)
       : const pw.TextStyle(fontSize: 10);
   return pw.Padding(
     padding: const pw.EdgeInsets.symmetric(vertical: 3),
@@ -226,7 +260,7 @@ pw.Widget _eurConversion(ReceiptEurConversionModel eur, String currency) {
   final String eurAmount = "${(eur.totalTtcEur ?? 0).toStringAsFixed(2)} EUR";
   final String rateLine = eur.rate != null
       ? "${LocaleKeys.orderReceiptBottomSheet_ecbRate.tr()}: 1 $currency = "
-          "${eur.rate} EUR${eur.rateDate != null ? " (${eur.rateDate})" : ""}"
+            "${eur.rate} EUR${eur.rateDate != null ? " (${eur.rateDate})" : ""}"
       : "";
   return pw.Padding(
     padding: const pw.EdgeInsets.only(top: 6),
@@ -238,9 +272,10 @@ pw.Widget _eurConversion(ReceiptEurConversionModel eur, String currency) {
           style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700),
         ),
         if (rateLine.isNotEmpty)
-          pw.Text(rateLine,
-              style:
-                  const pw.TextStyle(fontSize: 9, color: PdfColors.grey700)),
+          pw.Text(
+            rateLine,
+            style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey700),
+          ),
       ],
     ),
   );
