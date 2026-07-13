@@ -4,6 +4,7 @@ import "dart:developer";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/data_source/esims_local_data_source.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
+import "package:esim_open_source/data/remote/request/user/invoice_request_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
@@ -225,6 +226,19 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
     return responseToResource(
       apiUserBundles.getOrderReceipt(
         orderID: orderID,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<Resource<EmptyResponse?>> requestInvoice({
+    required String orderID,
+    required InvoiceRequestModel body,
+  }) {
+    return responseToResource(
+      apiUserBundles.requestInvoice(
+        orderID: orderID,
+        body: body,
       ),
     );
   }

@@ -18,6 +18,7 @@ import "package:esim_open_source/presentation/views/bottom_sheet/add_email/add_e
 import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/logout_bottom_sheet/logout_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/invoice_request_bottom_sheet/invoice_request_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_method_bottom_sheet/payment_method_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_selection_bottom_sheet/payment_selection_bottom_sheet_view.dart";
@@ -116,6 +117,15 @@ void setupBottomSheetUi() {
       Function(SheetResponse<EmptyBottomSheetResponse>) completer,
     ) =>
         OrderReceiptBottomSheetView(
+          requestBase: sheetRequest,
+          completer: completer,
+        ),
+    BottomSheetType.invoiceRequest: (
+      dynamic context,
+      dynamic sheetRequest,
+      Function(SheetResponse<EmptyBottomSheetResponse>) completer,
+    ) =>
+        InvoiceRequestBottomSheetView(
           requestBase: sheetRequest,
           completer: completer,
         ),

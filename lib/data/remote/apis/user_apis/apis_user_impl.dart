@@ -3,6 +3,7 @@ import "dart:async";
 import "package:esim_open_source/data/remote/apis/api_provider.dart";
 import "package:esim_open_source/data/remote/apis/user_apis/user_apis.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
+import "package:esim_open_source/data/remote/request/user/invoice_request_model.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
@@ -268,6 +269,22 @@ class APIUserImpl extends APIService implements ApiUser {
         paramIDs: <String>[orderID, "receipt"],
       ),
       fromJson: ReceiptSnapshotResponseModel.fromJson,
+    );
+    return response;
+  }
+
+  @override
+  FutureOr<ResponseMain<EmptyResponse?>> requestInvoice({
+    required String orderID,
+    required InvoiceRequestModel body,
+  }) async {
+    ResponseMain<EmptyResponse?> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.requestInvoice,
+        paramIDs: <String>[orderID, "invoice-request"],
+        parameters: body.toJson(),
+      ),
+      fromJson: EmptyResponse.fromJson,
     );
     return response;
   }

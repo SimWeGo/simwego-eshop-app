@@ -48,6 +48,17 @@ class OrderHistoryViewModel extends BaseModel {
     }
   }
 
+  // B2B invoice request (CDC Partie B). Opens the questionnaire for this order;
+  // the invoice is issued by finance within 7 business days.
+  Future<void> requestInvoiceTapped(OrderHistoryResponseModel order) async {
+    await bottomSheetService.showCustomSheet(
+      data: order,
+      enableDrag: false,
+      isScrollControlled: true,
+      variant: BottomSheetType.invoiceRequest,
+    );
+  }
+
   //#endregion
 
   //#region Apis
