@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:typed_data";
 
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/receipt_snapshot_response_model.dart";
