@@ -18,6 +18,26 @@ import "package:pdf/widgets.dart" as pw;
 Future<Uint8List> buildReceiptPdf(ReceiptSnapshotResponseModel receipt) async {
   final pw.Document pdf = pw.Document();
 
+  // Load Poppins (already bundled in the app) as the PDF theme. The `pdf`
+  // package defaults to Helvetica (WinAnsi/Latin-1), whose `save()` throws as
+  // soon as a non-Latin-1 glyph appears (curly quotes, extended latin, symbols
+  // — common in product designations, customer names or country names). Using
+  // a TrueType font makes generation robust. Degrade to the default font if the
+  // asset can't be loaded, so a font issue never breaks the receipt.
+  pw.ThemeData? theme;
+  try {
+    final pw.Font base = pw.Font.ttf(
+      await rootBundle.load("assets/fonts/poppins/Poppins-Regular.ttf"),
+    );
+    final pw.Font bold = pw.Font.ttf(
+      await rootBundle.load("assets/fonts/poppins/Poppins-Bold.ttf"),
+    );
+    theme = pw.ThemeData.withFont(base: base, bold: bold);
+  } on Object catch (e) {
+    log("buildReceiptPdf: Poppins font not loaded, using default: $e");
+    theme = null;
+  }
+
   final pw.ImageProvider? logo = await _loadLogo();
 
   final ReceiptAmountsModel? amounts = receipt.amounts;
@@ -28,6 +48,7 @@ Future<Uint8List> buildReceiptPdf(ReceiptSnapshotResponseModel receipt) async {
 
   pdf.addPage(
     pw.MultiPage(
+      theme: theme,
       pageFormat: PdfPageFormat.a4,
       margin: const pw.EdgeInsets.all(32),
       build: (pw.Context context) => <pw.Widget>[

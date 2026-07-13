@@ -70,7 +70,8 @@ Future<bool> saveAndSharePdfBytes({
   } on Object catch (e, s) {
     // Surface the real error instead of hiding it behind a generic message.
     log("saveAndSharePdfBytes failed: $e", stackTrace: s);
-    DisplayMessageHelper.toast("Something went wrong");
+    // TEMP diagnostic: surface the real error instead of a generic message.
+    DisplayMessageHelper.toast("Partage: $e");
     return false;
   }
 }

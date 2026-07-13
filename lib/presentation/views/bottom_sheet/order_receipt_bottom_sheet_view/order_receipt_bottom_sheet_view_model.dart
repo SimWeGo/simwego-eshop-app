@@ -63,20 +63,26 @@ class OrderReceiptBottomSheetViewModel extends BaseModel {
   }
 
   Future<void> savePdf() async {
-    final ReceiptSnapshotResponseModel? snapshot = receipt;
-    // The receipt is generated from the frozen backend snapshot (like the
-    // website), not from a screenshot of the widget — so the download can't
-    // fail because the receipt is longer than the screen.
-    if (snapshot == null) {
-      DisplayMessageHelper.toast("Something went wrong");
-      return;
+    try {
+      final ReceiptSnapshotResponseModel? snapshot = receipt;
+      // The receipt is generated from the frozen backend snapshot (like the
+      // website), not from a screenshot of the widget — so the download can't
+      // fail because the receipt is longer than the screen.
+      if (snapshot == null) {
+        DisplayMessageHelper.toast("Something went wrong");
+        return;
+      }
+
+      final String fileName = snapshot.product?.designation ??
+          bundleOrderModel?.bundleDetails?.bundleName ??
+          "receipt";
+
+      final Uint8List bytes = await buildReceiptPdf(snapshot);
+      await saveAndSharePdfBytes(bytes: bytes, fileName: fileName);
+    } on Object catch (e) {
+      // TEMP diagnostic: PDF generation (buildReceiptPdf) was not wrapped, so a
+      // throw here surfaced as nothing. Show the real error.
+      DisplayMessageHelper.toast("Reçu: $e");
     }
-
-    final String fileName = snapshot.product?.designation ??
-        bundleOrderModel?.bundleDetails?.bundleName ??
-        "receipt";
-
-    final Uint8List bytes = await buildReceiptPdf(snapshot);
-    await saveAndSharePdfBytes(bytes: bytes, fileName: fileName);
   }
 }

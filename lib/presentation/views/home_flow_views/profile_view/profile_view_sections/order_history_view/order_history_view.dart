@@ -137,10 +137,10 @@ class OrderHistoryView extends StatelessWidget {
                 ),
               ),
               verticalSpaceSmall,
-              // B2B: request a VAT invoice for this order (CDC Partie B).
+              // Open the receipt sheet directly for this order.
               MainButton(
-                title: LocaleKeys.invoiceRequest_button.tr(),
-                onPressed: () => viewModel.requestInvoiceTapped(bundleOrder),
+                title: LocaleKeys.orderBottomSheet_viewReceipt.tr(),
+                onPressed: () => viewModel.viewReceiptTapped(bundleOrder),
                 themeColor: themeColor,
                 height: 42,
                 hideShadows: true,
