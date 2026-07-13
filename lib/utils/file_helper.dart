@@ -1,3 +1,4 @@
+import "dart:developer";
 import "dart:io";
 import "dart:ui" as ui;
 
@@ -41,6 +42,37 @@ Future<String> captureImage({
     return imagePath.path;
   }
   return "";
+}
+
+/// Persists an already-built PDF (generated from data) to a temp file and opens
+/// the share sheet. Unlike [capturePdfAndShare], this never screenshots a
+/// widget, so it can't fail on scroll/viewport size — the previous cause of the
+/// generic "Something went wrong" on the receipt download. Returns true on
+/// success; on failure it logs the real error (so we can actually diagnose it)
+/// and shows a user-facing toast.
+Future<bool> saveAndSharePdfBytes({
+  required Uint8List bytes,
+  String? fileName,
+}) async {
+  try {
+    final String newFileName = safeFileName(fileName);
+    final Directory tempDir = await getTemporaryDirectory();
+    final String tempPath = "${tempDir.path}/$newFileName.pdf";
+    final File file = File(tempPath);
+    await file.writeAsBytes(bytes);
+
+    await SharePlus.instance.share(
+      ShareParams(
+        files: <XFile>[XFile(tempPath)],
+      ),
+    );
+    return true;
+  } on Object catch (e, s) {
+    // Surface the real error instead of hiding it behind a generic message.
+    log("saveAndSharePdfBytes failed: $e", stackTrace: s);
+    DisplayMessageHelper.toast("Something went wrong");
+    return false;
+  }
 }
 
 Future<void> capturePdfAndShare({
