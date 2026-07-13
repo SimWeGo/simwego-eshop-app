@@ -62,7 +62,7 @@ class OrderReceiptBottomSheetViewModel extends BaseModel {
     setViewState(ViewState.idle);
   }
 
-  Future<void> savePdf() async {
+  Future<void> savePdf({Rect? sharePositionOrigin}) async {
     try {
       final ReceiptSnapshotResponseModel? snapshot = receipt;
       // The receipt is generated from the frozen backend snapshot (like the
@@ -78,7 +78,11 @@ class OrderReceiptBottomSheetViewModel extends BaseModel {
           "receipt";
 
       final Uint8List bytes = await buildReceiptPdf(snapshot);
-      await saveAndSharePdfBytes(bytes: bytes, fileName: fileName);
+      await saveAndSharePdfBytes(
+        bytes: bytes,
+        fileName: fileName,
+        sharePositionOrigin: sharePositionOrigin,
+      );
     } on Object catch (e) {
       // TEMP diagnostic: PDF generation (buildReceiptPdf) was not wrapped, so a
       // throw here surfaced as nothing. Show the real error.

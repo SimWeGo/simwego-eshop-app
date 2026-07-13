@@ -53,6 +53,7 @@ Future<String> captureImage({
 Future<bool> saveAndSharePdfBytes({
   required Uint8List bytes,
   String? fileName,
+  Rect? sharePositionOrigin,
 }) async {
   try {
     final String newFileName = safeFileName(fileName);
@@ -64,6 +65,11 @@ Future<bool> saveAndSharePdfBytes({
     await SharePlus.instance.share(
       ShareParams(
         files: <XFile>[XFile(tempPath)],
+        // iOS requires a non-zero anchor rect for the share popover, else it
+        // throws PlatformException('sharePositionOrigin: argument must be set').
+        // Ignored on iPhone (uses a sheet); used to anchor the iPad popover.
+        sharePositionOrigin:
+            sharePositionOrigin ?? const Rect.fromLTRB(0, 0, 100, 100),
       ),
     );
     return true;
@@ -115,6 +121,8 @@ Future<void> capturePdfAndShare({
     await SharePlus.instance.share(
       ShareParams(
         files: <XFile>[XFile(tempPath)],
+        // iOS requires a non-zero anchor rect for the share popover.
+        sharePositionOrigin: const Rect.fromLTRB(0, 0, 100, 100),
       ),
     );
   } on Object catch (_) {
