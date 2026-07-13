@@ -140,6 +140,8 @@ workflows:
         auth: integration
         submit_to_testflight: true
         # Groupes de test INTERNES (pas de review Apple). Noms EXACTS tels qu'affichés dans TestFlight.
+        # NB : "Internat Testing" reçoit les builds via la distribution automatique de
+        # TestFlight — on ne l'assigne PAS ici, sinon l'API échoue ("Cannot add internal
+        # group to a build"). On n'assigne que les groupes qui acceptent l'assignation.
         beta_groups:
-          - Internat Testing
           - simwegoteam
