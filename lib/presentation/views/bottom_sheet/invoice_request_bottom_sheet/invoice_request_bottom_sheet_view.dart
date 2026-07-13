@@ -30,7 +30,7 @@ class InvoiceRequestBottomSheetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder(
       viewModel: locator<InvoiceRequestBottomSheetViewModel>()
-        ..order = requestBase.data as OrderHistoryResponseModel
+        ..order = requestBase.data!
         ..completer = completer,
       builder:
           (
@@ -253,7 +253,6 @@ class InvoiceRequestBottomSheetView extends StatelessWidget {
   }) {
     return PaddingWidget.applySymmetricPadding(
       vertical: 6,
-      horizontal: 0,
       child: MainInputField.formField(
         themeColor: themeColor,
         labelTitleText: label,

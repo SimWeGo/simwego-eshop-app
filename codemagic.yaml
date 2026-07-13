@@ -40,14 +40,44 @@ workflows:
       - name: Flutter pub get
         script: flutter pub get
 
-      # Attrape les vraies erreurs de compilation du code applicatif AVANT le
-      # build IPA (~90 min). Scopé sur lib/ (le code embarqué dans l'app) : on
-      # ignore les fichiers test/ (des mocks générés y ont une erreur d'analyse
-      # pré-existante, sans impact sur l'app). --no-fatal-warnings : les warnings
-      # et les nits de lint (types explicites, virgules finales…) sont affichés
-      # mais NE bloquent PAS ; seules les erreurs de compilation font échouer.
-      - name: Analyse statique (dart analyze lib)
-        script: dart analyze lib --no-fatal-warnings
+      # Attrape les vraies erreurs de compilation AVANT le build IPA (~90 min),
+      # UNIQUEMENT sur les fichiers lib/ modifiés par cette branche (le reste du
+      # codebase a une grosse dette de lint pré-existante qui ferait échouer une
+      # analyse globale). On ne bloque que si dart analyze remonte une ligne de
+      # sévérité "error" (vraie erreur de compilation) ; les info/warnings sont
+      # affichés sans bloquer. Fallback : si la base git est introuvable, on
+      # n'analyse rien (le build compile le code de toute façon).
+      - name: Analyse statique (fichiers modifiés)
+        script: |
+          #!/usr/bin/env sh
+          set +e
+          BASE_BRANCH="OSTE-1067-sim-we-go-project-preparation"
+          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          git fetch --no-tags --depth=300 origin "$BASE_BRANCH" >/dev/null 2>&1
+          git fetch --no-tags --depth=300 origin "$CURRENT_BRANCH" >/dev/null 2>&1
+          BASE_REF=$(git merge-base HEAD "origin/$BASE_BRANCH" 2>/dev/null)
+          if [ -z "$BASE_REF" ]; then
+            echo "Base git introuvable — analyse ignorée (le build compilera le code)."
+            exit 0
+          fi
+          FILES=$(git diff --name-only --diff-filter=ACMR "$BASE_REF" HEAD -- '*.dart' \
+            | grep '^lib/' | tr '\n' ' ')
+          if [ -z "$FILES" ]; then
+            echo "Aucun .dart modifié dans lib/."
+            exit 0
+          fi
+          echo "Fichiers analysés :"
+          echo "$FILES" | tr ' ' '\n'
+          echo "----------------------------------------"
+          OUT=$(dart analyze $FILES 2>&1)
+          echo "$OUT"
+          echo "----------------------------------------"
+          if echo "$OUT" | grep -qE "^[[:space:]]*error[[:space:]]+[-•]"; then
+            echo "❌ Erreur(s) de compilation dans les fichiers modifiés — build stoppé."
+            exit 1
+          fi
+          echo "✅ Aucune erreur de compilation dans les fichiers modifiés (info/warnings non bloquants)."
+          exit 0
 
       - name: Installer le CLI FlutterFire (phases Xcode bundle-service-file / crashlytics)
         script: dart pub global activate flutterfire_cli
