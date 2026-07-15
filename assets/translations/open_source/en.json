@@ -409,5 +409,6 @@
   "invoiceRequest_vatRequiredOutsideFrance": "VAT number is required for companies established outside France",
   "invoiceRequest_successTitle": "Request received",
   "invoiceRequest_successMessage": "Your invoice will be sent by email within 7 business days. Remember to check your spam folder.",
-  "invoiceRequest_close": "Close"
+  "invoiceRequest_close": "Close",
+  "applyPromoCode_successMessage": "Code accepted, the discount will be applied at checkout"
 }

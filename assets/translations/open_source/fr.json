@@ -409,5 +409,6 @@
   "invoiceRequest_vatRequiredOutsideFrance": "Le N° TVA est obligatoire pour les entreprises établies hors de France",
   "invoiceRequest_successTitle": "Demande reçue",
   "invoiceRequest_successMessage": "Votre facture sera envoyée par email sous 7 jours ouvrés. Pensez à vérifier vos courriers indésirables (spam).",
-  "invoiceRequest_close": "Fermer"
+  "invoiceRequest_close": "Fermer",
+  "applyPromoCode_successMessage": "Code accepté, la réduction sera appliquée lors du paiement"
 }

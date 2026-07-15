@@ -293,6 +293,7 @@ abstract class  LocaleKeys {
   static const String promoCodeView_titleText = "promoCodeView_titleText";
   static const String promoCodeView_buttonText = "promoCodeView_buttonText";
   static const String promoCodeView_cancelButtonText = "promoCodeView_cancelButtonText";
+  static const String applyPromoCode_successMessage = "applyPromoCode_successMessage";
   static const String bundleDetails_planTypeText = "bundleDetails_planTypeText";
   static const String bundleDetails_activationPolicyText = "bundleDetails_activationPolicyText";
   static const String bundleDetails_emptyText = "bundleDetails_emptyText";
