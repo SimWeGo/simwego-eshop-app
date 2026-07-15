@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:diacritic/diacritic.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/app/banner_response_model.dart";
@@ -164,9 +165,18 @@ class DataPlansViewModel extends BaseModel {
     setViewState(ViewState.idle);
   }
 
+  /// Normalizes text for accent- AND case-insensitive search: lowercases and
+  /// strips diacritics (é→e, ñ→n, ô→o...) so e.g. "perou" matches "Pérou" and
+  /// "espagne" matches "Espagne".
+  String _normalizeForSearch(String? value) =>
+      removeDiacritics((value ?? "").toLowerCase());
+
+  bool _matchesSearch(String? value, String normalizedQuery) =>
+      _normalizeForSearch(value).contains(normalizedQuery);
+
   void _applySearch() {
     final String searchQuery =
-        _searchTextFieldController.text.trim().toLowerCase();
+        _normalizeForSearch(_searchTextFieldController.text.trim());
 
     if (searchQuery.isEmpty) {
       _filteredCountries = List<CountryResponseModel>.from(
@@ -184,8 +194,8 @@ class DataPlansViewModel extends BaseModel {
       _filteredCountries = countries
               ?.where(
                 (CountryResponseModel country) =>
-                    country.country?.toLowerCase().contains(searchQuery) ??
-                    false,
+                    _matchesSearch(country.country, searchQuery) ||
+                    _matchesSearch(country.alternativeCountry, searchQuery),
               )
               .toList() ??
           <CountryResponseModel>[];
@@ -193,8 +203,7 @@ class DataPlansViewModel extends BaseModel {
       _filteredRegions = regions
               ?.where(
                 (RegionsResponseModel region) =>
-                    region.regionName?.toLowerCase().contains(searchQuery) ??
-                    false,
+                    _matchesSearch(region.regionName, searchQuery),
               )
               .toList() ??
           <RegionsResponseModel>[];
@@ -202,8 +211,7 @@ class DataPlansViewModel extends BaseModel {
       _filteredBundles = globalBundles
               ?.where(
                 (BundleResponseModel bundle) =>
-                    bundle.bundleName?.toLowerCase().contains(searchQuery) ??
-                    false,
+                    _matchesSearch(bundle.bundleName, searchQuery),
               )
               .toList() ??
           <BundleResponseModel>[];
@@ -211,8 +219,7 @@ class DataPlansViewModel extends BaseModel {
       _filteredCruiseBundles = cruiseBundles
               ?.where(
                 (BundleResponseModel bundle) =>
-                    bundle.bundleName?.toLowerCase().contains(searchQuery) ??
-                    false,
+                    _matchesSearch(bundle.bundleName, searchQuery),
               )
               .toList() ??
           <BundleResponseModel>[];
