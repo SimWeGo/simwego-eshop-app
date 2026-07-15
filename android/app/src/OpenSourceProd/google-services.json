@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1011794263105-50081a365v0hm77lv1v8et5flvj4eksk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simwego.esim",
+            "certificate_hash": "b26b54c142bc7149edfa791e6cf5e5c50a6514e3"
+          }
+        },
+        {
+          "client_id": "1011794263105-grjarvg52bjs7p1oqp6er7kbqfgntls7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simwego.esim",
+            "certificate_hash": "207486dcd7de82b942c0150975cd70b57bd8e80e"
+          }
+        },
+        {
           "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -49,6 +65,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1011794263105-5pb6r5iuki3fvbp4ibe3oup7tgk2k6e0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simwego.esim.test",
+            "certificate_hash": "dceff4cd3b4a3e8ee589afb01c8a91d4c9df933c"
+          }
+        },
         {
           "client_id": "1011794263105-06jl5dbcpld0v47l9mdji3bigk1ai2gr.apps.googleusercontent.com",
           "client_type": 3
