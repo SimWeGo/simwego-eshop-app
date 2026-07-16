@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:esim_open_source/data/remote/request/related_search.dart";
+import "package:esim_open_source/data/remote/request/user/invoice_request_model.dart";
 
 abstract interface class ApiUser {
   FutureOr<dynamic> getUserConsumption({required String iccID});
@@ -64,6 +65,11 @@ abstract interface class ApiUser {
 
   FutureOr<dynamic> getOrderReceipt({
     required String orderID,
+  });
+
+  FutureOr<dynamic> requestInvoice({
+    required String orderID,
+    required InvoiceRequestModel body,
   });
 
   FutureOr<dynamic> topUpWallet({

@@ -1,6 +1,8 @@
 import "dart:async";
 
 import "package:esim_open_source/data/remote/request/related_search.dart";
+import "package:esim_open_source/data/remote/request/user/invoice_request_model.dart";
+import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/receipt_snapshot_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
@@ -66,6 +68,11 @@ abstract interface class ApiUserRepository {
 
   FutureOr<Resource<ReceiptSnapshotResponseModel?>> getOrderReceipt({
     required String orderID,
+  });
+
+  FutureOr<Resource<EmptyResponse?>> requestInvoice({
+    required String orderID,
+    required InvoiceRequestModel body,
   });
 
   FutureOr<dynamic> topUpWallet({

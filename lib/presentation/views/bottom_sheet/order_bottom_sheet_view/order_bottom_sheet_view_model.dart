@@ -4,6 +4,7 @@ import "package:esim_open_source/data/remote/responses/user/order_history_respon
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/use_case/user/get_order_by_id.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:stacked_services/stacked_services.dart";
 
@@ -54,5 +55,15 @@ class OrderBottomSheetViewModel extends BaseModel {
     );
 
     applyShimmer = false;
+  }
+
+  // Opens the B2B invoice request questionnaire for this order.
+  Future<void> requestInvoice() async {
+    await bottomSheetService.showCustomSheet(
+      data: bundleOrderModel,
+      enableDrag: false,
+      isScrollControlled: true,
+      variant: BottomSheetType.invoiceRequest,
+    );
   }
 }

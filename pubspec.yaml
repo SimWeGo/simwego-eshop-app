@@ -31,6 +31,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  diacritic: ^0.1.6 # accent-insensitive search normalization
   http: ^1.5.0
   path_provider: ^2.1.5
   # stacked_themes depends on rxdart ^0.27.1

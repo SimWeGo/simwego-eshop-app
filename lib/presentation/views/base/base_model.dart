@@ -26,6 +26,7 @@ import "package:esim_open_source/presentation/views/base/mixins/navigation_helpe
 import "package:esim_open_source/presentation/views/base/mixins/response_handler_mixin.dart";
 import "package:esim_open_source/presentation/views/base/mixins/view_state_manager_mixin.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:stacked/stacked.dart";
 import "package:stacked_themes/stacked_themes.dart";
 
@@ -123,5 +124,10 @@ class BaseModel extends ReactiveViewModel
 
   void hideKeyboard() {
     FocusManager.instance.primaryFocus?.unfocus();
+    // Force the keyboard down at the platform level. unfocus() alone doesn't
+    // dismiss it on iOS when the focused field (e.g. the plans search box)
+    // lives in a still-mounted tab, so the keyboard stayed up after navigating
+    // to "My eSIM" from the purchase-success screen.
+    SystemChannels.textInput.invokeMethod<void>("TextInput.hide");
   }
 }

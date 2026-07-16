@@ -1,3 +1,4 @@
+import "dart:developer";
 import "dart:io";
 import "dart:ui" as ui;
 
@@ -43,6 +44,44 @@ Future<String> captureImage({
   return "";
 }
 
+/// Persists an already-built PDF (generated from data) to a temp file and opens
+/// the share sheet. Unlike [capturePdfAndShare], this never screenshots a
+/// widget, so it can't fail on scroll/viewport size — the previous cause of the
+/// generic "Something went wrong" on the receipt download. Returns true on
+/// success; on failure it logs the real error (so we can actually diagnose it)
+/// and shows a user-facing toast.
+Future<bool> saveAndSharePdfBytes({
+  required Uint8List bytes,
+  String? fileName,
+  Rect? sharePositionOrigin,
+}) async {
+  try {
+    final String newFileName = safeFileName(fileName);
+    final Directory tempDir = await getTemporaryDirectory();
+    final String tempPath = "${tempDir.path}/$newFileName.pdf";
+    final File file = File(tempPath);
+    await file.writeAsBytes(bytes);
+
+    await SharePlus.instance.share(
+      ShareParams(
+        files: <XFile>[XFile(tempPath)],
+        // iOS requires a non-zero anchor rect for the share popover, else it
+        // throws PlatformException('sharePositionOrigin: argument must be set').
+        // Ignored on iPhone (uses a sheet); used to anchor the iPad popover.
+        sharePositionOrigin:
+            sharePositionOrigin ?? const Rect.fromLTRB(0, 0, 100, 100),
+      ),
+    );
+    return true;
+  } on Object catch (e, s) {
+    // Surface the real error instead of hiding it behind a generic message.
+    log("saveAndSharePdfBytes failed: $e", stackTrace: s);
+    // TEMP diagnostic: surface the real error instead of a generic message.
+    DisplayMessageHelper.toast("Partage: $e");
+    return false;
+  }
+}
+
 Future<void> capturePdfAndShare({
   required GlobalKey globalKey,
   String? pdfFileName,
@@ -82,6 +121,8 @@ Future<void> capturePdfAndShare({
     await SharePlus.instance.share(
       ShareParams(
         files: <XFile>[XFile(tempPath)],
+        // iOS requires a non-zero anchor rect for the share popover.
+        sharePositionOrigin: const Rect.fromLTRB(0, 0, 100, 100),
       ),
     );
   } on Object catch (_) {

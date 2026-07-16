@@ -68,6 +68,7 @@ import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_co
 import "package:esim_open_source/presentation/views/bottom_sheet/add_email/add_email_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/invoice_request_bottom_sheet/invoice_request_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_list_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view_model.dart";
@@ -321,6 +322,9 @@ Future<void> viewModelInjectionModules() async {
     )
     ..registerFactory<OrderReceiptBottomSheetViewModel>(
       OrderReceiptBottomSheetViewModel.new,
+    )
+    ..registerFactory<InvoiceRequestBottomSheetViewModel>(
+      InvoiceRequestBottomSheetViewModel.new,
     )
     ..registerFactory<EditNameBottomSheetViewModel>(
       EditNameBottomSheetViewModel.new,

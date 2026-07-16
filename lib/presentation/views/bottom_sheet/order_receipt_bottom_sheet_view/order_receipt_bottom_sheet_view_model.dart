@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:typed_data";
 
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/receipt_snapshot_response_model.dart";
@@ -8,7 +9,9 @@ import "package:esim_open_source/domain/use_case/user/get_order_receipt_use_case
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
+import "package:esim_open_source/utils/display_message_helper.dart";
 import "package:esim_open_source/utils/file_helper.dart";
+import "package:esim_open_source/utils/receipt_pdf_builder.dart";
 import "package:flutter/cupertino.dart";
 
 class OrderReceiptBottomSheetViewModel extends BaseModel {
@@ -59,12 +62,31 @@ class OrderReceiptBottomSheetViewModel extends BaseModel {
     setViewState(ViewState.idle);
   }
 
-  Future<void> savePdf() async {
-    await capturePdfAndShare(
-      globalKey: globalKey,
-      pdfFileName: receipt?.product?.designation ??
+  Future<void> savePdf({Rect? sharePositionOrigin}) async {
+    try {
+      final ReceiptSnapshotResponseModel? snapshot = receipt;
+      // The receipt is generated from the frozen backend snapshot (like the
+      // website), not from a screenshot of the widget — so the download can't
+      // fail because the receipt is longer than the screen.
+      if (snapshot == null) {
+        DisplayMessageHelper.toast("Something went wrong");
+        return;
+      }
+
+      final String fileName = snapshot.product?.designation ??
           bundleOrderModel?.bundleDetails?.bundleName ??
-          "",
-    );
+          "receipt";
+
+      final Uint8List bytes = await buildReceiptPdf(snapshot);
+      await saveAndSharePdfBytes(
+        bytes: bytes,
+        fileName: fileName,
+        sharePositionOrigin: sharePositionOrigin,
+      );
+    } on Object catch (e) {
+      // TEMP diagnostic: PDF generation (buildReceiptPdf) was not wrapped, so a
+      // throw here surfaced as nothing. Show the real error.
+      DisplayMessageHelper.toast("Reçu: $e");
+    }
   }
 }

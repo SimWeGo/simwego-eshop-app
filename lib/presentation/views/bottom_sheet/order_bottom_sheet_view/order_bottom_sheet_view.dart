@@ -143,6 +143,18 @@ class OrderBottomSheetView extends StatelessWidget {
                   fontColor: mainWhiteTextColor(context: context),
                 ),
               ),
+              verticalSpaceSmall,
+              // B2B: request a VAT invoice for this order (CDC Partie B).
+              MainButton(
+                title: LocaleKeys.invoiceRequest_button.tr(),
+                onPressed: () => viewModel.requestInvoice(),
+                themeColor: themeColor,
+                height: 45,
+                hideShadows: true,
+                enabledBackgroundColor: Colors.transparent,
+                borderColor: mainBorderColor(context: context),
+                enabledTextColor: mainDarkTextColor(context: context),
+              ),
             ],
           ),
         ),

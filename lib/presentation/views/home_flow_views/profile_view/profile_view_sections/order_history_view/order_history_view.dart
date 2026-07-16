@@ -12,6 +12,7 @@ import "package:esim_open_source/presentation/widgets/bundle_validity_view.dart"
 import "package:esim_open_source/presentation/widgets/common_navigation_title.dart";
 import "package:esim_open_source/presentation/widgets/empty_paginated_state_list_view.dart";
 import "package:esim_open_source/presentation/widgets/empty_state_widget.dart";
+import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/date_time_utils.dart";
@@ -133,6 +134,22 @@ class OrderHistoryView extends StatelessWidget {
                 bundleExpiryDate: DateTimeUtils.formatTimestampToDate(
                   timestamp: int.parse(bundleOrder.orderDate ?? "0"),
                   format: DateTimeUtils.ddMmYyyy,
+                ),
+              ),
+              verticalSpaceSmall,
+              // Open the receipt sheet directly for this order.
+              MainButton(
+                title: LocaleKeys.orderBottomSheet_viewReceipt.tr(),
+                onPressed: () => viewModel.viewReceiptTapped(bundleOrder),
+                themeColor: themeColor,
+                height: 42,
+                hideShadows: true,
+                enabledBackgroundColor: Colors.transparent,
+                borderColor: mainBorderColor(context: context),
+                enabledTextColor: mainDarkTextColor(context: context),
+                titleTextStyle: captionOneMediumTextStyle(
+                  context: context,
+                  fontColor: mainDarkTextColor(context: context),
                 ),
               ),
             ],

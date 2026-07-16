@@ -48,6 +48,16 @@ class OrderHistoryViewModel extends BaseModel {
     }
   }
 
+  // Opens the receipt sheet directly for this order.
+  Future<void> viewReceiptTapped(OrderHistoryResponseModel order) async {
+    await bottomSheetService.showCustomSheet(
+      data: order,
+      enableDrag: false,
+      isScrollControlled: true,
+      variant: BottomSheetType.receiptOrder,
+    );
+  }
+
   //#endregion
 
   //#region Apis

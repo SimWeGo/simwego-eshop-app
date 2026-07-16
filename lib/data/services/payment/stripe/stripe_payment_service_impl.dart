@@ -63,11 +63,14 @@ class StripePayment {
           merchantDisplayName: merchantDisplayName,
           customerId: customerId,
           customerEphemeralKeySecret: customerEphemeralKeySecret,
+          // Apple/Google Pay expect the MERCHANT's country (where the business
+          // is registered — SAS SIMWEGO is in France), not the customer's
+          // billing country. A wrong value makes the wallet fail to init.
           applePay: PaymentSheetApplePay(
-            merchantCountryCode: billingCountryCode,
+            merchantCountryCode: "FR",
           ),
           googlePay: PaymentSheetGooglePay(
-            merchantCountryCode: billingCountryCode,
+            merchantCountryCode: "FR",
             testEnv: testEnv,
           ),
           billingDetails: billingDetails,

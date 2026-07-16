@@ -8,6 +8,7 @@ enum BottomSheetType {
   deleteAccount,
   orderHistory,
   receiptOrder,
+  invoiceRequest,
   voucherCode,
   termsCondition,
   bundleDetails,

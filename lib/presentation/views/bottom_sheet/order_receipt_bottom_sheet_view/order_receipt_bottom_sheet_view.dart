@@ -87,7 +87,16 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                   ),
                   MainButton(
                     title: LocaleKeys.orderReceiptBottomSheet_download.tr(),
-                    onPressed: viewModel.savePdf,
+                    onPressed: () {
+                      // Anchor rect for the iOS share popover (required non-zero
+                      // on iPad; harmless on iPhone).
+                      final RenderObject? box = context.findRenderObject();
+                      viewModel.savePdf(
+                        sharePositionOrigin: box is RenderBox
+                            ? box.localToGlobal(Offset.zero) & box.size
+                            : null,
+                      );
+                    },
                     hideShadows: true,
                     themeColor: themeColor,
                     enabledTextColor:

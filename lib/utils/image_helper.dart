@@ -1,4 +1,5 @@
 import "dart:io";
+import "dart:ui" show Rect;
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
@@ -39,11 +40,18 @@ Future<XFile?> compressImage(File file) async {
   }
 }
 
-Future<dynamic> shareImage({required String imagePath}) async {
+Future<dynamic> shareImage({
+  required String imagePath,
+  Rect? sharePositionOrigin,
+}) async {
   if (imagePath.isNotEmpty) {
     await SharePlus.instance.share(
       ShareParams(
         files: <XFile>[XFile(imagePath)],
+        // iOS requires a non-zero anchor rect for the share popover, else it
+        // throws PlatformException('sharePositionOrigin: argument must be set').
+        sharePositionOrigin:
+            sharePositionOrigin ?? const Rect.fromLTRB(0, 0, 100, 100),
       ),
     );
   }

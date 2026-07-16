@@ -57,6 +57,9 @@ enum ProfileViewSections {
         return true;
       case ProfileViewSections.language:
         return !AppEnvironment.appEnvironmentHelper.enableLanguageSelection;
+      case ProfileViewSections.aboutUs:
+        // "About Us" removed from the profile menu.
+        return true;
       default:
         return false;
     }

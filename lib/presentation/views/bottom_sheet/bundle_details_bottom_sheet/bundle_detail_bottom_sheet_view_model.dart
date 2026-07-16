@@ -677,7 +677,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           isPromoCodeExpanded = true;
         }
         updatePromoCodeView(
-          message: result.message ?? "",
+          message: LocaleKeys.applyPromoCode_successMessage.tr(),
           isEnabled: false,
           fieldColor: Colors.green,
         );
