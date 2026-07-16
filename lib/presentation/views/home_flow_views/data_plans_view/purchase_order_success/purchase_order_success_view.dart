@@ -174,11 +174,13 @@ class PurchaseOrderSuccessView extends StatelessWidget {
         ),
         verticalSpaceSmall,
         MainButton.emptyBackground(
-          width: 200,
           hideShadows: true,
           title: LocaleKeys.check_user_guide.tr(),
           onPressed: viewModel.onUserGuideClick,
           themeColor: userGuideButtonColor(context: context),
+          // Smaller text + no fixed width: the FR/long labels overflowed the
+          // fixed 200px pill. Full width + 14px keeps it inside the button.
+          titleTextStyle: captionOneMediumTextStyle(context: context),
         ),
       ],
     );
