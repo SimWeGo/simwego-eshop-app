@@ -2,6 +2,7 @@ import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/data/services/remote_config_service_impl.dart";
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
 import "package:esim_open_source/presentation/utils/extensions.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
@@ -19,8 +20,17 @@ Future<bool> isInstallButtonEnabled() async {
     Map<String, dynamic> deviceData =
         await locator<DeviceInfoService>().deviceData;
     bool supportsEsim = await FlutterEsim().isSupportESim(null);
-    String currentOSVersion = deviceData["version.release"];
-    if (currentOSVersion.compareTo("15") >= 0 && supportsEsim) {
+    // Proper integer compare (the previous String compareTo was buggy, e.g.
+    // "9" sorted >= "15"). version.release is like "14", "13", "10"...
+    int majorVersion =
+        int.tryParse("${deviceData["version.release"]}".split(".").first) ?? 0;
+    // The universal link works on Android 10+; the legacy native intent only
+    // on Android 15+. Gate accordingly so the button never shows a path that
+    // can't run on the device.
+    bool directInstall = await RemoteConfigServiceImpl
+        .instance.isAndroidDirectEsimInstallEnabled;
+    int minVersion = directInstall ? 10 : 15;
+    if (majorVersion >= minVersion && supportsEsim) {
       return true;
     }
   }

@@ -1,7 +1,9 @@
 import "dart:developer";
 
+import "package:esim_open_source/data/services/remote_config_service_impl.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
 import "package:flutter/services.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
   FlutterChannelHandlerServiceImpl.initialize();
@@ -59,8 +61,38 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
     required String activationCode,
     bool isSHAExist = true,
   }) async {
+    String cardData = "LPA:1\$$smdpAddress\$$activationCode";
+
+    // Feature flag (Remote Config): use the Android eSIM universal link,
+    // mirroring the iOS `esimsetup.apple.com` flow. Can be turned off to fall
+    // back to the legacy native intent without a new app release.
+    final bool directInstall = await RemoteConfigServiceImpl
+        .instance.isAndroidDirectEsimInstallEnabled;
+
+    if (directInstall) {
+      try {
+        // `$` and `:` must stay RAW in `carddata` — build the string and
+        // Uri.parse it (do NOT use a query-parameter map, which would encode
+        // them to %24/%3A and break the Android eSIM setup handler).
+        final Uri uri = Uri.parse(
+          "https://esimsetup.android.com/esim_qrcode_provisioning?carddata=$cardData",
+        );
+        final bool launched = await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+        if (!launched) {
+          throw Exception(errorMessage);
+        }
+        return launched;
+      } on Object catch (e) {
+        log("openEsimSetupForAndroid (universal link) Error: $e");
+        throw Exception(errorMessage);
+      }
+    }
+
+    // Legacy path: native intent (Android 15+) / privileged eUICC install.
     try {
-      String cardData = "LPA:1\$$smdpAddress\$$activationCode";
       bool result = await flutterToNativePlatform.invokeMethod(
         "openEsimSetup",
         <String, String>{

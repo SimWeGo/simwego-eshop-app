@@ -29,6 +29,14 @@ class RemoteConfigServiceImpl implements RemoteConfigService {
         false;
   }
 
+  @override
+  Future<bool> get isAndroidDirectEsimInstallEnabled async {
+    await _remoteConfigCompleter?.future;
+    await remoteConfig?.fetchAndActivate();
+    return remoteConfig?.getBool(RemoteConfigKey.androidEsimDirectInstall.name) ??
+        true;
+  }
+
   Future<void> initializeRemoteConfig() async {
     _remoteConfigCompleter = Completer<void>();
 
@@ -41,6 +49,11 @@ class RemoteConfigServiceImpl implements RemoteConfigService {
         minimumFetchInterval: Duration.zero,
       ),
     );
+
+    // In-app defaults (used until Remote Config is fetched / when a key is unset).
+    await remoteConfig?.setDefaults(<String, dynamic>{
+      RemoteConfigKey.androidEsimDirectInstall.name: true,
+    });
 
     if (!(_remoteConfigCompleter?.isCompleted ?? true)) {
       _remoteConfigCompleter?.complete();
