@@ -1,5 +1,7 @@
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -30,7 +32,7 @@ class WarningWidget extends StatelessWidget {
                   color: context.appColors.baseWhite,
                 ),
                 Text(
-                  "Warning",
+                  LocaleKeys.common_warning.tr(),
                   style: captionTwoBoldTextStyle(context: context)
                       .copyWith(color: context.appColors.baseWhite),
                 ),

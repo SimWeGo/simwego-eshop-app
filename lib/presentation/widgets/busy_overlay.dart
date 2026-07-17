@@ -1,3 +1,5 @@
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -8,12 +10,12 @@ import "package:flutter/material.dart";
 class BusyOverlay extends StatelessWidget {
   const BusyOverlay({
     required this.child,
-    this.title = "Please wait...",
+    this.title,
     this.show = false,
     super.key,
   });
   final Widget child;
-  final String title;
+  final String? title;
   final bool show;
 
   @override
@@ -36,7 +38,7 @@ class BusyOverlay extends StatelessWidget {
                   children: <Widget>[
                     const CircularProgressIndicator(),
                     Text(
-                      title,
+                      title ?? LocaleKeys.pleaseWait.tr(),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

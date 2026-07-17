@@ -2,6 +2,9 @@
 
 import "dart:async";
 import "dart:convert";
+
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "dart:developer";
 
 import "package:esim_open_source/data/remote/api_end_point.dart";
@@ -158,7 +161,7 @@ class HttpRequest {
       throw ResponseMainException(
         ResponseMain<T>.createError(
           responseCode: 500,
-          errorMessage: "Time out exception",
+          errorMessage: LocaleKeys.error_timeout.tr(),
         ),
       );
     }
@@ -217,7 +220,7 @@ class HttpRequest {
       throw ResponseMainException(
         ResponseMain<T>.createError(
           responseCode: 500,
-          errorMessage: "Time out exception",
+          errorMessage: LocaleKeys.error_timeout.tr(),
         ),
       );
     }

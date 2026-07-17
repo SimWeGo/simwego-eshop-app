@@ -118,7 +118,7 @@ class _AffiliateBannerWidgetState extends State<AffiliateBannerWidget> {
           IconButton(
             icon: const Icon(Icons.close, size: 16),
             onPressed: _close,
-            tooltip: "Close",
+            tooltip: LocaleKeys.common_close.tr(),
           ),
         ],
       ),

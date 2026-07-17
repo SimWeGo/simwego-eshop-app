@@ -1,4 +1,6 @@
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -153,7 +155,9 @@ class ServicesBottomSheet extends StatelessWidget {
                                             width: 60,
                                             child: Text(
                                               textAlign: TextAlign.center,
-                                              "To your Business App", //item?.title ?? "", //"To your e&money",
+                                              LocaleKeys
+                                                  .services_toYourBusinessApp
+                                                  .tr(),
                                               maxLines: 2,
                                               style: captionFourBoldTextStyle(
                                                 context: context,

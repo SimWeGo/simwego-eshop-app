@@ -1,6 +1,8 @@
 import "dart:async";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
 import "package:qr_code_scanner/qr_code_scanner.dart";
 
@@ -31,7 +33,7 @@ class QrScannerViewModel extends BaseModel {
   }) {
     if (!hasPermission) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("no Permission")),
+        SnackBar(content: Text(LocaleKeys.camera_permissionDenied.tr())),
       );
     }
   }

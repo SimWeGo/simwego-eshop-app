@@ -1,7 +1,9 @@
 import "dart:async";
 import "dart:developer";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -37,7 +39,7 @@ class ApplyReferralCodeUseCase
     } else {
       log("Show error with text: ${response.message}");
       showToast(
-        response.message ?? "Invalid referral code",
+        response.message ?? LocaleKeys.referral_invalidCode.tr(),
       );
     }
     return response;

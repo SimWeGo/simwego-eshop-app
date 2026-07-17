@@ -2,6 +2,9 @@ import "dart:developer";
 import "dart:io";
 import "dart:ui" as ui;
 
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+
 import "package:esim_open_source/utils/display_message_helper.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
@@ -76,8 +79,7 @@ Future<bool> saveAndSharePdfBytes({
   } on Object catch (e, s) {
     // Surface the real error instead of hiding it behind a generic message.
     log("saveAndSharePdfBytes failed: $e", stackTrace: s);
-    // TEMP diagnostic: surface the real error instead of a generic message.
-    DisplayMessageHelper.toast("Partage: $e");
+    DisplayMessageHelper.toast(LocaleKeys.error_somethingWentWrong.tr());
     return false;
   }
 }
@@ -116,7 +118,7 @@ Future<void> capturePdfAndShare({
     final File file = File(tempPath);
     await file.writeAsBytes(await pdf.save());
 
-    DisplayMessageHelper.toast("Pdf Saved");
+    DisplayMessageHelper.toast(LocaleKeys.pdf_saved.tr());
     // Share the PDF file
     await SharePlus.instance.share(
       ShareParams(
@@ -126,7 +128,7 @@ Future<void> capturePdfAndShare({
       ),
     );
   } on Object catch (_) {
-    DisplayMessageHelper.toast("Something went wrong");
+    DisplayMessageHelper.toast(LocaleKeys.error_somethingWentWrong.tr());
   }
 }
 

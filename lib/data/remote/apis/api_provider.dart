@@ -3,6 +3,9 @@ import "dart:convert";
 import "dart:developer";
 import "dart:io";
 
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+
 import "package:esim_open_source/data/remote/api_end_point.dart";
 import "package:esim_open_source/data/remote/apis/auth_apis/auth_apis.dart";
 import "package:esim_open_source/data/remote/apis/http_client_wrapper.dart";
@@ -181,7 +184,7 @@ class APIService {
       throw ResponseMainException(
         ResponseMain<dynamic>.createError(
           responseCode: 503,
-          errorMessage: "No internet connection",
+          errorMessage: LocaleKeys.error_noInternetConnection.tr(),
         ),
       );
     }

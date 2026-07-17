@@ -44,12 +44,12 @@ mixin DialogUtilitiesMixin on BaseViewModel {
   ) async {
     if (Platform.isIOS) {
       await dialogService.showDialog(
-        title: titleMessage ?? "Error",
-        description: contentMessage ?? "Please try again",
+        title: titleMessage ?? LocaleKeys.error_generic.tr(),
+        description: contentMessage ?? LocaleKeys.error_pleaseTryAgain.tr(),
       );
     } else {
       await showToast(
-        contentMessage ?? "Error",
+        contentMessage ?? LocaleKeys.error_generic.tr(),
       );
     }
   }

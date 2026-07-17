@@ -2,6 +2,9 @@ import "dart:async";
 import "dart:developer";
 import "dart:io";
 
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
@@ -55,8 +58,8 @@ class StartUpViewModel extends BaseModel {
     if (context.mounted) {
       showNativeDialog(
         context: context,
-        titleText: "Warning",
-        contentText: "Your device is compromised",
+        titleText: LocaleKeys.common_warning.tr(),
+        contentText: LocaleKeys.startup_deviceCompromised.tr(),
       );
     }
   }

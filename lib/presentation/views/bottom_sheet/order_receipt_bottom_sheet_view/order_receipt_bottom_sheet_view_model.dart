@@ -1,7 +1,9 @@
 import "dart:async";
 import "dart:typed_data";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/data/remote/responses/user/receipt_snapshot_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
@@ -69,7 +71,7 @@ class OrderReceiptBottomSheetViewModel extends BaseModel {
       // website), not from a screenshot of the widget — so the download can't
       // fail because the receipt is longer than the screen.
       if (snapshot == null) {
-        DisplayMessageHelper.toast("Something went wrong");
+        DisplayMessageHelper.toast(LocaleKeys.error_somethingWentWrong.tr());
         return;
       }
 

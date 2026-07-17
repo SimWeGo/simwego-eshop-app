@@ -4,6 +4,28 @@
 
 abstract class  LocaleKeys {
   static const String appName = "appName";
+  static const String error_generic = "error_generic";
+  static const String error_pleaseTryAgain = "error_pleaseTryAgain";
+  static const String error_somethingWentWrong = "error_somethingWentWrong";
+  static const String error_noInternetConnection = "error_noInternetConnection";
+  static const String error_timeout = "error_timeout";
+  static const String error_authentication = "error_authentication";
+  static const String common_warning = "common_warning";
+  static const String common_close = "common_close";
+  static const String common_image = "common_image";
+  static const String image_notAvailable = "image_notAvailable";
+  static const String startup_deviceCompromised = "startup_deviceCompromised";
+  static const String esim_installNotSupported = "esim_installNotSupported";
+  static const String socialLogin_facebookNoEmail = "socialLogin_facebookNoEmail";
+  static const String socialLogin_googleAuthFailed = "socialLogin_googleAuthFailed";
+  static const String referral_invalidCode = "referral_invalidCode";
+  static const String pdf_saved = "pdf_saved";
+  static const String services_toYourBusinessApp = "services_toYourBusinessApp";
+  static const String consumption_dataUsedOf = "consumption_dataUsedOf";
+  static const String camera_permissionDenied = "camera_permissionDenied";
+  static const String validation_clientNameLettersOnly =
+      "validation_clientNameLettersOnly";
+  static const String validation_clientNameLabel = "validation_clientNameLabel";
   static const String noDataAvailableYet = "noDataAvailableYet";
   static const String errorRetrievingYourData = "errorRetrievingYourData";
   static const String openSettings = "openSettings";

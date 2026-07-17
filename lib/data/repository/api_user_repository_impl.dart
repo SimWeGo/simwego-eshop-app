@@ -1,7 +1,9 @@
 import "dart:async";
 import "dart:developer";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/data/data_source/esims_local_data_source.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/request/user/invoice_request_model.dart";
@@ -151,7 +153,7 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
         );
       } else {
         return Resource<List<PurchaseEsimBundleResponseModel>?>.error(
-          "No internet connection",
+          LocaleKeys.error_noInternetConnection.tr(),
         );
       }
     }

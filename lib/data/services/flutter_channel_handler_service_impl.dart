@@ -4,6 +4,8 @@ import "package:esim_open_source/data/services/remote_config_service_impl.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
 import "package:flutter/services.dart";
 import "package:url_launcher/url_launcher.dart";
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 
 class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
   FlutterChannelHandlerServiceImpl.initialize();
@@ -17,8 +19,8 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
     return _instance!;
   }
 
-  String errorMessage =
-      "Auto eSIM installation is not available, Please use manual install";
+  String get errorMessage =>
+      LocaleKeys.eSim_installation_error_message.tr();
 
   static FlutterChannelHandlerServiceImpl? _instance;
 
@@ -101,7 +103,7 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
         },
       );
       if (!result) {
-        throw Exception("eSIM installation not supported");
+        throw Exception(LocaleKeys.esim_installNotSupported.tr());
       }
       return result;
     } on PlatformException catch (e) {

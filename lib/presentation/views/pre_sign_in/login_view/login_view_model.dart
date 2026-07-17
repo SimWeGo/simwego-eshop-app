@@ -1,7 +1,9 @@
 import "dart:async";
 import "dart:io";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
@@ -54,7 +56,7 @@ class LoginViewModel extends BaseModel {
       if (data.errorMessage.isNotEmpty) {
         unawaited(
           showNativeErrorMessage(
-            "Authentication error",
+            LocaleKeys.error_authentication.tr(),
             data.errorMessage,
           ),
         );

@@ -1,6 +1,8 @@
 import "dart:async";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
@@ -82,13 +84,19 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
         _state
           ..percentageUI = "$percentage %"
           ..consumption = percentage / 100
-          ..consumptionText = "$dataUsedDisplay of $dataAllocatedDisplay"
+          ..consumptionText = LocaleKeys.consumption_dataUsedOf.tr(
+            namedArgs: <String, String>{
+              "used": "$dataUsedDisplay",
+              "total": "$dataAllocatedDisplay",
+            },
+          )
           ..consumptionLoading = false
           ..expiryDate = expiryDate;
       },
       onFailure: (Resource<UserBundleConsumptionResponse?> result) async {
         _state
-          ..errorMessage = result.message ?? "Something Went Wrong"
+          ..errorMessage =
+              result.message ?? LocaleKeys.error_somethingWentWrong.tr()
           ..consumptionLoading = false;
       },
     );

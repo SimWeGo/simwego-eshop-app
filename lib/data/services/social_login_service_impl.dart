@@ -2,6 +2,9 @@ import "dart:async";
 import "dart:convert";
 import "dart:developer";
 
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+
 import "package:crypto/crypto.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
@@ -61,7 +64,7 @@ class SocialLoginServiceImpl extends SocialLoginService {
 
         if (errorMessage.contains("Error getting user email")) {
           errorMessage =
-              "Facebook account has no email. Please try another account";
+              LocaleKeys.socialLogin_facebookNoEmail.tr();
         }
         log("SupaBase authStateSubscription error:  $errorMessage");
         _socialLoginResultStream.add(
@@ -161,7 +164,7 @@ class SocialLoginServiceImpl extends SocialLoginService {
       String? idToken = currentUser.authentication.idToken;
 
       if (authorization == null || idToken == null) {
-        throw Exception("Failed to get authorization from Google Sign In");
+        throw Exception(LocaleKeys.socialLogin_googleAuthFailed.tr());
       }
 
       String? accessToken = authorization.accessToken;
