@@ -4,6 +4,8 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/android_user_guide_view/android_user_guide_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/ios_esim_carousel/esim_carousel_en.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/ios_esim_carousel/esim_carousel_fr.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_data_source/ios_user_guide_enum.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view_type.dart";
@@ -20,6 +22,13 @@ class UserGuideView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // iOS: new eSIM activation carousel (FR/EN by app language).
+    // Android keeps the existing guide (handled separately).
+    if (Platform.isIOS) {
+      return context.locale.languageCode == "fr"
+          ? const EsimCarouselFr()
+          : const EsimCarouselEn();
+    }
     return Scaffold(
       body: SafeArea(
         child: SizedBox(

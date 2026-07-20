@@ -152,6 +152,9 @@ flutter:
     #user guide
     - assets/images/shared/user_guide/
     - assets/images/open_source/user_guide/
+    #iOS eSIM activation carousel (new guide)
+    - assets/esim_fr/
+    - assets/esim_en/
     #tab bar
     - assets/images/open_source/tab_bar/
     #profile
