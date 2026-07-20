@@ -12,6 +12,7 @@
 // La version anglaise suivra dans un fichier séparé (es_carousel_en.dart).
 // -----------------------------------------------------------------------------
 
+import 'package:esim_open_source/app/environment/environment_images.dart';
 import 'package:flutter/material.dart';
 
 class EsimStep {
@@ -126,12 +127,10 @@ class _EsimCarouselFrState extends State<EsimCarouselFr> {
                           size: 20, color: Color(0xFF17357C)),
                     ),
                   ),
-                  // Remplacez par Image.asset('assets/esim_fr/logo.png', height: 26)
-                  const Text('SimWeGo',
-                      style: TextStyle(
-                          color: Color(0xFF17357C),
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18)),
+                  Image.asset(
+                    EnvironmentImages.darkAppIcon.fullImagePath,
+                    height: 26,
+                  ),
                   const Spacer(),
                   Container(
                     padding:
