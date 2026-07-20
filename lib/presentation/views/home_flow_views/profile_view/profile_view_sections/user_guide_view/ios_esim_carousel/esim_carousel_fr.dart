@@ -13,6 +13,9 @@
 // -----------------------------------------------------------------------------
 
 import 'package:esim_open_source/app/environment/environment_images.dart';
+import 'package:esim_open_source/di/locator.dart';
+import 'package:esim_open_source/domain/repository/services/app_configuration_service.dart';
+import 'package:esim_open_source/presentation/shared/action_helpers.dart';
 import 'package:flutter/material.dart';
 
 class EsimStep {
@@ -217,7 +220,38 @@ class _StepView extends StatelessWidget {
         children: [
           ConstrainedBox(
             constraints: const BoxConstraints(maxHeight: 440),
-            child: Image.asset(step.screenAsset, fit: BoxFit.contain),
+            child: step.number == 1
+                ? AspectRatio(
+                    aspectRatio: 960 / 2070,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.asset(step.screenAsset, fit: BoxFit.contain),
+                        // Zone tappable invisible sur la bulle WhatsApp (en bas
+                        // à droite du mockup) -> ouvre le chat support.
+                        Align(
+                          alignment: const Alignment(0.68, 0.68),
+                          child: FractionallySizedBox(
+                            widthFactor: 0.24,
+                            heightFactor: 0.10,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () async {
+                                await openWhatsApp(
+                                  phoneNumber:
+                                      await locator<AppConfigurationService>()
+                                          .getWhatsAppNumber,
+                                  message: "",
+                                );
+                              },
+                              child: const SizedBox.expand(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Image.asset(step.screenAsset, fit: BoxFit.contain),
           ),
           const SizedBox(height: 12),
           Container(
