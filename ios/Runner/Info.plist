@@ -55,6 +55,8 @@
 		<string>${PRODUCT_DISPLAY_NAME}</string>
 		<key>FACEBOOK_CLIENT_TOKEN</key>
 		<string>$(FACEBOOK_CLIENT_TOKEN)</string>
+		<key>FacebookAdvertiserIDCollectionEnabled</key>
+		<false/>
 		<key>FlutterDeepLinkingEnabled</key>
 		<false/>
 		<key>GIDClientID</key>
@@ -75,8 +77,6 @@
 		<string>This app needs access to save QR codes to your photo library</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs access to save QR codes to your photo library</string>
-		<key>NSUserTrackingUsageDescription</key>
-		<string>This app would like to access IDFA to provide better ad experiences and measure ad performance.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UIBackgroundModes</key>
