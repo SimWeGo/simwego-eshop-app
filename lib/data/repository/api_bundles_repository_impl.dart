@@ -114,8 +114,9 @@ class ApiBundlesRepositoryImpl implements ApiBundlesRepository {
 
   Future<void> _fetchAndUpdateHomeData(
     StreamController<BundleServicesStreamModel> controller,
-    String version,
-  ) async {
+    String version, {
+    int attempt = 0,
+  }) async {
     try {
       final ResponseMain<HomeDataResponseModel> response =
           await _apiBundles.getAllData();
@@ -193,15 +194,35 @@ class ApiBundlesRepositoryImpl implements ApiBundlesRepository {
               Resource<HomeDataResponseModel>.success(newData, message: null),
         ),
       );
-    } on Error catch (e) {
-      // Emit error resource
+    } on Object catch (e) {
+      // Catch BOTH Error and Exception here: network calls throw Exception, so
+      // the previous `on Error catch` missed them and the shimmer hung forever
+      // on a fresh install (the very first call can race ahead of device/config
+      // setup and fail transiently).
+      log("Error fetching new home data (attempt $attempt): $e");
+
+      // Retry a couple of times before giving up: on a cold start the retry
+      // almost always succeeds once config/device registration has completed,
+      // so the home populates on first launch instead of showing an empty
+      // screen (App Store guideline 2.1).
+      if (attempt < 2) {
+        await Future<void>.delayed(const Duration(seconds: 2));
+        await _fetchAndUpdateHomeData(
+          controller,
+          version,
+          attempt: attempt + 1,
+        );
+        return;
+      }
+
+      // Retries exhausted -> emit error so the shimmer stops and the UI can
+      // show an error/empty state (the user can pull-to-refresh to retry).
       _homeDataController.add(
         BundleServicesStreamModel(
           shouldRenderShimmer: false,
           homeData: Resource<HomeDataResponseModel>.error(e.toString()),
         ),
       );
-      log("Error fetching new home data: $e");
     }
   }
   //
