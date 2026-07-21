@@ -74,18 +74,26 @@ const List<EsimStep> kStepsEn = [
   ),
   EsimStep(
     number: 5,
-    screenAsset: '${_base}05a_roaming_simwego.png',
-    title: 'Data roaming',
+    screenAsset: '${_base}05_roaming_esim_on.png',
+    title: 'Enable data roaming',
     description:
-        'Turn on "Data Roaming" for SimWeGo, and turn it off on your usual SIM.',
-    tip: 'SimWeGo eSIM: ON · usual SIM: OFF.',
+        'On your SimWeGo eSIM, open the line then turn on "Data Roaming".',
+    tip: 'SimWeGo eSIM: roaming ON.',
   ),
   EsimStep(
     number: 6,
-    screenAsset: '${_base}06_arrival.png',
+    screenAsset: '${_base}06_roaming_sim_off.png',
+    title: 'Turn off roaming on your main SIM',
+    description:
+        'On your usual SIM, turn off "Data Roaming" to avoid charges.',
+    tip: 'Usual SIM: roaming OFF.',
+  ),
+  EsimStep(
+    number: 7,
+    screenAsset: '${_base}07_connected.png',
     title: 'On arrival',
     description:
-        'When you land, select your eSIM in "Mobile Service". You\'re connected!',
+        'When you land, select your eSIM under "Mobile Service". You\'re connected!',
   ),
 ];
 

@@ -78,15 +78,23 @@ const List<EsimStep> kStepsFr = [
   ),
   EsimStep(
     number: 5,
-    screenAsset: '${_base}05a_roaming_simwego.png',
-    title: "Données à l'étranger",
+    screenAsset: '${_base}05_roaming_esim_on.png',
+    title: "Activez les données à l'étranger",
     description:
-        "Activez « Données à l'étranger » sur SimWeGo, et désactivez-les sur votre SIM habituelle.",
-    tip: "eSIM SimWeGo : ACTIVÉ · SIM habituelle : DÉSACTIVÉ.",
+        "Sur votre eSIM SimWeGo, ouvrez la ligne puis activez « Données à l'étranger ».",
+    tip: "eSIM SimWeGo : itinérance ACTIVÉE.",
   ),
   EsimStep(
     number: 6,
-    screenAsset: '${_base}06_arrivee.png',
+    screenAsset: '${_base}06_roaming_sim_off.png',
+    title: "Désactivez les données sur votre SIM principale",
+    description:
+        "Sur votre SIM habituelle, désactivez « Données à l'étranger » pour éviter les frais.",
+    tip: "SIM habituelle : itinérance DÉSACTIVÉE.",
+  ),
+  EsimStep(
+    number: 7,
+    screenAsset: '${_base}07_connected.png',
     title: "À l'arrivée",
     description:
         "À votre arrivée, sélectionnez votre eSIM dans « Données cellulaires ». Vous êtes connecté !",
