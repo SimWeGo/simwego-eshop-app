@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:developer";
 import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
@@ -34,7 +35,14 @@ class LoginViewModel extends BaseModel {
 
   Future<void> initializeListener() async {
     if (!isUserLoggedIn) {
-      await socialLoginService.logOut();
+      // Never let a logOut failure (e.g. Supabase momentarily not ready) throw
+      // before the auth-result listener is attached: that would leave the login
+      // screen stuck with no navigation on social sign-in.
+      try {
+        await socialLoginService.logOut();
+      } on Object catch (e) {
+        log("logOut before attaching login listener failed: $e");
+      }
     }
 
     socialLoginService.socialLoginResultStream.listen((SocialLoginResult data) {
