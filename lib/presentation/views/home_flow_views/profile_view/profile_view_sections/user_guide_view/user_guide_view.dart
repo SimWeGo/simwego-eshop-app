@@ -3,6 +3,8 @@ import "dart:io";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/android_esim_carousel/esim_carousel_android_en.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/android_esim_carousel/esim_carousel_android_fr.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/android_user_guide_view/android_user_guide_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/ios_esim_carousel/esim_carousel_en.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/ios_esim_carousel/esim_carousel_fr.dart";
@@ -28,6 +30,11 @@ class UserGuideView extends StatelessWidget {
       return context.locale.languageCode == "fr"
           ? const EsimCarouselFr()
           : const EsimCarouselEn();
+    }
+    if (Platform.isAndroid) {
+      return context.locale.languageCode == "fr"
+          ? const EsimCarouselAndroidFr()
+          : const EsimCarouselAndroidEn();
     }
     return Scaffold(
       body: SafeArea(

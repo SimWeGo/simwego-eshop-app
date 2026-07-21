@@ -155,6 +155,9 @@ flutter:
     #iOS eSIM activation carousel (new guide)
     - assets/esim_fr/
     - assets/esim_en/
+    #Android eSIM activation carousel (new guide)
+    - assets/esim_android_fr/
+    - assets/esim_android_en/
     #tab bar
     - assets/images/open_source/tab_bar/
     #profile
