@@ -35,11 +35,18 @@ class StartUpViewModel extends BaseModel {
   Future<void> handleStartUpLogic(BuildContext context) async {
     unawaited(_initializePushServices());
 
-    unawaited(_initializeConfigurations());
-
     setViewState(ViewState.busy);
 
-    await Future<void>.delayed(const Duration(seconds: 2));
+    // Wait for the app configuration + Supabase auth client to be ready before
+    // routing. This used to run unawaited behind a blind 2s delay, so on a
+    // fresh install (no cached config yet) the user could land on the login or
+    // home screen before Supabase was initialized -> login silently did nothing
+    // and the home never loaded until the app was killed and reopened.
+    try {
+      await _initializeConfigurations();
+    } on Object catch (e) {
+      log("Startup configuration init failed: $e");
+    }
 
     // Device root/compromise check DISABLED (2026-06-24): SafeDevice.isJailBroken
     // false-positives on stock release builds (observed on a non-rooted Samsung

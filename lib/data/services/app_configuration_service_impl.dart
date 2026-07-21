@@ -43,23 +43,42 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
         log(e.toString());
       }
     }
-    // if (_configData?.isNotEmpty ?? false) {
-    //   _appConfigCompleter?.complete();
-    // }
 
-    Resource<List<ConfigurationResponseModel>?> response =
-        await GetConfigurationsUseCase(locator()).execute(NoParams());
+    try {
+      // Retry the remote fetch a few times: on a fresh install the first
+      // network call can fail or be slow. The whole app waits on this completer
+      // (Supabase login init, catalog version, home data), so a single failed
+      // fetch used to leave every awaiter hanging until the app was killed and
+      // reopened.
+      for (int attempt = 0; attempt < 3; attempt++) {
+        try {
+          Resource<List<ConfigurationResponseModel>?> response =
+              await GetConfigurationsUseCase(locator()).execute(NoParams());
 
-    if (response.resourceType == ResourceType.success) {
-      _configData = response.data;
+          if (response.resourceType == ResourceType.success &&
+              (response.data?.isNotEmpty ?? false)) {
+            _configData = response.data;
 
-      locator<LocalStorageService>().setString(
-        LocalStorageKeys.appConfigurations,
-        ConfigurationResponseModel.toJsonListString(
-          _configData ?? <ConfigurationResponseModel>[],
-        ),
-      );
+            locator<LocalStorageService>().setString(
+              LocalStorageKeys.appConfigurations,
+              ConfigurationResponseModel.toJsonListString(
+                _configData ?? <ConfigurationResponseModel>[],
+              ),
+            );
+            break;
+          }
+        } on Object catch (e) {
+          log("getAppConfigurations attempt $attempt failed: $e");
+        }
 
+        if (attempt < 2) {
+          await Future<void>.delayed(const Duration(seconds: 2));
+        }
+      }
+    } finally {
+      // ALWAYS release awaiters, even if every attempt failed, so config
+      // dependent code falls back to cached/empty values and can retry instead
+      // of hanging the whole app forever.
       if (!(_appConfigCompleter?.isCompleted ?? true)) {
         _appConfigCompleter?.complete();
       }
