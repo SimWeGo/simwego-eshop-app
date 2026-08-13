@@ -1,6 +1,5 @@
 import "dart:developer";
 
-import "package:app_tracking_transparency/app_tracking_transparency.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:facebook_app_events/facebook_app_events.dart";
 import "package:firebase_analytics/firebase_analytics.dart";
@@ -30,22 +29,9 @@ class AnalyticsServiceImpl extends AnalyticsService {
     _useFirebaseAnalytics = firebaseAnalytics;
     _useFacebookAnalytics = facebookAnalytics;
     log("Analytics service initialized with Facebook Events: $facebookAnalytics and Firebase Events: $firebaseAnalytics");
-
-    final TrackingStatus status =
-        await AppTrackingTransparency.trackingAuthorizationStatus;
-
-    log("ATT permission result: $status");
-
-    if (status == TrackingStatus.notDetermined || status == TrackingStatus.denied || status == TrackingStatus.restricted) {
-      final TrackingStatus result =
-          await AppTrackingTransparency.requestTrackingAuthorization();
-      log("ATT permission result: $result");
-      if (result == TrackingStatus.authorized) {
-        _facebookAppEvents.setAdvertiserTracking(enabled: true);
-      }
-    } else if (status == TrackingStatus.authorized) {
-      _facebookAppEvents.setAdvertiserTracking(enabled: true);
-    }
+    // No ATT request here: the app declares no tracking (App Privacy) and
+    // Info.plist has no NSUserTrackingUsageDescription, so any
+    // AppTrackingTransparency call is killed by iOS (TCC) on first launch.
   }
 
   @override
